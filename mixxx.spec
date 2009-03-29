@@ -1,6 +1,6 @@
 Name:           mixxx
 Version:        1.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -128,6 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.6.1-2
+- rebuild for new F11 features
+
 * Mon Sep 29 2008 kwizart < kwizart at gmail.com > - 1.6.1-1
 - Update to 1.6.1
 
