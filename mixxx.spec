@@ -1,6 +1,6 @@
 Name:           mixxx
-Version:        1.6.1
-Release:        2%{?dist}
+Version:        1.7.0
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -32,7 +32,7 @@ BuildRequires:  portaudio-devel
 #BuildRequires:  lua-devel, tolua++-devel
 %{?_with_bpm:BuildRequires: fftw-devel}
 %{?_with_djconsole:BuildRequires: libdjconsole-devel}
-%{?_with_ladspa:BuildRequires: ladspa-devel}
+BuildRequires: ladspa-devel
 %{?_with_libgpod:BuildRequires: libgpod-devel}
 
 
@@ -46,33 +46,23 @@ controllers including MIDI devices, and more.
 Non-default rpmbuild options:
 --with bpm:        Enable bpm support
 --with djconsole:  Enable djconsole support
---with ladspa:     Enable ladspa support (EXPERIMENTAL)
 --with libgpod:    Enable libgpod support
 
 
 
 %prep
 %setup -q
-#removal of internal dependencies
-rm -rf lib/{portaudio-v18,portaudio-v18mac}
-#libsamplerate, older version, better than having compat-libsamplerate for now
 
-#Fix ladspa in any cases
-sed -i -e 's|/usr/lib/ladspa/|%{_libdir}/ladspa/|' src/ladspaloader.cpp
-
-#Fix perm for sources
-find lib src -type f -name \* -exec chmod 644 {} \;
 
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
 export CXXFLAGS=$RPM_OPT_FLAGS
 scons %{?_smp_mflags} \
-  prefix=%{_prefix} \
+  prefix=%{_prefix} ladspa=1 \
   shoutcast=0 hifieq=1 script=0 optimize=0 \
   %{?_with_bpm:       experimentalbpm=1} \
   %{?_with_djconsole: djconsole=1} \
-  %{?_with_ladspa:    ladspa=1} \
   %{?_with_libgpod:   ipod=1} \
 
 
@@ -128,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 1.7.0-1
+- Update to 1.7.0
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.6.1-2
 - rebuild for new F11 features
 
