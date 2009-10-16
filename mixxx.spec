@@ -21,13 +21,14 @@ BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
+BuildRequires:  libmp4v2-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
 
 #Optionals Requirements
 #BuildRequires:  ffmpeg-devel
-#BuildRequires:  libshout-devel
+BuildRequires:  libshout-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
 %{?_with_bpm:BuildRequires: fftw-devel}
@@ -88,7 +89,7 @@ Exec=mixxx
 Terminal=false
 Icon=mixxx-icon
 Type=Application
-Categories=AudioVideo;Audio;
+Categories=AudioVideo;X-Synthesis;
 EOF
 
 desktop-file-install --vendor "" --delete-original \
@@ -99,10 +100,6 @@ desktop-file-install --vendor "" --delete-original \
 #Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
-#Fix script perms
-chmod +x $RPM_BUILD_ROOT%{_datadir}/mixxx/midi/convert
-chmod +x $RPM_BUILD_ROOT%{_datadir}/mixxx/skins/outlineMini/shifter.sh
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING HERCULES.txt LICENSE README README.macro
+%doc COPYING LICENSE README README.macro
 %doc Mixxx-Manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
