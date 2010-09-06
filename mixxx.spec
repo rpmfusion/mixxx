@@ -1,5 +1,5 @@
 Name:           mixxx
-Version:        1.7.0
+Version:        1.7.2
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
@@ -115,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Mon Sep 06 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.7.2-1
+- Update to 1.7.2
+
 * Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 1.7.0-1
 - Update to 1.7.0
 
