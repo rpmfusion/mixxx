@@ -1,5 +1,5 @@
 Name:           mixxx
-Version:        1.7.2
+Version:        1.8.0.2
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
@@ -16,7 +16,7 @@ BuildRequires:  scons
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
-BuildRequires:  qt4-devel
+BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libid3tag-devel
@@ -25,6 +25,7 @@ BuildRequires:  libmp4v2-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
+BuildRequires:  portmidi-devel
 
 #Optionals Requirements
 #BuildRequires:  ffmpeg-devel
@@ -35,6 +36,7 @@ BuildRequires:  libshout-devel
 %{?_with_djconsole:BuildRequires: libdjconsole-devel}
 BuildRequires: ladspa-devel
 %{?_with_libgpod:BuildRequires: libgpod-devel}
+BuildRequires: wavpack-devel
 
 
 
@@ -60,7 +62,9 @@ Non-default rpmbuild options:
 export CFLAGS=$RPM_OPT_FLAGS
 export CXXFLAGS=$RPM_OPT_FLAGS
 scons %{?_smp_mflags} \
-  prefix=%{_prefix} ladspa=1 \
+  prefix=%{_prefix} \
+  qtdir=%{_qt4_prefix} \
+  ladspa=0 \
   shoutcast=0 hifieq=1 script=0 optimize=0 \
   %{?_with_bpm:       experimentalbpm=1} \
   %{?_with_djconsole: djconsole=1} \
@@ -115,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Wed Oct 13 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.8.0.2-1
+- Update to 1.8.0.2
+
 * Mon Sep 06 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.7.2-1
 - Update to 1.7.2
 
