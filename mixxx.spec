@@ -17,6 +17,7 @@ BuildRequires:  scons
 BuildRequires:  alsa-lib-devel >= 1.0.10
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
 BuildRequires:  qt4-devel >= 4.3
+BuildRequires:  qt4-webkit-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libid3tag-devel
