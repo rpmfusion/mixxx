@@ -1,5 +1,5 @@
 Name:           mixxx
-Version:        1.8.0.2
+Version:        1.8.2
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
@@ -7,6 +7,7 @@ Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/mixxx-%{version}-src.tar.gz
+Patch0:         mixxx-1.8.2-norpath.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #Build tools
@@ -56,7 +57,7 @@ Non-default rpmbuild options:
 
 %prep
 %setup -q
-
+%patch0 -p1 -b .norpath
 
 
 %build
@@ -82,25 +83,10 @@ scons %{?_smp_mflags} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   prefix=%{_prefix} install
 
-#Recreate desktop file to better handle encoding convertion
-rm $RPM_BUILD_ROOT%{_datadir}/applications/mixxx.desktop
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mixxx.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Encoding=UTF-8
-Name=Mixxx
-Comment=A digital DJ interface
-Exec=mixxx
-Terminal=false
-Icon=mixxx-icon
-Type=Application
-Categories=AudioVideo;X-Synthesis;
-EOF
-
-desktop-file-install --vendor "" --delete-original \
+desktop-file-install --vendor ""  \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  --remove-category Application \
-  $RPM_BUILD_ROOT%{_datadir}/applications/mixxx.desktop
+  --add-category=X-Synthesis \
+  src/mixxx.desktop
 
 #Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
@@ -120,6 +106,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Fri Jan 21 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.8.2-1
+- Update to 1.8.2
+
 * Wed Oct 13 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.8.0.2-1
 - Update to 1.8.0.2
 
