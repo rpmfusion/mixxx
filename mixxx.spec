@@ -1,6 +1,6 @@
 Name:           mixxx
 Version:        1.9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -42,7 +42,9 @@ BuildRequires: ladspa-devel
 %{?_with_libgpod:BuildRequires: libgpod-devel}
 BuildRequires: wavpack-devel
 
-
+# workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
+# is broken in rpmfusion currently
+BuildRequires: phonon-backend-gstreamer
 
 %description
 Mixxx is open source software for DJ'ing. You can use MP3s,
@@ -108,6 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Mon May 9 2011 John Brier <johnbrier@gmail.com> - 1.9.0-2
+- add BuildRequires phonon-backend-gstreamer since phonon-backend-vlc
+  is broken in rpmfusion currently
+
 * Tue Feb 22 2011 John Brier <johnbrier@gmail.com>- 1.9.0-1
 - Update to 1.9.0
 - Added BuildRequires to spec file for taglib-devel and flac-devel header files
