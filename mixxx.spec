@@ -1,13 +1,13 @@
 Name:           mixxx
-Version:        1.8.2
-Release:        1%{?dist}
+Version:        1.9.0
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/mixxx-%{version}-src.tar.gz
-Patch0:         mixxx-1.8.2-norpath.patch
+Patch0:         mixxx-%{version}-norpath.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #Build tools
@@ -28,6 +28,8 @@ BuildRequires:  libsndfile-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
+BuildRequires:  taglib-devel
+BuildRequires:  flac-devel
 
 #Optionals Requirements
 #BuildRequires:  ffmpeg-devel
@@ -40,7 +42,9 @@ BuildRequires: ladspa-devel
 %{?_with_libgpod:BuildRequires: libgpod-devel}
 BuildRequires: wavpack-devel
 
-
+# workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
+# is broken in rpmfusion currently
+BuildRequires: phonon-backend-gstreamer
 
 %description
 Mixxx is open source software for DJ'ing. You can use MP3s,
@@ -56,7 +60,7 @@ Non-default rpmbuild options:
 
 
 %prep
-%setup -q
+%setup -q -n mixxx-1.9.0~release-1.9.x~bzr2720
 %patch0 -p1 -b .norpath
 
 
@@ -106,6 +110,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Mon May 9 2011 John Brier <johnbrier@gmail.com> - 1.9.0-2
+- add BuildRequires phonon-backend-gstreamer since phonon-backend-vlc
+  is broken in rpmfusion currently
+
+* Tue Feb 22 2011 John Brier <johnbrier@gmail.com>- 1.9.0-1
+- Update to 1.9.0
+- Added BuildRequires to spec file for taglib-devel and flac-devel header files
+
 * Fri Jan 21 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.8.2-1
 - Update to 1.8.2
 

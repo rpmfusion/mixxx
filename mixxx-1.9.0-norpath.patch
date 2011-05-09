@@ -1,0 +1,11 @@
+--- mixxx-1.9.0/build/depends.py	2011-02-15 22:00:20.000000000 -0500
++++ mixxx-1.9.0/build/depends.py.norpath	2011-04-12 22:25:43.275373232 -0400
+@@ -190,8 +190,6 @@ class Qt(Dependence):
+         compiling_on_104 = False
+         if build.platform_is_osx:
+             compiling_on_104 = (os.popen('sw_vers').readlines()[1].find('10.4') >= 0)
+-        if not build.platform_is_windows and not (using_104_sdk or compiling_on_104):
+-            build.env.Append(LINKFLAGS = "-Wl,-rpath,$QTDIR/lib")
+ 
+ 
+ class FidLib(Dependence):
