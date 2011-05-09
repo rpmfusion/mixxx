@@ -1,5 +1,5 @@
 Name:           mixxx
-Version:        1.8.2
+Version:        1.9.0
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
@@ -7,7 +7,7 @@ Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/mixxx-%{version}-src.tar.gz
-Patch0:         mixxx-1.8.2-norpath.patch
+Patch0:         mixxx-%{version}-norpath.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #Build tools
@@ -28,6 +28,8 @@ BuildRequires:  libsndfile-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
+BuildRequires:  taglib-devel
+BuildRequires:  flac-devel
 
 #Optionals Requirements
 #BuildRequires:  ffmpeg-devel
@@ -56,7 +58,7 @@ Non-default rpmbuild options:
 
 
 %prep
-%setup -q
+%setup -q -n mixxx-1.9.0~release-1.9.x~bzr2720
 %patch0 -p1 -b .norpath
 
 
@@ -106,6 +108,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Tue Feb 22 2011 John Brier <johnbrier@gmail.com>- 1.9.0-1
+- Update to 1.9.0
+- Added BuildRequires to spec file for taglib-devel and flac-devel header files
+
 * Fri Jan 21 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.8.2-1
 - Update to 1.8.2
 
