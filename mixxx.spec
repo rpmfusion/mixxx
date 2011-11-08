@@ -1,6 +1,6 @@
 Name:           mixxx
-Version:        1.9.0
-Release:        2%{?dist}
+Version:        1.9.2
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -52,15 +52,9 @@ Ogg Vorbis files, and other formats as audio input. Mixxx
 can be controlled through the GUI and with external
 controllers including MIDI devices, and more.
 
-Non-default rpmbuild options:
---with bpm:        Enable bpm support
---with djconsole:  Enable djconsole support
---with libgpod:    Enable libgpod support
-
-
 
 %prep
-%setup -q -n mixxx-1.9.0~release-1.9.x~bzr2720
+%setup -q
 %patch0 -p1 -b .norpath
 
 
@@ -71,11 +65,7 @@ scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
   ladspa=0 \
-  shoutcast=0 hifieq=1 script=0 optimize=0 \
-  %{?_with_bpm:       experimentalbpm=1} \
-  %{?_with_djconsole: djconsole=1} \
-  %{?_with_libgpod:   ipod=1} \
-
+  shoutcast=1 hifieq=1 script=0 optimize=0 \
 
 
 %install
@@ -110,6 +100,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Mon Nov 8 2011 John Brier <johnbrier@gmail.com> - 1.9.2-1
+- Update to 1.9.2
+- build with shoutcast support
+- remove -n option to setup since upstream source extracts 
+  into a directory of name-version format
+- remove old experimental build options that are no longer
+  relevant
+
 * Mon May 9 2011 John Brier <johnbrier@gmail.com> - 1.9.0-2
 - add BuildRequires phonon-backend-gstreamer since phonon-backend-vlc
   is broken in rpmfusion currently
