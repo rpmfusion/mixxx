@@ -1,6 +1,6 @@
 Name:           mixxx
 Version:        1.9.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -100,6 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.9.2-3
+- Rebuilt for c++ ABI breakage
+
 * Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.9.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
