@@ -1,13 +1,17 @@
+%global _with_bpm     1
+%global _with_libgpod 1
+
 Name:           mixxx
-Version:        1.9.2
-Release:        3%{?dist}
+Version:        1.10.0
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/mixxx-%{version}-src.tar.gz
-Patch0:         mixxx-%{version}-norpath.patch
+Patch0:         mixxx-1.9.2-norpath.patch
+Patch1:         mixxx-1.10.0-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #Build tools
@@ -32,7 +36,7 @@ BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
 
 #Optionals Requirements
-#BuildRequires:  ffmpeg-devel
+BuildRequires:  ffmpeg-devel
 BuildRequires:  libshout-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
@@ -56,6 +60,7 @@ controllers including MIDI devices, and more.
 %prep
 %setup -q
 %patch0 -p1 -b .norpath
+%patch1 -p1 -b .gcc47
 
 
 %build
@@ -100,6 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Thu May 03 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.10.0-1
+- Update to 1.10.0
+
 * Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.9.2-3
 - Rebuilt for c++ ABI breakage
 
