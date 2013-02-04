@@ -2,7 +2,7 @@
 %global _with_libgpod 1
 
 Name:           mixxx
-Version:        1.10.0
+Version:        1.10.1
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
@@ -105,6 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Wed Jul 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.10.1-1
+- Update to 1.10.1
+
 * Thu May 03 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.10.0-1
 - Update to 1.10.0
 
