@@ -1,17 +1,17 @@
-%global _with_bpm     1
-%global _with_libgpod 1
-
 Name:           mixxx
-Version:        1.10.1
+Version:        1.11.0
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
-Source0:        http://downloads.mixxx.org/mixxx-%{version}/mixxx-%{version}-src.tar.gz
-Patch0:         mixxx-1.9.2-norpath.patch
-Patch1:         mixxx-1.10.0-gcc47.patch
+Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
+Patch0:         %{name}-%{version}-20130517bzr.patch
+# Updated manual...build it yourself with:
+# 1) bzr checkout lp:~mixxxdevelopers/mixxx/manual-1.11.x
+# 2) cd manual-1.11.x; make html; make latexpdf; make latexpdf
+Source1:        %{name}-%{version}-20130517bzr.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #Build tools
@@ -29,14 +29,15 @@ BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmp4v2-devel
 BuildRequires:  libsndfile-devel
+BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
+BuildRequires:  protobuf-devel
 BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
 
 #Optionals Requirements
-BuildRequires:  ffmpeg-devel
 BuildRequires:  libshout-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
@@ -59,8 +60,19 @@ controllers including MIDI devices, and more.
 
 %prep
 %setup -q
-%patch0 -p1 -b .norpath
-%patch1 -p1 -b .gcc47
+%patch0 -p1
+%setup -T -D -a 1
+
+# Fix file permissions.  (Already fixed upstream.)
+chmod -x \
+    "res/controllers/Vestax VCI-300.midi.xml" \
+    "res/controllers/Vestax-VCI-300-scripts.js" \
+    "res/skins/Outline1024x600-Netbook/CHANGELOG.txt" \
+    "res/skins/Outline1024x600-Netbook/skin.xml" \
+    "res/skins/Outline1024x768-XGA/CHANGELOG.txt" \
+    "res/skins/Outline1024x768-XGA/skin.xml" \
+    "res/skins/Outline800x480-WVGA/skin.xml"
+
 
 
 %build
@@ -73,6 +85,7 @@ scons %{?_smp_mflags} \
   shoutcast=1 hifieq=1 script=0 optimize=0 \
 
 
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
@@ -80,6 +93,7 @@ export CFLAGS=$RPM_OPT_FLAGS
 export CXXFLAGS=$RPM_OPT_FLAGS
 scons %{?_smp_mflags} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
+  qtdir=%{_qt4_prefix} \
   prefix=%{_prefix} install
 
 desktop-file-install --vendor ""  \
@@ -101,12 +115,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc Mixxx-Manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+%{_libdir}/%{name}/plugins/vamp/libmixxxminimal.so
 %{_datadir}/applications/mixxx.desktop
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
-* Wed Jul 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.10.1-1
-- Update to 1.10.1
+* Fri May 17 2013 Steven Boswell <ulatekh@yahoo.com> - 1.11.0-1
+- Update to 1.11.0
 
 * Thu May 03 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.10.0-1
 - Update to 1.10.0
