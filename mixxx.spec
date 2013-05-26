@@ -1,6 +1,6 @@
 Name:           mixxx
 Version:        1.11.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -8,6 +8,7 @@ License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
 Patch0:         %{name}-%{version}-20130517bzr.patch
+Patch1:         %{name}-%{version}-installpath.patch
 # Updated manual...build it yourself with:
 # 1) bzr checkout lp:~mixxxdevelopers/mixxx/manual-1.11.x
 # 2) cd manual-1.11.x; make html; make latexpdf; make latexpdf
@@ -61,6 +62,7 @@ controllers including MIDI devices, and more.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %setup -T -D -a 1
 
 # Fix file permissions.  (Already fixed upstream.)
@@ -77,7 +79,7 @@ chmod -x \
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
-export CXXFLAGS=$RPM_OPT_FLAGS
+export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
@@ -90,7 +92,7 @@ scons %{?_smp_mflags} \
 rm -rf $RPM_BUILD_ROOT
 
 export CFLAGS=$RPM_OPT_FLAGS
-export CXXFLAGS=$RPM_OPT_FLAGS
+export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
 scons %{?_smp_mflags} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   qtdir=%{_qt4_prefix} \
