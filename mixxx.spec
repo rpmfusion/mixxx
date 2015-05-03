@@ -1,6 +1,6 @@
 Name:           mixxx
 Version:        1.11.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -10,11 +10,13 @@ Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-s
 Patch0:         %{name}-%{version}-20130517bzr.patch
 Patch1:         %{name}-%{version}-installpath.patch
 Patch2:         %{name}-%{version}-wtf.patch
+Patch3:         0001-Improve-detection-of-libmp4-libmp4v2.patch
 # Updated manual...build it yourself with:
 # 1) bzr checkout lp:~mixxxdevelopers/mixxx/manual-1.11.x
 # 2) cd manual-1.11.x; make html; make latexpdf; make latexpdf
 Source1:        %{name}-%{version}-20130517bzr.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+ExclusiveArch:  i686 x86_64
 
 #Build tools
 BuildRequires:  desktop-file-utils
@@ -22,6 +24,7 @@ BuildRequires:  scons
 
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
+BuildRequires:  faad2-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
 BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  qt4-webkit-devel
@@ -65,6 +68,7 @@ controllers including MIDI devices, and more.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %setup -T -D -a 1
 
 # Fix file permissions.  (Already fixed upstream.)
@@ -85,14 +89,13 @@ export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
+  faad=1 \
   ladspa=0 \
   shoutcast=1 hifieq=1 script=0 optimize=0 \
 
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 export CFLAGS=$RPM_OPT_FLAGS
 export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
 scons %{?_smp_mflags} \
@@ -109,21 +112,24 @@ desktop-file-install --vendor ""  \
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files
-%defattr(-,root,root,-)
 %doc COPYING LICENSE README README.macro
 %doc Mixxx-Manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+%dir %{_libdir}/%{name}/plugins/vamp
 %{_libdir}/%{name}/plugins/vamp/libmixxxminimal.so
+%dir %{_libdir}/%{name}/plugins/soundsource
+%{_libdir}/%{name}/plugins/soundsource/libsoundsourcem4a.so
 %{_datadir}/applications/mixxx.desktop
 %{_datadir}/pixmaps/mixxx-icon.png
 
 %changelog
+* Sun May 03 2015 Nicolas Chauvet <kwizart@gmail.com> - 1.11.0-4
+- Add ExclusiveArch - Workaround rfbz#2413
+- Add m4a support - rhbz#3488
+- Spec file clean-up
+
 * Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 1.11.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
@@ -139,7 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.9.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
-* Mon Nov 8 2011 John Brier <johnbrier@gmail.com> - 1.9.2-1
+* Tue Nov 8 2011 John Brier <johnbrier@gmail.com> - 1.9.2-1
 - Update to 1.9.2
 - build with shoutcast support
 - remove -n option to setup since upstream source extracts 
