@@ -1,20 +1,13 @@
 Name:           mixxx
-Version:        1.11.0
-Release:        4%{?dist}
+Version:        2.0.0
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
-Patch0:         %{name}-%{version}-20130517bzr.patch
-Patch1:         %{name}-%{version}-installpath.patch
-Patch2:         %{name}-%{version}-wtf.patch
-Patch3:         0001-Improve-detection-of-libmp4-libmp4v2.patch
-# Updated manual...build it yourself with:
-# 1) bzr checkout lp:~mixxxdevelopers/mixxx/manual-1.11.x
-# 2) cd manual-1.11.x; make html; make latexpdf; make latexpdf
-Source1:        %{name}-%{version}-20130517bzr.tar.bz2
+Patch0:         %{name}-%{version}-build.patch
 
 ExclusiveArch:  i686 x86_64
 
@@ -41,6 +34,9 @@ BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel
 BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
+BuildRequires:  sqlite-devel
+BuildRequires:  rubberband-devel
+BuildRequires:  libchromaprint-devel
 
 #Optionals Requirements
 BuildRequires:  libshout-devel
@@ -66,26 +62,12 @@ controllers including MIDI devices, and more.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%setup -T -D -a 1
-
-# Fix file permissions.  (Already fixed upstream.)
-chmod -x \
-    "res/controllers/Vestax VCI-300.midi.xml" \
-    "res/controllers/Vestax-VCI-300-scripts.js" \
-    "res/skins/Outline1024x600-Netbook/CHANGELOG.txt" \
-    "res/skins/Outline1024x600-Netbook/skin.xml" \
-    "res/skins/Outline1024x768-XGA/CHANGELOG.txt" \
-    "res/skins/Outline1024x768-XGA/skin.xml" \
-    "res/skins/Outline800x480-WVGA/skin.xml"
-
 
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
-export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
+export LDFLAGS=$RPM_LD_FLAGS
+export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
@@ -97,7 +79,8 @@ scons %{?_smp_mflags} \
 
 %install
 export CFLAGS=$RPM_OPT_FLAGS
-export LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
+export LDFLAGS=$RPM_LD_FLAGS
+export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   qtdir=%{_qt4_prefix} \
@@ -106,14 +89,14 @@ scons %{?_smp_mflags} \
 desktop-file-install --vendor ""  \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --add-category=X-Synthesis \
-  src/mixxx.desktop
+  res/linux/mixxx.desktop
 
 #Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %files
-%doc COPYING LICENSE README README.macro
+%doc COPYING LICENSE README README.md
 %doc Mixxx-Manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
@@ -123,8 +106,12 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_libdir}/%{name}/plugins/soundsource/libsoundsourcem4a.so
 %{_datadir}/applications/mixxx.desktop
 %{_datadir}/pixmaps/mixxx-icon.png
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Fri Feb 05 2016 Martin Milata <b42@srck.net> - 2.0.0-1
+- Update to 2.0.0
+
 * Sun May 03 2015 Nicolas Chauvet <kwizart@gmail.com> - 1.11.0-4
 - Add ExclusiveArch - Workaround rfbz#2413
 - Add m4a support - rhbz#3488
