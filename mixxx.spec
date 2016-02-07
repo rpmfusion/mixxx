@@ -1,3 +1,8 @@
+
+%bcond_with bpm
+%bcond_with djconsole
+%bcond_with libgpod
+
 Name:           mixxx
 Version:        2.0.0
 Release:        1%{?dist}
@@ -31,7 +36,7 @@ BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
-BuildRequires:  protobuf-devel
+BuildRequires:  protobuf-devel protobuf-compiler
 BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
 BuildRequires:  sqlite-devel
@@ -40,12 +45,13 @@ BuildRequires:  libchromaprint-devel
 
 #Optionals Requirements
 BuildRequires:  libshout-devel
+BuildRequires:  vamp-plugin-sdk-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
-%{?_with_bpm:BuildRequires: fftw-devel}
-%{?_with_djconsole:BuildRequires: libdjconsole-devel}
+%{?with_bpm:BuildRequires: fftw-devel}
+%{?with_djconsole:BuildRequires: idjc}
 BuildRequires: ladspa-devel
-%{?_with_libgpod:BuildRequires: libgpod-devel}
+%{?with_libgpod:BuildRequires: libgpod-devel}
 BuildRequires: wavpack-devel
 
 # workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
@@ -109,7 +115,11 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
-* Fri Feb 05 2016 Martin Milata <b42@srck.net> - 2.0.0-1
+* Sun Feb 07 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-1
+- Review BuildRequires from
+  https://github.com/mixxxdj/mixxx/blob/master/.travis.yml
+
+* Fri Feb 05 2016 Martin Milata <b42@srck.net>
 - Update to 2.0.0
 
 * Sun May 03 2015 Nicolas Chauvet <kwizart@gmail.com> - 1.11.0-4
