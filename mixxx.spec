@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -68,6 +68,9 @@ controllers including MIDI devices, and more.
 %prep
 %setup -q
 %patch0 -p1
+# TODO remove bundle libs
+#rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
+
 
 
 %build
@@ -115,6 +118,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Feb 09 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-2
+- Remove rpath in linkage,
+  https://bugzilla.rpmfusion.org/show_bug.cgi?id=3873#c7
+
 * Sun Feb 07 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-1
 - Review BuildRequires from
   https://github.com/mixxxdj/mixxx/blob/master/.travis.yml
