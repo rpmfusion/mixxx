@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -13,6 +13,7 @@ License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
 Patch0:         %{name}-%{version}-build.patch
+Patch1:         %{name}-gcc6.patch
 
 ExclusiveArch:  i686 x86_64
 
@@ -68,10 +69,11 @@ controllers including MIDI devices, and more.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1 -b .gcc6
 # TODO remove bundle libs
 #rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
-
+ 
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
@@ -118,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Jul 14 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-3
+- Add gcc6 patch
+
 * Tue Feb 09 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-2
 - Remove rpath in linkage,
   https://bugzilla.rpmfusion.org/show_bug.cgi?id=3873#c7
