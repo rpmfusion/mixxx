@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -14,11 +14,12 @@ URL:            http://www.mixxx.org
 Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
 Patch0:         %{name}-%{version}-build.patch
 Patch1:         %{name}-gcc6.patch
+Patch2:         %{name}-arm.patch
 
-ExclusiveArch:  i686 x86_64
 
 #Build tools
 BuildRequires:  desktop-file-utils
+BuildRequires:  libappstream-glib
 BuildRequires:  scons
 
 #Mandatory Requirements
@@ -70,6 +71,7 @@ controllers including MIDI devices, and more.
 %setup -q
 %patch0 -p1
 %patch1 -p1 -b .gcc6
+%patch2 -p1
 # TODO remove bundle libs
 #rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
@@ -102,24 +104,28 @@ desktop-file-install --vendor ""  \
   --add-category=X-Synthesis \
   res/linux/mixxx.desktop
 
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/appdata/%{name}.appdata.xml
+
 #Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %files
-%doc COPYING LICENSE README README.md
-%doc Mixxx-Manual.pdf
+%license COPYING LICENSE
+%doc Mixxx-Manual.pdf README README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%dir %{_libdir}/%{name}/plugins/vamp
-%{_libdir}/%{name}/plugins/vamp/libmixxxminimal.so
-%dir %{_libdir}/%{name}/plugins/soundsource
-%{_libdir}/%{name}/plugins/soundsource/libsoundsourcem4a.so
+%{_libdir}/%{name}/
 %{_datadir}/applications/mixxx.desktop
 %{_datadir}/pixmaps/mixxx-icon.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Aug 21 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-4
+- Patch so it builds on ARM (rfbz#2413)
+- Validate appdata file
+- Clean up files section
+
 * Thu Jul 14 2016 Sérgio Basto <sergio@serjux.com> - 2.0.0-3
 - Add gcc6 patch
 
