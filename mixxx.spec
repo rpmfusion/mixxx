@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -99,6 +99,10 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   prefix=%{_prefix} install
 
+#Install udev rule
+install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
+install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}/%{_udevrulesdir}/90-mixxx.usb.rules
+
 desktop-file-install --vendor ""  \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --add-category=X-Synthesis \
@@ -115,12 +119,16 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %doc Mixxx-Manual.pdf README README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+%{_udevrulesdir}/90-mixxx.usb.rules
 %{_libdir}/%{name}/
 %{_datadir}/applications/mixxx.desktop
 %{_datadir}/pixmaps/mixxx-icon.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Aug 21 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-5
+- Add udev rule (rfbz#4064)
+
 * Sun Aug 21 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-4
 - Patch so it builds on ARM (rfbz#2413)
 - Validate appdata file
