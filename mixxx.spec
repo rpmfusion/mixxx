@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -16,6 +16,7 @@ Patch0:         %{name}-%{version}-build.patch
 Patch1:         %{name}-gcc6.patch
 Patch2:         %{name}-arm.patch
 Patch3:         AppData_fix.patch
+Patch4:         fix_udev_rules.patch
 
 
 #Build tools
@@ -74,6 +75,7 @@ controllers including MIDI devices, and more.
 %patch1 -p1 -b .gcc6
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 # TODO remove bundle libs
 #rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
@@ -128,6 +130,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Nov 07 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-7
+- Fix udev rules (rfbz#4329)
+
 * Thu Oct 27 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-6
 - Fix appdata (rfbz#4311)
 

@@ -1,0 +1,31 @@
+From 56b8e3fb9e08a0b1b3b474aeef11eef4d7d37079 Mon Sep 17 00:00:00 2001
+From: leigh123linux <leigh123linux@fedoraproject.org>
+Date: Mon, 7 Nov 2016 06:36:24 +0000
+Subject: [PATCH] Fix invalid key/value pair in file
+ /usr/lib/udev/rules.d/90-mixxx.usb.rules
+
+systemd-udevd[585]: invalid key/value pair in file /usr/lib/udev/rules.d/90-mixxx.usb.rules on line 7, starting at character 99 ('#')
+systemd-udevd[585]: hint: comments can only start at beginning of line
+systemd-udevd[585]: invalid key/value pair in file /usr/lib/udev/rules.d/90-mixxx.usb.rules on line 8, starting at character 99 ('#')
+systemd-udevd[585]: hint: comments can only start at beginning of line
+---
+ res/linux/mixxx.usb.rules | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/res/linux/mixxx.usb.rules b/res/linux/mixxx.usb.rules
+index 48c6584..e9088bb 100644
+--- a/res/linux/mixxx.usb.rules
++++ b/res/linux/mixxx.usb.rules
+@@ -4,8 +4,10 @@
+ SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{bInterfaceClass}=="03", GROUP="users", MODE="0660"
+ 
+ # Vendors with USB Bulk-transfer DJ controllers
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="06f8", GROUP="users", MODE="0660" # Hercules
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="15e4", GROUP="users", MODE="0660" # Numark (may be needed for NS7/V7)
++# Hercules
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="06f8", GROUP="users", MODE="0660"
++# Numark (may be needed for NS7/V7)
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="15e4", GROUP="users", MODE="0660"
+ 
+ # Only some distribuions require the below
+ KERNEL=="hiddev*", NAME="usb/%k", GROUP="users"
