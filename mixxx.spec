@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -17,6 +17,7 @@ Patch1:         %{name}-gcc6.patch
 Patch2:         %{name}-arm.patch
 Patch3:         AppData_fix.patch
 Patch4:         fix_udev_rules.patch
+Patch5:         remove_sqlite_typedef.patch
 
 
 #Build tools
@@ -76,6 +77,7 @@ controllers including MIDI devices, and more.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 # TODO remove bundle libs
 #rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
@@ -130,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Sep 12 2017 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-11
+- Fix sqlite typedef issue
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2.0.0-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
