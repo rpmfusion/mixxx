@@ -5,7 +5,7 @@
 
 Name:           mixxx
 Version:        2.0.0
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -132,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Dec 16 2017 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-12
+- Rebuild for new protobuf .so version (f28)
+
 * Tue Sep 12 2017 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-11
 - Fix sqlite typedef issue
 
