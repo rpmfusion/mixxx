@@ -1,0 +1,32 @@
+--- a/build/mixxx.py
++++ b/build/mixxx.py
+@@ -174,7 +174,7 @@
+ 
+         # Validate the specified qtdir exists
+         if not os.path.isdir(qtdir):
+-            logging.error("QT path does not exist or QT4 is not installed.")
++            logging.error("QT path (%s) does not exist or QT4 is not installed." % qtdir)
+             logging.error(
+                 "Please specify your QT path by running 'scons qtdir=[path]'")
+             Script.Exit(1)
+@@ -385,7 +385,7 @@
+         if 'CC' in os.environ:
+             self.env['CC'] = os.environ['CC']
+         if 'CFLAGS' in os.environ:
+-            self.env['CFLAGS'] += SCons.Util.CLVar(os.environ['CFLAGS'])
++            self.env['CCFLAGS'] += SCons.Util.CLVar(os.environ['CFLAGS'])
+         if 'CXX' in os.environ:
+             self.env['CXX'] = os.environ['CXX']
+         if 'CXXFLAGS' in os.environ:
+
+--- a/build/depends.py
++++ b/build/depends.py
+@@ -427,7 +427,6 @@
+             qtdir = build.env['QTDIR']
+             framework_path = Qt.find_framework_libdir(qtdir, qt5)
+             if os.path.isdir(framework_path):
+-                build.env.Append(LINKFLAGS="-Wl,-rpath," + framework_path)
+                 build.env.Append(LINKFLAGS="-L" + framework_path)
+ 
+         # Mixxx requires C++11 support. Windows enables C++11 features by
+
