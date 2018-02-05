@@ -1,29 +1,26 @@
+%global commit  22f78d299961a1b3910b80f161391a181b18265a
+%global date 20180204
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
 %bcond_with bpm
 %bcond_with djconsole
 %bcond_with libgpod
 
 Name:           mixxx
-Version:        2.0.0
-Release:        12%{?dist}
+Version:        2.1.0
+Release:        0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
-Source0:        http://downloads.mixxx.org/mixxx-%{version}/%{name}-%{version}-src.tar.gz
+Source0:        https://github.com/mixxxdj/mixxx/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
 Patch0:         %{name}-%{version}-build.patch
-Patch1:         %{name}-gcc6.patch
-Patch2:         %{name}-arm.patch
-Patch3:         AppData_fix.patch
-Patch4:         fix_udev_rules.patch
-Patch5:         remove_sqlite_typedef.patch
-
 
 #Build tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
-BuildRequires:  scons
+BuildRequires:  python2-scons
 
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
@@ -71,13 +68,8 @@ controllers including MIDI devices, and more.
 
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1 -b .gcc6
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%autosetup -p1 -n %{name}-%{commit}
+
 # TODO remove bundle libs
 #rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
@@ -132,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Feb 05 2018 Leigh Scott <leigh123linux@googlemail.com> - 2.1.0-0.1.20180204git22f78d2
+- Update to 2.1 snapshot
+
 * Sat Dec 16 2017 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-12
 - Rebuild for new protobuf .so version (f28)
 
