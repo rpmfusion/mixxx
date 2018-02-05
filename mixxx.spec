@@ -44,6 +44,7 @@ BuildRequires:  flac-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  libchromaprint-devel
+BuildRequires:  upower-devel
 
 #Optionals Requirements
 BuildRequires:  libshout-devel
@@ -126,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %changelog
 * Mon Feb 05 2018 Leigh Scott <leigh123linux@googlemail.com> - 2.1.0-0.1.20180204git22f78d2
 - Update to 2.1 snapshot
+- Add build requires upower-devel
 
 * Sat Dec 16 2017 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-12
 - Rebuild for new protobuf .so version (f28)
