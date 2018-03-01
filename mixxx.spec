@@ -8,7 +8,7 @@
 
 Name:           mixxx
 Version:        2.1.0
-Release:        0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 
 Group:          Applications/Multimedia
@@ -125,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 2.1.0-0.2.20180204git22f78d2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Mon Feb 05 2018 Leigh Scott <leigh123linux@googlemail.com> - 2.1.0-0.1.20180204git22f78d2
 - Update to 2.1 snapshot
 - Add build requires upower-devel
