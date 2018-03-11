@@ -41,6 +41,7 @@ BuildRequires:  protobuf-devel protobuf-compiler
 BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
 BuildRequires:  opus-devel opusfile-devel
+BuildRequires:  ffmpeg-devel
 BuildRequires:  libshout-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  rubberband-devel
@@ -86,6 +87,7 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   faad=1 \
   opus=1 \
+  ffmpeg=1 \
   shoutcast=1 \
   wv=1 \
   modplug=1 \
