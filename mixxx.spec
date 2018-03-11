@@ -18,34 +18,36 @@ Patch0:         %{name}-%{version}-build.patch
 #Build tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  protobuf-compiler
 BuildRequires:  python2-scons
 
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
 BuildRequires:  faad2-devel
+BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
+BuildRequires:  flac-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
-BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
+BuildRequires:  libchromaprint-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
+BuildRequires:  libmodplug-devel
 BuildRequires:  libmp4v2-devel
+BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
-BuildRequires:  libmodplug-devel
+BuildRequires:  opus-devel
+BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
-BuildRequires:  protobuf-devel protobuf-compiler
-BuildRequires:  taglib-devel
-BuildRequires:  flac-devel
-BuildRequires:  opus-devel opusfile-devel
-BuildRequires:  ffmpeg-devel
-BuildRequires:  libshout-devel
-BuildRequires:  sqlite-devel
+BuildRequires:  protobuf-devel
+BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  rubberband-devel
-BuildRequires:  libchromaprint-devel
+BuildRequires:  sqlite-devel
+BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
 
