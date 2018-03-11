@@ -2,8 +2,6 @@
 %global date 20180204
 %global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
-%bcond_with bpm
-%bcond_with djconsole
 %bcond_with libgpod
 
 Name:           mixxx
@@ -20,42 +18,48 @@ Patch0:         %{name}-%{version}-build.patch
 #Build tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  protobuf-compiler
 BuildRequires:  python2-scons
 
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
 BuildRequires:  faad2-devel
+BuildRequires:  ffmpeg-devel
+BuildRequires:  fftw-devel
+BuildRequires:  flac-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
-BuildRequires:  qt4-devel >= 4.3
-BuildRequires:  qt4-webkit-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
+BuildRequires:  libchromaprint-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
+BuildRequires:  libmodplug-devel
 BuildRequires:  libmp4v2-devel
+BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
+BuildRequires:  opus-devel
+BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
-BuildRequires:  protobuf-devel protobuf-compiler
-BuildRequires:  taglib-devel
-BuildRequires:  flac-devel
-BuildRequires:  sqlite-devel
+BuildRequires:  protobuf-devel
+BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  rubberband-devel
-BuildRequires:  libchromaprint-devel
+BuildRequires:  sqlite-devel
+BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
+BuildRequires:  wavpack-devel
 
-#Optionals Requirements
-BuildRequires:  libshout-devel
-BuildRequires:  vamp-plugin-sdk-devel
+#Bundled Requirements
+#BuildRequires:  libebur128-devel
+#BuildRequires:  soundtouch-devel
+#BuildRequires:  vamp-plugin-sdk-devel
+
+#Optional Requirements
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
-%{?with_bpm:BuildRequires: fftw-devel}
-%{?with_djconsole:BuildRequires: idjc}
-BuildRequires: ladspa-devel
 %{?with_libgpod:BuildRequires: libgpod-devel}
-BuildRequires: wavpack-devel
 
 # workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
 # is broken in rpmfusion currently
@@ -71,10 +75,10 @@ controllers including MIDI devices, and more.
 %prep
 %autosetup -p1 -n %{name}-%{commit}
 
-# TODO remove bundle libs
-#rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
+# TODO remove bundle libs?
+#rm -rf lib/libebur128* lib/soundtouch* lib/vamp lib/xwax lib/gmock* lib/gtest*
 
- 
+
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
@@ -83,9 +87,13 @@ export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
+  optimize=portable \
   faad=1 \
-  ladspa=0 \
-  shoutcast=1 hifieq=1 script=0 optimize=0 \
+  ffmpeg=1 \
+  modplug=1 \
+  opus=1 \
+  shoutcast=1 \
+  wv=1 \
 
 
 
