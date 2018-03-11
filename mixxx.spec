@@ -75,10 +75,10 @@ controllers including MIDI devices, and more.
 %prep
 %autosetup -p1 -n %{name}-%{commit}
 
-# TODO remove bundle libs
-#rm -rf lib/vamp lib/libebur128 lib/soundtouch-2.0.0 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
+# TODO remove bundle libs?
+#rm -rf lib/libebur128* lib/soundtouch* lib/vamp lib/xwax lib/gmock* lib/gtest*
 
- 
+
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
