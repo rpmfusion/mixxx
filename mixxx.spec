@@ -81,7 +81,7 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   faad=1 \
   shoutcast=1 \
-  optimize=0 \
+  optimize=portable \
 
 
 
