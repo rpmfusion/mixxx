@@ -44,6 +44,7 @@ BuildRequires:  sqlite-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  upower-devel
+BuildRequires:  wavpack-devel
 
 #Bundled Requirements
 #BuildRequires:  libebur128-devel
@@ -54,7 +55,6 @@ BuildRequires:  upower-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
 %{?with_libgpod:BuildRequires: libgpod-devel}
-BuildRequires: wavpack-devel
 
 # workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
 # is broken in rpmfusion currently
@@ -84,6 +84,7 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   faad=1 \
   shoutcast=1 \
+  wv=1 \
   optimize=portable \
 
 
