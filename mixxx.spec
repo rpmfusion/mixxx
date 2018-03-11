@@ -34,6 +34,7 @@ BuildRequires:  libmp4v2-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
+BuildRequires:  libmodplug-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel protobuf-compiler
@@ -85,6 +86,7 @@ scons %{?_smp_mflags} \
   faad=1 \
   shoutcast=1 \
   wv=1 \
+  modplug=1 \
   optimize=portable \
 
 
