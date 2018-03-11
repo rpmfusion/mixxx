@@ -2,7 +2,6 @@
 %global date 20180204
 %global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
-%bcond_with bpm
 %bcond_with libgpod
 
 Name:           mixxx
@@ -24,6 +23,7 @@ BuildRequires:  python2-scons
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
 BuildRequires:  faad2-devel
+BuildRequires:  fftw-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
 BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  libGL-devel
@@ -49,7 +49,6 @@ BuildRequires:  libshout-devel
 BuildRequires:  vamp-plugin-sdk-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
-%{?with_bpm:BuildRequires: fftw-devel}
 %{?with_libgpod:BuildRequires: libgpod-devel}
 BuildRequires: wavpack-devel
 
