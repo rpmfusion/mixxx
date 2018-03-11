@@ -39,14 +39,18 @@ BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel protobuf-compiler
 BuildRequires:  taglib-devel
 BuildRequires:  flac-devel
+BuildRequires:  libshout-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  upower-devel
 
-#Optionals Requirements
-BuildRequires:  libshout-devel
-BuildRequires:  vamp-plugin-sdk-devel
+#Bundled Requirements
+#BuildRequires:  libebur128-devel
+#BuildRequires:  soundtouch-devel
+#BuildRequires:  vamp-plugin-sdk-devel
+
+#Optional Requirements
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
 %{?with_libgpod:BuildRequires: libgpod-devel}
@@ -67,7 +71,7 @@ controllers including MIDI devices, and more.
 %autosetup -p1 -n %{name}-%{commit}
 
 # TODO remove bundle libs
-#rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
+#rm -rf lib/vamp lib/libebur128 lib/soundtouch-2.0.0 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
  
 
