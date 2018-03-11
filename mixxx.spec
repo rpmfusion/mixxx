@@ -87,13 +87,13 @@ export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
+  optimize=portable \
   faad=1 \
-  opus=1 \
   ffmpeg=1 \
+  modplug=1 \
+  opus=1 \
   shoutcast=1 \
   wv=1 \
-  modplug=1 \
-  optimize=portable \
 
 
 
