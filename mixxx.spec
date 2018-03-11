@@ -3,7 +3,6 @@
 %global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
 %bcond_with bpm
-%bcond_with djconsole
 %bcond_with libgpod
 
 Name:           mixxx
@@ -27,7 +26,6 @@ BuildRequires:  alsa-lib-devel >= 1.0.10
 BuildRequires:  faad2-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
 BuildRequires:  qt4-devel >= 4.3
-BuildRequires:  qt4-webkit-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libid3tag-devel
@@ -52,8 +50,6 @@ BuildRequires:  vamp-plugin-sdk-devel
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
 %{?with_bpm:BuildRequires: fftw-devel}
-%{?with_djconsole:BuildRequires: idjc}
-BuildRequires: ladspa-devel
 %{?with_libgpod:BuildRequires: libgpod-devel}
 BuildRequires: wavpack-devel
 
@@ -84,8 +80,8 @@ scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
   faad=1 \
-  ladspa=0 \
-  shoutcast=1 hifieq=1 script=0 optimize=0 \
+  shoutcast=1 \
+  optimize=0 \
 
 
 
