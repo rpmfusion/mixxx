@@ -20,7 +20,7 @@
 
 Name:           mixxx
 Version:        2.1.0
-Release:        %{pkgrel}%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}
+Release:        %{pkgrel}%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
