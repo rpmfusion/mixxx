@@ -1,80 +1,98 @@
-%global commit  22f78d299961a1b3910b80f161391a181b18265a
-%global date 20180204
-%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
+# Manually modified with every package release
+%global pkgrel 0.3
 
-%bcond_with bpm
-%bcond_with djconsole
+# Package version suffix: <undefined>, beta1, beta2, rc1, ...
+#global extraver
+
+# Only for untagged snapshot versions
+%global gitcommit f77cf966288ee481fb7f17cc56bed830b7137f54 
+# <yyyymmdd>
+%global gitcommitdate 20180404
+
+%if %{gitcommit}
+%global snapinfo %{?gitcommit:%{gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
+%global sources %{gitcommit}
+%else
+%global sources release-%{version}%{?extraver:-%{extraver}}}
+%endif
+
 %bcond_with libgpod
 
 Name:           mixxx
 Version:        2.1.0
-Release:        0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        %{pkgrel}%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}
 Summary:        Mixxx is open source software for DJ'ing
-
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
-Source0:        https://github.com/mixxxdj/mixxx/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
-Patch0:         %{name}-%{version}-build.patch
+Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
 
 #Build tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+BuildRequires:  protobuf-compiler
 BuildRequires:  python2-scons
 
 #Mandatory Requirements
 BuildRequires:  alsa-lib-devel >= 1.0.10
 BuildRequires:  faad2-devel
+BuildRequires:  ffmpeg-devel
+BuildRequires:  fftw-devel
+BuildRequires:  flac-devel
 #BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
-BuildRequires:  qt4-devel >= 4.3
-BuildRequires:  qt4-webkit-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
+BuildRequires:  libchromaprint-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
+BuildRequires:  libmodplug-devel
 BuildRequires:  libmp4v2-devel
+BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusb1-devel
 BuildRequires:  libvorbis-devel
+BuildRequires:  opus-devel
+BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
-BuildRequires:  protobuf-devel protobuf-compiler
-BuildRequires:  taglib-devel
-BuildRequires:  flac-devel
-BuildRequires:  sqlite-devel
+BuildRequires:  protobuf-devel
+BuildRequires:  qt4-devel >= 4.3
 BuildRequires:  rubberband-devel
-BuildRequires:  libchromaprint-devel
+BuildRequires:  sqlite-devel
+BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
+BuildRequires:  wavpack-devel
 
-#Optionals Requirements
-BuildRequires:  libshout-devel
-BuildRequires:  vamp-plugin-sdk-devel
+#Bundled Requirements
+#BuildRequires:  libebur128-devel
+#BuildRequires:  soundtouch-devel
+#BuildRequires:  vamp-plugin-sdk-devel
+
+#Optional Requirements
 #BuildRequires:  python-devel
 #BuildRequires:  lua-devel, tolua++-devel
-%{?with_bpm:BuildRequires: fftw-devel}
-%{?with_djconsole:BuildRequires: idjc}
-BuildRequires: ladspa-devel
 %{?with_libgpod:BuildRequires: libgpod-devel}
-BuildRequires: wavpack-devel
 
 # workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
 # is broken in rpmfusion currently
 BuildRequires: phonon-backend-gstreamer
 
+
 %description
-Mixxx is open source software for DJ'ing. You can use MP3s,
-Ogg Vorbis files, and other formats as audio input. Mixxx
-can be controlled through the GUI and with external
-controllers including MIDI devices, and more.
+Mixxx is open source software for DJ'ing. You can use
+AIFF/FLAC/M4A/MP3/OggVorbis/Opus/WAV/WavPack files, and
+other formats as audio input. Playback can be controlled
+through the GUI or with external controllers including
+MIDI and HID devices.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -p1 -n %{name}-%{sources}
 
-# TODO remove bundle libs
-#rm -rf lib/vamp-2.3 lib/xwax lib/gmock-1.7.0 lib/gtest-1.7.0
 
- 
+# TODO remove bundle libs?
+#rm -rf lib/libebur128* lib/soundtouch* lib/vamp lib/xwax lib/gmock* lib/gtest*
+
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
@@ -83,10 +101,13 @@ export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
+  optimize=portable \
   faad=1 \
-  ladspa=0 \
-  shoutcast=1 hifieq=1 script=0 optimize=0 \
-
+  ffmpeg=1 \
+  modplug=1 \
+  opus=1 \
+  shoutcast=1 \
+  wv=1 \
 
 
 %install
@@ -96,20 +117,25 @@ export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   qtdir=%{_qt4_prefix} \
-  prefix=%{_prefix} install
+  prefix=%{_prefix} \
+  install
 
-#Install udev rule
+# Install udev rule
 install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
 install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}/%{_udevrulesdir}/90-mixxx.usb.rules
 
-desktop-file-install --vendor ""  \
+desktop-file-install \
+  --vendor "" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --add-category=X-Synthesis \
   res/linux/mixxx.desktop
 
-appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/appdata/%{name}.appdata.xml
+appstream-util \
+  validate-relax \
+  --nonet \
+  $RPM_BUILD_ROOT/%{_datadir}/appdata/%{name}.appdata.xml
 
-#Remove docdir
+# Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
@@ -124,7 +150,13 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_datadir}/pixmaps/mixxx-icon.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
+
 %changelog
+* Wed Apr 04 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.3.20180404gitf77cf96
+- Update to 2.1 snapshot
+- Add support for Opus, WavPack, and Mod tracker files
+- Adjust and optimize build options
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 2.1.0-0.2.20180204git22f78d2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
