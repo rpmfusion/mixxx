@@ -103,7 +103,7 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   optimize=portable \
   faad=1 \
-  ffmpeg=1 \
+  ffmpeg=0 \
   modplug=1 \
   opus=1 \
   shoutcast=1 \
