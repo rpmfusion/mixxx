@@ -1,10 +1,10 @@
 # Optional: Package version suffix for pre-releases, e.g. "beta1", "beta2", "rc1", ...
-#global extraver rc1
+%global extraver rc1
 
-# Optional: Only for untagged snapshot versions
-%global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03 
+# Optional: Only used for untagged snapshot versions
+#global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03 
 # Format: <yyyymmdd>
-%global gitcommitdate 20180407
+#global gitcommitdate 20180407
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -19,7 +19,7 @@
 
 Name:           mixxx
 Version:        2.1.0
-Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -151,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Tue Apr 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.5.rc1
+- Update to 2.1.0-rc1 pre-release version
+
 * Tue Apr 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.4.20180407git66028dd
 - Update to (inofficial) 2.1.0-rc1 snapshot
 - Remove pkgrel macro
