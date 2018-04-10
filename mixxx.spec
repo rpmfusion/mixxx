@@ -1,26 +1,25 @@
-# Manually modified with every package release
-%global pkgrel 0.3
+# Optional: Package version suffix for pre-releases, e.g. "beta1", "beta2", "rc1", ...
+#global extraver rc1
 
-# Package version suffix: <undefined>, beta1, beta2, rc1, ...
-#global extraver
+# Optional: Only for untagged snapshot versions
+%global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03 
+# Format: <yyyymmdd>
+%global gitcommitdate 20180407
 
-# Only for untagged snapshot versions
-%global gitcommit f77cf966288ee481fb7f17cc56bed830b7137f54 
-# <yyyymmdd>
-%global gitcommitdate 20180404
-
-%if %{gitcommit}
-%global snapinfo %{?gitcommit:%{gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
-%global sources %{gitcommit}
+%if "%{?gitcommit}" == ""
+# (Pre-)Releases
+%global sources release-%{version}%{?extraver:-%{extraver}}
 %else
-%global sources release-%{version}%{?extraver:-%{extraver}}}
+# Snapshots
+%global sources %{gitcommit}
+%global snapinfo %{?gitcommit:%{?gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
 %endif
 
 %bcond_with libgpod
 
 Name:           mixxx
 Version:        2.1.0
-Release:        %{pkgrel}%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -152,6 +151,11 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Tue Apr 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.4.20180407git66028dd
+- Update to (inofficial) 2.1.0-rc1 snapshot
+- Remove pkgrel macro
+- Fix distinction between snapshots and releases
+
 * Wed Apr 04 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.3.20180404gitf77cf96
 - Update to 2.1 snapshot
 - Add support for Opus, WavPack, and Mod tracker files
