@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.1.0
-Release:        0.6%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.7%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -118,6 +118,7 @@ export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
+  qtdir=%{_qt4_prefix} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   install
 
@@ -153,6 +154,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Wed Apr 11 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.7.rc1
+- Re-add missing install option
+
 * Wed Apr 11 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.6.rc1
 - Update build requirements and options
 - Switch from debug to release build
