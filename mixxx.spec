@@ -15,30 +15,30 @@
 %global snapinfo %{?gitcommit:%{?gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
 %endif
 
-%bcond_with libgpod
-
 Name:           mixxx
 Version:        2.1.0
-Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.6%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
 
-#Build tools
+# Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
 BuildRequires:  python2-scons
 
-#Mandatory Requirements
-BuildRequires:  alsa-lib-devel >= 1.0.10
+# Build Requirements
 BuildRequires:  faad2-devel
-BuildRequires:  ffmpeg-devel
+# 2018-04-11 uklotzde: FFmpeg support has been disabled temporarily
+# due to incompatibilities causing build errors in rawhide/f29
+# See below: SCons build option ffmpeg=0/1
+#BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
-#BuildRequires:  jack-audio-connection-kit-devel >= 0.61.0 #jack seems deprecated to portaudio
+BuildRequires:  hidapi-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
@@ -48,33 +48,27 @@ BuildRequires:  libmodplug-devel
 BuildRequires:  libmp4v2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
-BuildRequires:  libusb1-devel
+BuildRequires:  libusbx-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  opus-devel
 BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel
-BuildRequires:  qt4-devel >= 4.3
+BuildRequires:  qt4-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
 
-#Bundled Requirements
+# Bundled Requirements
+# The following essential libraries for audio processing are
+# currently bundled and statically linked to avoid unexpected
+# behavior due to version differences.
 #BuildRequires:  libebur128-devel
 #BuildRequires:  soundtouch-devel
 #BuildRequires:  vamp-plugin-sdk-devel
-
-#Optional Requirements
-#BuildRequires:  python-devel
-#BuildRequires:  lua-devel, tolua++-devel
-%{?with_libgpod:BuildRequires: libgpod-devel}
-
-# workaround to use phonon-backend-gstreamer instead of phonon-backend-vlc since phonon-backend-vlc
-# is broken in rpmfusion currently
-BuildRequires: phonon-backend-gstreamer
 
 
 %description
@@ -88,9 +82,14 @@ MIDI and HID devices.
 %prep
 %autosetup -p1 -n %{name}-%{sources}
 
-
-# TODO remove bundle libs?
-#rm -rf lib/libebur128* lib/soundtouch* lib/vamp lib/xwax lib/gmock* lib/gtest*
+# TODO: Remove bundled libs before build?
+#rm -rf \
+#  lib/gmock* \
+#  lib/gtest* \
+#  lib/libebur128* \
+#  lib/soundtouch* \
+#  lib/vamp \
+#  lib/xwax \
 
 
 %build
@@ -100,9 +99,13 @@ export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt4_prefix} \
+  build=release \
   optimize=portable \
+  qdebug=1 \
+  bulk=1 \
   faad=1 \
   ffmpeg=0 \
+  hid=1 \
   modplug=1 \
   opus=1 \
   shoutcast=1 \
@@ -114,9 +117,8 @@ export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
-  install_root=$RPM_BUILD_ROOT%{_prefix} \
-  qtdir=%{_qt4_prefix} \
   prefix=%{_prefix} \
+  install_root=$RPM_BUILD_ROOT%{_prefix} \
   install
 
 # Install udev rule
@@ -151,6 +153,13 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Wed Apr 11 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.6.rc1
+- Update build requirements and options
+- Switch from debug to release build
+- Enable USB HID and bulk support
+- Remove obsolete/redundant/unused build requirements
+- Remove obsolete lower version boundaries from build requirements
+
 * Tue Apr 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-0.5.rc1
 - Update to 2.1.0-rc1 pre-release version
 
