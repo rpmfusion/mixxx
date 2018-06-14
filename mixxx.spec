@@ -16,8 +16,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.1.0
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.1.1
+Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -57,6 +57,7 @@ BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel
 BuildRequires:  qt4-devel
 BuildRequires:  rubberband-devel
+BuildRequires:  soundtouch-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
@@ -67,7 +68,6 @@ BuildRequires:  wavpack-devel
 # currently bundled and statically linked to avoid unexpected
 # behavior due to version differences.
 #BuildRequires:  libebur128-devel
-#BuildRequires:  soundtouch-devel
 #BuildRequires:  vamp-plugin-sdk-devel
 
 
@@ -154,6 +154,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Thu Jun 14 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.1-2
+- Update to upstream release 2.1.1
+- Use system library SoundTouch v2.0+ if available
+
 * Sun Apr 15 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.0-1
 - Initial release of Mixxx 2.1.0
 
