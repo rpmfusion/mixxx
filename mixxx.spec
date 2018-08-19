@@ -16,8 +16,9 @@
 %endif
 
 Name:           mixxx
-Version:        2.1.1
-Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+# NOTE (uklotzde, 2018-08-19): Special 2.1.2.0 version tag (instead of 2.1.2) due to a release accident
+Version:        2.1.2.0
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -150,6 +151,11 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Sun Aug 19 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.2-1
+- Update to upstream release 2.1.2
+- Re-enable FFmpeg
+- Remove obsolete build flag
+
 * Thu Jun 14 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.1-2
 - Update to upstream release 2.1.1
 - Use system library SoundTouch v2.0+ if available
