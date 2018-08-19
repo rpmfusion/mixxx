@@ -32,10 +32,7 @@ BuildRequires:  python2-scons
 
 # Build Requirements
 BuildRequires:  faad2-devel
-# 2018-04-11 uklotzde: FFmpeg support has been disabled temporarily
-# due to incompatibilities causing build errors in rawhide/f29
-# See below: SCons build option ffmpeg=0/1
-#BuildRequires:  ffmpeg-devel
+BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
@@ -103,7 +100,7 @@ scons %{?_smp_mflags} \
   optimize=portable \
   bulk=1 \
   faad=1 \
-  ffmpeg=0 \
+  ffmpeg=1 \
   hid=1 \
   modplug=1 \
   opus=1 \
