@@ -101,7 +101,6 @@ scons %{?_smp_mflags} \
   qtdir=%{_qt4_prefix} \
   build=release \
   optimize=portable \
-  qdebug=1 \
   bulk=1 \
   faad=1 \
   ffmpeg=0 \
