@@ -16,8 +16,7 @@
 %endif
 
 Name:           mixxx
-# NOTE (uklotzde, 2018-08-19): Special 2.1.2.0 version tag (instead of 2.1.2) due to a release accident
-Version:        2.1.2.0
+Version:        2.1.3
 Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
@@ -151,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Mon Aug 20 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.3-1
+- New upstream release 2.1.3
+
 * Sun Aug 19 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.2-1
 - Update to upstream release 2.1.2
 - Re-enable FFmpeg
