@@ -2,7 +2,7 @@
 #global extraver rc1
 
 # Optional: Only used for untagged snapshot versions
-#global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03 
+#global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03
 # Format: <yyyymmdd>
 #global gitcommitdate 20180407
 
@@ -16,7 +16,7 @@
 %endif
 
 Name:           mixxx
-Version:        2.1.3
+Version:        2.1.4
 Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
@@ -150,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Thu Sep 06 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.4-1
+- New upstream release 2.1.4
+
 * Mon Aug 20 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.3-1
 - New upstream release 2.1.3
 
@@ -264,7 +267,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 * Tue Nov 8 2011 John Brier <johnbrier@gmail.com> - 1.9.2-1
 - Update to 1.9.2
 - build with shoutcast support
-- remove -n option to setup since upstream source extracts 
+- remove -n option to setup since upstream source extracts
   into a directory of name-version format now
 - remove old experimental build options that are no longer
   relevant
