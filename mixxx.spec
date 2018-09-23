@@ -36,8 +36,6 @@ BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
-BuildRequires:  libGL-devel
-BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
@@ -46,6 +44,7 @@ BuildRequires:  libmp4v2-devel
 BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusbx-devel
+BuildRequires:  lilv-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  opus-devel
 BuildRequires:  opusfile-devel
