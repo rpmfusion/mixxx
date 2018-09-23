@@ -2,9 +2,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 637ed7635a36872393fc9cbe183a98c39ab2fc2a
+%global gitcommit 33e0cc33ee840d0b6c24ffa8f753b2b3e8ae5c34
 # Format: <yyyymmdd>
-%global gitcommitdate 20180923
+%global gitcommitdate 20180924
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -126,8 +126,8 @@ scons %{?_smp_mflags} \
   install
 
 # Install udev rule
-install -d ${RPM_BUILD_ROOT}/%{_udevrulesdir}
-install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}/%{_udevrulesdir}/90-mixxx.usb.rules
+install -d ${RPM_BUILD_ROOT}%{_udevrulesdir}
+install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}%{_udevrulesdir}/90-mixxx.usb.rules
 
 desktop-file-install \
   --vendor "" \
@@ -138,7 +138,7 @@ desktop-file-install \
 appstream-util \
   validate-relax \
   --nonet \
-  $RPM_BUILD_ROOT/%{_datadir}/appdata/%{name}.appdata.xml
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 # Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
@@ -148,18 +148,18 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %license COPYING LICENSE
 %doc Mixxx-Manual.pdf README README.md
 %{_bindir}/%{name}
-%{_datadir}/%{name}/
-%{_udevrulesdir}/90-mixxx.usb.rules
 %{_libdir}/%{name}/
+%{_datadir}/%{name}/
 %{_datadir}/applications/mixxx.desktop
-%{_datadir}/pixmaps/mixxx-icon.png
+%{_datadir}/pixmaps/mixxx_icon.svg
 %{_datadir}/appdata/%{name}.appdata.xml
+%{_udevrulesdir}/90-mixxx.usb.rules
 
 
 %changelog
-* Sun Sep 23 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.1.beta.20180923git637ed76
+* Mon Sep 24 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.1.beta.20180924git33e0cc3
 - 1st upstream beta test release for 2.2.0
-- Update dependencies from Qt 4 to Qt 5
+- Update build and dependencies from Qt 4 to Qt 5
 - Add support for QtKeychain to store broadcasting credentials
 
 * Thu Sep 06 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.4-1
