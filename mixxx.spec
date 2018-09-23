@@ -36,6 +36,8 @@ BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
+BuildRequires:  libGL-devel
+BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
