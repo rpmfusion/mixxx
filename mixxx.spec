@@ -1,10 +1,10 @@
 # Optional: Package version suffix for pre-releases, e.g. "beta1", "beta2", "rc1", ...
-#global extraver rc1
+%global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-#global gitcommit 66028ddb1a16722285fcc999c2e7170c446b7c03
+%global gitcommit 637ed7635a36872393fc9cbe183a98c39ab2fc2a
 # Format: <yyyymmdd>
-#global gitcommitdate 20180407
+%global gitcommitdate 20180923
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -16,8 +16,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.1.4
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.2.0
+Release:        0.1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -52,7 +52,8 @@ BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-devel
-BuildRequires:  qt4-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qtkeychain-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  soundtouch-devel
 BuildRequires:  sqlite-devel
@@ -95,7 +96,7 @@ export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
-  qtdir=%{_qt4_prefix} \
+  qtdir=%{_qt5_prefix} \
   build=release \
   optimize=portable \
   bulk=1 \
@@ -104,6 +105,7 @@ scons %{?_smp_mflags} \
   hid=1 \
   modplug=1 \
   opus=1 \
+  qtkeychain=1 \
   shoutcast=1 \
   wv=1 \
 
@@ -114,7 +116,7 @@ export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
 scons %{?_smp_mflags} \
   prefix=%{_prefix} \
-  qtdir=%{_qt4_prefix} \
+  qtdir=%{_qt5_prefix} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
   install
 
@@ -150,6 +152,11 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Sun Sep 23 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.1.beta.20180923git637ed76
+- 1st upstream beta test release for 2.2.0
+- Update dependencies from Qt 4 to Qt 5
+- Add support for QtKeychain to store broadcasting credentials
+
 * Thu Sep 06 2018 Uwe Klotz <uklotz@mixxx.org> - 2.1.4-1
 - New upstream release 2.1.4
 
@@ -300,4 +307,3 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 * Thu Sep 11 2008 kwizart < kwizart at gmail.com > - 1.6.0-1
 - Initial version
-
