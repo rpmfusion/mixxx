@@ -31,6 +31,7 @@ BuildRequires:  protobuf-compiler
 BuildRequires:  python2-scons
 
 # Build Requirements
+BuildRequires:  chrpath
 BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
@@ -139,6 +140,12 @@ appstream-util \
   validate-relax \
   --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+
+# Workaround: Manually strip RPATH from installed binaries
+chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/vamp/libmixxxminimal.so
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsource/libsoundsourcem4a.so
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsource/libsoundsourcewv.so
 
 # Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
