@@ -165,10 +165,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 %changelog
 * Sun Oct 28 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.3.beta.20181027git96f139d
-- 3rd upsteam beta snapshot for 2.2.0
+- 3rd upstream beta snapshot for 2.2.0
 
 * Tue Oct 09 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.2.beta.20181009gitb488246
-- 2nd upsteam beta snapshot for 2.2.0
+- 2nd upstream beta snapshot for 2.2.0
 
 * Mon Sep 24 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.1.beta.20180924git33e0cc3
 - 1st upstream beta test release for 2.2.0
