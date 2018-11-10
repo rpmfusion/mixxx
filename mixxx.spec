@@ -143,9 +143,9 @@ appstream-util \
 
 # Workaround: Manually strip RPATH from installed binaries
 chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/vamp/libmixxxminimal.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsource/libsoundsourcem4a.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsource/libsoundsourcewv.so
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/vampqt5/libmixxxminimal.so
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcem4a.so
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcewv.so
 
 # Remove docdir
 rm -rf $RPM_BUILD_ROOT%{_docdir}
@@ -166,6 +166,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %changelog
 * Sat Nov 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.4.rc.20181106gitfaf1a67
 - Upstream release candidate snapshot for 2.2.0
+- Rename plugin directories
 
 * Sun Oct 28 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.3.beta.20181027git96f139d
 - 3rd upstream beta snapshot for 2.2.0
