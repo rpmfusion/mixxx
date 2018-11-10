@@ -1,10 +1,10 @@
-# Optional: Package version suffix for pre-releases, e.g. "beta1", "beta2", "rc1", ...
-%global extraver beta
+# Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
+%global extraver rc
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 96f139d8fe70b209eddf249230e88d35d16a70e6
+%global gitcommit faf1a67bf1c39510b3dfa2840e98280cf38572eb
 # Format: <yyyymmdd>
-%global gitcommitdate 20181027
+%global gitcommitdate 20181106
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.0
-Release:        0.3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Sat Nov 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.4.rc.20181106gitfaf1a67
+- Upstream release candidate snapshot for 2.2.0
+
 * Sun Oct 28 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.3.beta.20181027git96f139d
 - 3rd upstream beta snapshot for 2.2.0
 
