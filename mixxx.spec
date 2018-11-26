@@ -2,9 +2,9 @@
 %global extraver rc
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit faf1a67bf1c39510b3dfa2840e98280cf38572eb
+%global gitcommit 9fb543c928c63c359a7608760e5124f05b4d9c20
 # Format: <yyyymmdd>
-%global gitcommitdate 20181106
+%global gitcommitdate 20181126
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.0
-Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Mon Nov 26 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.5.rc.20181126git9fb543c
+- 5th upstream release candidate snapshot for 2.2.0
+
 * Sat Nov 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.4.rc.20181106gitfaf1a67
 - Upstream release candidate snapshot for 2.2.0
 - Rename plugin directories
