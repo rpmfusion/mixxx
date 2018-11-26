@@ -166,6 +166,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %changelog
 * Mon Nov 26 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.5.rc.20181126git9fb543c
 - 5th upstream release candidate snapshot for 2.2.0
+- Rename plugin directories
 
 * Sat Nov 10 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.4.rc.20181106gitfaf1a67
 - Upstream release candidate snapshot for 2.2.0
