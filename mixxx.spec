@@ -2,9 +2,9 @@
 %global extraver rc
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 9fb543c928c63c359a7608760e5124f05b4d9c20
+%global gitcommit 5752e913130544295230be9693a3919adb08b799
 # Format: <yyyymmdd>
-%global gitcommitdate 20181126
+%global gitcommitdate 20181205
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.0
-Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.6%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -58,6 +58,7 @@ BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtsvg-devel
+BuildRequires:  qt5-qtx11extras-devel
 BuildRequires:  qt5-qtxmlpatterns-devel
 BuildRequires:  qtkeychain-devel
 BuildRequires:  rubberband-devel
@@ -164,6 +165,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Thu Dec 06 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.6.rc.20181205git5752e91
+- 6th upstream release candidate snapshot for 2.2.0
+- New dependency and workaround for Xlib deadlock
+
 * Mon Nov 26 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.5.rc.20181126git9fb543c
 - 5th upstream release candidate snapshot for 2.2.0
 - Rename plugin directories
