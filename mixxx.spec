@@ -1,10 +1,10 @@
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-%global extraver rc
+#global extraver rc
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit bd4218904e6a0be00d9c0ff614903677bdd3ee87
+#global gitcommit d9d7ea6404de71c86beacfc86f9087dc8db0fc58
 # Format: <yyyymmdd>
-%global gitcommitdate 20181212
+#global gitcommitdate 20181224
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.0
-Release:        0.7%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -165,6 +165,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Mon Dec 24 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-1
+- New upstream release 2.2.0
+
 * Wed Dec 12 2018 Uwe Klotz <uklotz@mixxx.org> - 2.2.0-0.7.rc.20181212gitbd42189
 - 7th upstream release candidate snapshot for 2.2.0
 - Remove remaining Qt4 dependencies (QtKeychain)
