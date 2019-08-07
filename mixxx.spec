@@ -101,7 +101,7 @@ MIDI and HID devices.
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-scons %{?_smp_mflags} \
+scons-2 %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
   build=release \
@@ -121,7 +121,7 @@ scons %{?_smp_mflags} \
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-scons %{?_smp_mflags} \
+scons-2 %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
   install_root=$RPM_BUILD_ROOT%{_prefix} \
