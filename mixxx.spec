@@ -74,7 +74,6 @@ BuildRequires:  wavpack-devel
 # currently bundled and statically linked to avoid unexpected
 # behavior due to version differences.
 #BuildRequires:  libebur128-devel
-#BuildRequires:  vamp-plugin-sdk-devel
 
 
 %description
