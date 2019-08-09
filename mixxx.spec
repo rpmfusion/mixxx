@@ -28,6 +28,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
+# TODO: Update to python3-scons for 2.3.0
 BuildRequires:  python2-scons
 
 # Build Requirements
@@ -101,6 +102,7 @@ MIDI and HID devices.
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
+# TODO: Switch from scons-2 to scons(-3) for 2.3.0
 scons-2 %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
@@ -121,6 +123,7 @@ scons-2 %{?_smp_mflags} \
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
+# TODO: Switch from scons-2 to scons(-3) for 2.3.0
 scons-2 %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
