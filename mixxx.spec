@@ -16,7 +16,7 @@
 %endif
 
 Name:           mixxx
-Version:        2.2.1
+Version:        2.2.2
 Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
@@ -165,6 +165,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Wed Aug 14 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-1
+- New upstream release 2.2.2
+
 * Tue Apr 23 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.1-1
 - New upstream release 2.2.1
 
