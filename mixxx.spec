@@ -17,12 +17,13 @@
 
 Name:           mixxx
 Version:        2.2.2
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
+Patch0:         launcher-platform-xcb.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -162,6 +163,10 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Thu Oct 31 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-2
+- Use XCB instead of the default Qt Wayland platform adapter
+- Use system libebur128
+
 * Wed Aug 14 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-1
 - New upstream release 2.2.2
 
