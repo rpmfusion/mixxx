@@ -38,6 +38,7 @@ BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
+BuildRequires:  libebur128-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
@@ -68,12 +69,6 @@ BuildRequires:  sqlite-devel
 BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
-
-# Bundled Requirements
-# The following essential libraries for audio processing are
-# currently bundled and statically linked to avoid unexpected
-# behavior due to version differences.
-#BuildRequires:  libebur128-devel
 
 
 %description
