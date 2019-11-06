@@ -1,53 +1,11 @@
-From c4197fa4cf7e4bfa7f24850fd619a77e9e4f2f32 Mon Sep 17 00:00:00 2001
-From: Uwe Klotz <uklotz@mixxx.org>
-Date: Thu, 31 Oct 2019 21:16:51 +0100
-Subject: [PATCH 1/2] Disable QtWayland in desktop launcher
-
-https://bugs.launchpad.net/mixxx/+bug/1850729
----
- build/debian/mixxx.desktop | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/build/debian/mixxx.desktop b/build/debian/mixxx.desktop
-index fc89fa6da1..3bad29a170 100644
---- a/build/debian/mixxx.desktop
-+++ b/build/debian/mixxx.desktop
-@@ -3,7 +3,7 @@ Version=1.0
- Name=Mixxx
- GenericName=Digital DJ interface
+--- a/res/linux/mixxx.desktop
++++ b/res/linux/mixxx.desktop
+@@ -8,7 +8,7 @@
  Comment=A digital DJ interface
--Exec=pasuspender -- mixxx
-+Exec=QT_QPA_PLATFORM=xcb pasuspender -- mixxx
+ Comment[de]=Ein digitales DJ-System
+ Comment[fr]=Une interface numérique pour DJ
+-Exec=sh -c "pasuspender -- mixxx || mixxx"
++Exec=sh -c "pasuspender -- mixxx -platform xcb || mixxx -platform xcb"
  Terminal=false
  Icon=mixxx_icon
  Type=Application
--- 
-2.23.0
-
-
-From 55d700f4894164b7b8f463eea319cdb9896d3b3d Mon Sep 17 00:00:00 2001
-From: Uwe Klotz <uklotz@mixxx.org>
-Date: Thu, 31 Oct 2019 22:55:20 +0100
-Subject: [PATCH 2/2] Use command-line argument to select the platform
- abstraction
-
----
- build/debian/mixxx.desktop | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/build/debian/mixxx.desktop b/build/debian/mixxx.desktop
-index 3bad29a170..c7c96e7720 100644
---- a/build/debian/mixxx.desktop
-+++ b/build/debian/mixxx.desktop
-@@ -3,7 +3,7 @@ Version=1.0
- Name=Mixxx
- GenericName=Digital DJ interface
- Comment=A digital DJ interface
--Exec=QT_QPA_PLATFORM=xcb pasuspender -- mixxx
-+Exec=pasuspender -- mixxx -platform xcb
- Terminal=false
- Icon=mixxx_icon
- Type=Application
--- 
-2.23.0
-
