@@ -17,13 +17,14 @@
 
 Name:           mixxx
 Version:        2.2.2
-Release:        3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
 Patch0:         launcher-platform-xcb.patch
+Patch1:         appdata.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -163,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Mon Nov 11 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-4
+- Add appdata patch
+
 * Wed Nov 06 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-3
 - Fix desktop launcher patch
 
