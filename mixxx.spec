@@ -16,21 +16,20 @@
 %endif
 
 Name:           mixxx
-Version:        2.2.2
-Release:        4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.2.3
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
-Patch0:         launcher-platform-xcb.patch
-Patch1:         appdata.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
 # TODO: Update to python3-scons for 2.3.0
+# TODO: Update to cmake for 2.4.0
 BuildRequires:  python2-scons
 
 # Build Requirements
@@ -164,6 +163,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Mon Dec 09 2019 Uwe Klotz <uwe.klotz@gmail.com> - 2.2.3-1
+- New upstream release 2.2.3
+
 * Mon Nov 11 2019 Uwe Klotz <uklotz@mixxx.org> - 2.2.2-4
 - Add appdata patch
 
