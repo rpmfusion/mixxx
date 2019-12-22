@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.3
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -163,6 +163,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 
 
 %changelog
+* Sun Dec 22 2019 Leigh Scott <leigh123linux@googlemail.com> - 2.2.3-2
+- Rebuild for new protobuf version
+
 * Mon Dec 09 2019 Uwe Klotz <uwe.klotz@gmail.com> - 2.2.3-1
 - New upstream release 2.2.3
 
