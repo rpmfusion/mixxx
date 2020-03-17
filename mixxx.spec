@@ -1,10 +1,10 @@
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-#global extraver rc
+%global extraver alpha
 
 # Optional: Only used for untagged snapshot versions
-#global gitcommit d9d7ea6404de71c86beacfc86f9087dc8db0fc58
+%global gitcommit e16b6a63b28eab4d3c3ce919ed661a91d7fc664d
 # Format: <yyyymmdd>
-#global gitcommitdate 20181224
+%global gitcommitdate 20200316
 
 %if "%{?gitcommit}" == ""
 # (Pre-)Releases
@@ -16,21 +16,23 @@
 %endif
 
 Name:           mixxx
-Version:        2.2.3
-Release:        3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.3.0
+Release:        0.1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
+Patch0:         usb_hidapi_udev_rules0.patch
+Patch1:         usb_hidapi_udev_rules1.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
-# TODO: Update to python3-scons for 2.3.0
-# TODO: Update to cmake for 2.4.0
-BuildRequires:  python2-scons
+BuildRequires:  cmake
+BuildRequires:  ccache
+BuildRequires:  gcc-c++
 
 # Build Requirements
 BuildRequires:  chrpath
@@ -80,89 +82,122 @@ through the GUI or with external controllers including
 MIDI and HID devices.
 
 
+%global debug_package %{nil}
+
+
 %prep
 %autosetup -p1 -n %{name}-%{sources}
-
-# TODO: Remove bundled libs before build?
-#rm -rf \
-#  lib/gmock* \
-#  lib/gtest* \
-#  lib/libebur128* \
-#  lib/soundtouch* \
-#  lib/vamp \
-#  lib/xwax \
+echo "#pragma once" > src/build.h
+%if 0%{?extraver:1}
+  echo "#define BUILD_BRANCH \"%{extraver}\"" >> src/build.h
+%endif
+%if 0%{?snapinfo:1}
+  echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
+%endif
 
 
 %build
-export CFLAGS=$RPM_OPT_FLAGS
-export LDFLAGS=$RPM_LD_FLAGS
-export LIBDIR=%{_libdir}
-# TODO: Switch from scons-2 to scons(-3) for 2.3.0
-scons-2 %{?_smp_mflags} \
-  prefix=%{_prefix} \
-  qtdir=%{_qt5_prefix} \
-  build=release \
-  optimize=portable \
-  bulk=1 \
-  faad=1 \
-  ffmpeg=1 \
-  hid=1 \
-  modplug=1 \
-  opus=1 \
-  qtkeychain=1 \
-  shoutcast=1 \
-  wv=1 \
+ccache -s
+mkdir -p cmake_build
+cd cmake_build
+cmake \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES=%{_includedir} \
+  -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DOPTIMIZE=portable \
+  -DINSTALL_GTEST=OFF \
+  -DWITH_STATIC_PIC=ON \
+  -DBATTERY=ON \
+  -DBROADCAST=ON \
+  -DBULK=ON \
+  -DFAAD=ON \
+  -DFFMPEG=ON \
+  -DHID=ON \
+  -DLOCALECOMPARE=ON \
+  -DLILV=ON \
+  -DMAD=ON \
+  -DMODPLUG=ON \
+  -DOPUS=ON \
+  -DQTKEYCHAIN=ON \
+  -DVINYLCONTROL=ON \
+  -DWAVPACK=ON \
+  ..
+cmake \
+  --build . \
+  --target mixxx \
+  %{?_smp_mflags}
 
 
 %install
-export CFLAGS=$RPM_OPT_FLAGS
-export LDFLAGS=$RPM_LD_FLAGS
-export LIBDIR=%{_libdir}
-# TODO: Switch from scons-2 to scons(-3) for 2.3.0
-scons-2 %{?_smp_mflags} \
-  prefix=%{_prefix} \
-  qtdir=%{_qt5_prefix} \
-  install_root=$RPM_BUILD_ROOT%{_prefix} \
-  install
 
-# Install udev rule
-install -d ${RPM_BUILD_ROOT}%{_udevrulesdir}
-install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}%{_udevrulesdir}/90-mixxx.usb.rules
+# Executable
+install -Dpsm 0755 \
+  -t %{buildroot}%{_bindir} \
+  cmake_build/%{name}
 
+# Icon
+install -Dpm 0644 \
+  -t %{buildroot}%{_datadir}/pixmaps \
+  res/images/%{name}_icon.svg \
+
+# Resources
+for subdir in controllers fonts keyboard skins translations
+do
+  pushd .
+  cd res/$subdir
+  find . \
+    -type f \
+    -exec install -Dpm 0644 "{}" "%{buildroot}%{_datadir}/%{name}/$subdir/{}" \;
+  popd
+done
+
+# Docs
+install -Dpm 0644 \
+  -t %{buildroot}%{_docdir}/%{name} \
+  README \
+  README.md \
+  Mixxx-Manual.pdf
+
+# USB HID permissions
+# Order custom rules before 70-uaccess.rules
+install -Dpm 0644 \
+  res/linux/%{name}-usb-uaccess.rules \
+  %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
+
+# Desktop launcher
 desktop-file-install \
   --vendor "" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  --dir %{buildroot}%{_datadir}/applications \
   --add-category=X-Synthesis \
-  res/linux/mixxx.desktop
+  res/linux/%{name}.desktop
 
+# AppStream metadata
 appstream-util \
   validate-relax \
   --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
-
-# Workaround: Manually strip RPATH from installed binaries
-chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/vampqt5/libmixxxminimal.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcem4a.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcewv.so
-
-# Remove docdir
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+  res/linux/%{name}.appdata.xml
+install -Dpm 0644 \
+  -t %{buildroot}%{_datadir}/appdata \
+  res/linux/%{name}.appdata.xml
 
 
 %files
 %license COPYING LICENSE
 %doc Mixxx-Manual.pdf README README.md
 %{_bindir}/%{name}
-%{_libdir}/%{name}/
 %{_datadir}/%{name}/
-%{_datadir}/applications/mixxx.desktop
-%{_datadir}/pixmaps/mixxx_icon.svg
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}_icon.svg
 %{_datadir}/appdata/%{name}.appdata.xml
-%{_udevrulesdir}/90-mixxx.usb.rules
+%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 
 %changelog
+* Tue Mar 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.1.alpha.20200316gite16b6a6
+- New upstream snapshot 2.3.0-pre-alpha
+- Replaced build system SCons with CMake
+
 * Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 

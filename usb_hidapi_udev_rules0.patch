@@ -1,0 +1,95 @@
+From 5d1a915b655cf9060238275d8078f00c910f4f5a Mon Sep 17 00:00:00 2001
+From: Uwe Klotz <uklotz@mixxx.org>
+Date: Thu, 12 Mar 2020 11:44:29 +0100
+Subject: [PATCH 1/2] Change USB HID udev rules from GROUP/MODE to TAG uaccess
+
+---
+ CMakeLists.txt                                |  2 +-
+ SConscript                                    |  4 +--
+ ...ixxx.usb.rules => mixxx-usb-uaccess.rules} | 25 ++++++++++---------
+ 3 files changed, 16 insertions(+), 15 deletions(-)
+ rename res/linux/{mixxx.usb.rules => mixxx-usb-uaccess.rules} (56%)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aa5fba2edf..e95b430532 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -879,7 +879,7 @@ install(
+
+ # udev rule file for USB HID and Bulk controllers
+ install(
+-  FILES ${CMAKE_CURRENT_SOURCE_DIR}/res/linux/mixxx.usb.rules
++  FILES ${CMAKE_CURRENT_SOURCE_DIR}/res/linux/mixxx-usb-uaccess.rules
+   DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/udev/rules.d
+ )
+
+diff --git a/SConscript b/SConscript
+index 4a8d90d1fc..0eb8785093 100644
+--- a/SConscript
++++ b/SConscript
+@@ -287,7 +287,7 @@ dotdesktop_files = Glob('#res/linux/mixxx.desktop')
+ dotappstream_files = Glob('#res/linux/mixxx.appdata.xml')
+
+ #udev rule file for USB HID and Bulk controllers
+-hidudev_files = Glob('#res/linux/mixxx.usb.rules')
++hidudev_files = Glob('#res/linux/mixxx-usb-uaccess.rules')
+
+ #Icon file for menu entry
+ icon_files = Glob('#res/images/mixxx_icon.svg')
+@@ -1009,7 +1009,7 @@ def BuildUbuntuPackage(target, source, env):
+         print("* Copying Debian build directory from build/debian to debian (cwd: %s)" % os.getcwd())
+         print()
+         os.system('cp -r build/debian .')
+-        os.system('cp res/linux/mixxx.usb.rules ./debian/mixxx.mixxx-usb.udev')
++        os.system('cp res/linux/mixxx-usb-uaccess.rules ./debian/mixxx.mixxx-usb.udev')
+
+         scons_flags = ' '.join([
+                 'optimize=portable',
+diff --git a/res/linux/mixxx.usb.rules b/res/linux/mixxx-usb-uaccess.rules
+similarity index 56%
+rename from res/linux/mixxx.usb.rules
+rename to res/linux/mixxx-usb-uaccess.rules
+index 7187e8a0b0..1e1a9a842a 100644
+--- a/res/linux/mixxx.usb.rules
++++ b/res/linux/mixxx-usb-uaccess.rules
+@@ -1,25 +1,26 @@
+ # This udev rule allows Mixxx to access HID and USB Bulk controllers when running as a normal user
+
+-# Allow write access for all users in the "users" group for USB devices from known vendors
+-# that make HID or USB bulk controllers. Note that the udev rule must match on the USB device level;
+-# matching the USB interface descriptor with bInterfaceClass does not work.
++# Note that the udev rule must match on the USB device level; matching the USB interface
++# descriptor with bInterfaceClass does not work.
++
++# Install and execute before 70-uaccess.rules, e.g. .../udev/rules.d/69-mixxx-usb-uaccess.rules
+
+ # Native Instruments
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="17cc", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="17cc", TAG+="uaccess"
+ # Hercules
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="06f8", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="06f8", TAG+="uaccess"
+ # Pioneer
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="08e4", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="08e4", TAG+="uaccess"
+ # Numark (may be needed for NS7 & V7)
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="15e4", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="15e4", TAG+="uaccess"
+ # Eks
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="1157", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="1157", TAG+="uaccess"
+ # Nintendo
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", TAG+="uaccess"
+ # Sony
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="054c", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="054c", TAG+="uaccess"
+ # Gemini
+-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="23c7", GROUP="users", MODE="0660"
++SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="23c7", TAG+="uaccess"
+
+ # Only some distribuions require the below
+-KERNEL=="hiddev*", NAME="usb/%k", GROUP="users"
++KERNEL=="hiddev*", NAME="usb/%k", GROUP="uaccess"
+--
+2.25.1
