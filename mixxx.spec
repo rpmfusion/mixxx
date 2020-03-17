@@ -41,6 +41,7 @@ BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
+BuildRequires:  lame-devel
 BuildRequires:  libebur128-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
