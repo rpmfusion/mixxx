@@ -151,15 +151,18 @@ install -Dpm 0644 \
 
 
 %check
-pushd .
-cd cmake_build
+# Tests can only be executed locally. Running them on
+# http://koji.rpmfusion.org always ends with the error
+# message "# Child aborted***Exception:"
+#pushd .
+#cd cmake_build
 # TODO: Renable ControllerEngineTest after fixing the failures
 # See also: https://github.com/mixxxdj/mixxx/projects/2#card-34576534
-ctest \
-  --exclude-regex ControllerEngineTest \
-  %{?_smp_mflags} \
-  --verbose
-popd
+#ctest \
+#  --exclude-regex ControllerEngineTest \
+#  %{?_smp_mflags} \
+#  --verbose
+#popd
 
 appstream-util \
   validate-relax \
