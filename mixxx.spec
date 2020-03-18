@@ -171,7 +171,7 @@ chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsounds
 
 %files
 %license COPYING LICENSE
-%doc Mixxx-Manual.pdf README README.md
+%doc Mixxx-Manual.pdf README
 %{_bindir}/%{name}
 %{_libdir}/%{name}/
 %{_datadir}/%{name}/
