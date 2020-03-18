@@ -1,4 +1,4 @@
-From 9f01191fa5d61e993301f9e1d56bddee20460dd9 Mon Sep 17 00:00:00 2001
+From df88442557004d2afea0e8d6263f7e91057a471d Mon Sep 17 00:00:00 2001
 From: Uwe Klotz <uklotz@mixxx.org>
 Date: Thu, 12 Mar 2020 12:00:12 +0100
 Subject: [PATCH 2/2] Extend, update, and sort list of USB vendor ids
@@ -13,7 +13,7 @@ index 1e1a9a842a..0f8a67809b 100644
 +++ b/res/linux/mixxx-usb-uaccess.rules
 @@ -1,26 +1,50 @@
  # This udev rule allows Mixxx to access HID and USB Bulk controllers when running as a normal user
-
+ 
 +# Sources:
 +# http://www.linux-usb.org/usb.ids
 +# https://www.the-sz.com/products/usbid/
@@ -21,9 +21,9 @@ index 1e1a9a842a..0f8a67809b 100644
 +
  # Note that the udev rule must match on the USB device level; matching the USB interface
  # descriptor with bInterfaceClass does not work.
-
+ 
  # Install and execute before 70-uaccess.rules, e.g. .../udev/rules.d/69-mixxx-usb-uaccess.rules
-
+ 
 -# Native Instruments
 -SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="17cc", TAG+="uaccess"
 -# Hercules
@@ -71,8 +71,9 @@ index 1e1a9a842a..0f8a67809b 100644
 +
 +# Missing:
 +# - American Musical Supply (AMS/Mixars)
-
+ 
  # Only some distribuions require the below
  KERNEL=="hiddev*", NAME="usb/%k", GROUP="uaccess"
---
+-- 
 2.25.1
+

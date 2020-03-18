@@ -2,22 +2,22 @@
 %global extraver alpha
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit e16b6a63b28eab4d3c3ce919ed661a91d7fc664d
+%global gitcommit 9c15f9eb257f4a65419d1e582f7907897bd28ed4
 # Format: <yyyymmdd>
-%global gitcommitdate 20200316
+%global gitcommitdate 20200318
 
 %if "%{?gitcommit}" == ""
-# (Pre-)Releases
-%global sources release-%{version}%{?extraver:-%{extraver}}
+  # (Pre-)Releases
+  %global sources release-%{version}%{?extraver:-%{extraver}}
 %else
-# Snapshots
-%global sources %{gitcommit}
-%global snapinfo %{?gitcommit:%{?gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
+  # Snapshots
+  %global sources %{gitcommit}
+  %global snapinfo %{?gitcommit:%{?gitcommitdate}git%{?gitcommit:%(c=%{gitcommit}; echo ${c:0:7})}}
 %endif
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -83,28 +83,21 @@ through the GUI or with external controllers including
 MIDI and HID devices.
 
 
-%global debug_package %{nil}
-
-
 %prep
 %autosetup -p1 -n %{name}-%{sources}
 echo "#pragma once" > src/build.h
-%if 0%{?extraver:1}
+%if "%{?extraver}" != ""
   echo "#define BUILD_BRANCH \"%{extraver}\"" >> src/build.h
 %endif
-%if 0%{?snapinfo:1}
+%if "%{?snapinfo}" != ""
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
 
 %build
-ccache -s
 mkdir -p cmake_build
 cd cmake_build
-cmake \
-  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-  -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES=%{_includedir} \
-  -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+%cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
   -DINSTALL_GTEST=OFF \
@@ -124,47 +117,25 @@ cmake \
   -DVINYLCONTROL=ON \
   -DWAVPACK=ON \
   ..
-cmake \
-  --build . \
-  --target mixxx \
-  %{?_smp_mflags}
+%make_build
 
 
 %install
-
-# Executable
-install -Dpsm 0755 \
-  -t %{buildroot}%{_bindir} \
-  cmake_build/%{name}
-
-# Icon
-install -Dpm 0644 \
-  -t %{buildroot}%{_datadir}/pixmaps \
-  res/images/%{name}_icon.svg \
-
-# Resources
-for subdir in controllers fonts keyboard skins translations
-do
-  pushd .
-  cd res/$subdir
-  find . \
-    -type f \
-    -exec install -Dpm 0644 "{}" "%{buildroot}%{_datadir}/%{name}/$subdir/{}" \;
-  popd
-done
-
-# Docs
-install -Dpm 0644 \
-  -t %{buildroot}%{_docdir}/%{name} \
-  README \
-  README.md \
-  Mixxx-Manual.pdf
+pushd .
+cd cmake_build
+%make_install
+popd
 
 # USB HID permissions
-# Order custom rules before 70-uaccess.rules
-install -Dpm 0644 \
-  res/linux/%{name}-usb-uaccess.rules \
+# - Relocate .rules file
+# - Order custom rules before 70-uaccess.rules
+install -d \
+  %{buildroot}%{_udevrulesdir}
+mv \
+  %{buildroot}%{_prefix}%{_sysconfdir}/udev/rules.d/%{name}-usb-uaccess.rules \
   %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
+rm -rf \
+  %{buildroot}%{_prefix}%{_sysconfdir}
 
 # Desktop launcher
 desktop-file-install \
@@ -174,18 +145,31 @@ desktop-file-install \
   res/linux/%{name}.desktop
 
 # AppStream metadata
-appstream-util \
-  validate-relax \
-  --nonet \
-  res/linux/%{name}.appdata.xml
 install -Dpm 0644 \
   -t %{buildroot}%{_datadir}/appdata \
   res/linux/%{name}.appdata.xml
 
 
+%check
+pushd .
+cd cmake_build
+# TODO: Renable ControllerEngineTest after fixing the failures
+# See also: https://github.com/mixxxdj/mixxx/projects/2#card-34576534
+ctest \
+  --exclude-regex ControllerEngineTest \
+  %{?_smp_mflags} \
+  --verbose
+popd
+
+appstream-util \
+  validate-relax \
+  --nonet \
+  %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+
+
 %files
 %license COPYING LICENSE
-%doc Mixxx-Manual.pdf README README.md
+%doc Mixxx-Manual.pdf README
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
@@ -195,6 +179,12 @@ install -Dpm 0644 \
 
 
 %changelog
+* Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200318gitdf88442
+- New upstream snapshot 2.3.0-pre-alpha
+- Build debuginfo packages
+- Use cmake macros for the build
+- Verify the build results by executing ctest
+
 * Tue Mar 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.1.alpha.20200316gite16b6a6
 - New upstream snapshot 2.3.0-pre-alpha
 - Replaced build system SCons with CMake
