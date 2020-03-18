@@ -117,7 +117,16 @@ cd cmake_build
   -DVINYLCONTROL=ON \
   -DWAVPACK=ON \
   ..
-%make_build
+
+# Exclude tests from build
+# The bundled legacy gbenchmark lib cannot be built successfully
+# for all architectures. This is the reason why we can't use the
+# make_build macro here und must instead use plain cmake with an
+# explicit build target.
+cmake \
+  --build . \
+  --target mixxx \
+  %{?_smp_mflags}
 
 
 %install
@@ -186,7 +195,6 @@ appstream-util \
 - New upstream snapshot 2.3.0-pre-alpha
 - Build debuginfo packages
 - Use cmake macros for the build
-- Verify the build results by executing ctest
 
 * Tue Mar 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.1.alpha.20200316gite16b6a6
 - New upstream snapshot 2.3.0-pre-alpha
