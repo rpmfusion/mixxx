@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.2.3
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -28,8 +28,8 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
-# TODO: Update to python3-scons for 2.3.0
-# TODO: Update to cmake for 2.4.0
+BuildRequires:  gcc-g++
+# TODO: Update to CMake/CCache for 2.3.0
 BuildRequires:  python2-scons
 
 # Build Requirements
@@ -82,23 +82,22 @@ MIDI and HID devices.
 
 %prep
 %autosetup -p1 -n %{name}-%{sources}
-
-# TODO: Remove bundled libs before build?
-#rm -rf \
-#  lib/gmock* \
-#  lib/gtest* \
-#  lib/libebur128* \
-#  lib/soundtouch* \
-#  lib/vamp \
-#  lib/xwax \
+echo "#pragma once" > src/build.h
+%if 0%{?extraver:1}
+  echo "#define BUILD_BRANCH \"%{extraver}\"" >> src/build.h
+%endif
+%if 0%{?snapinfo:1}
+  echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
+%endif
 
 
 %build
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-# TODO: Switch from scons-2 to scons(-3) for 2.3.0
-scons-2 %{?_smp_mflags} \
+# TODO: Switch from scons-2 to CMake for 2.3.0
+scons-2 \
+  %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
   build=release \
@@ -115,39 +114,59 @@ scons-2 %{?_smp_mflags} \
 
 
 %install
+# TODO: Switch from scons-2 to CMake for 2.3.0
+# All environment variables and arguments for this invocation
+# must match the SCons build invocation!!!
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-# TODO: Switch from scons-2 to scons(-3) for 2.3.0
-scons-2 %{?_smp_mflags} \
+scons-2 \
+  %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
-  install_root=$RPM_BUILD_ROOT%{_prefix} \
+  build=release \
+  optimize=portable \
+  bulk=1 \
+  faad=1 \
+  ffmpeg=1 \
+  hid=1 \
+  modplug=1 \
+  opus=1 \
+  qtkeychain=1 \
+  shoutcast=1 \
+  wv=1 \
+  install_root=%{buildroot}%{_prefix} \
   install
 
-# Install udev rule
-install -d ${RPM_BUILD_ROOT}%{_udevrulesdir}
-install -p -m 0644 res/linux/mixxx.usb.rules ${RPM_BUILD_ROOT}%{_udevrulesdir}/90-mixxx.usb.rules
+# Remove redundant/unpackaged LICENSE file
+rm %{buildroot}%{_docdir}/%{name}/LICENSE
 
+# Install udev rules
+install -Dpm 0644 \
+  res/linux/%{name}.usb.rules \
+  %{buildroot}%{_udevrulesdir}/90-%{name}.usb.rules
+
+# Desktop launcher
 desktop-file-install \
   --vendor "" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  --dir %{buildroot}%{_datadir}/applications \
   --add-category=X-Synthesis \
-  res/linux/mixxx.desktop
+  res/linux/%{name}.desktop
 
+# AppStream metadata
 appstream-util \
   validate-relax \
   --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+  res/linux/%{name}.appdata.xml
+install -Dpm 0644 \
+  -t %{buildroot}%{_datadir}/appdata \
+  res/linux/%{name}.appdata.xml
 
 # Workaround: Manually strip RPATH from installed binaries
-chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/vampqt5/libmixxxminimal.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcem4a.so
-chrpath --delete $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcewv.so
-
-# Remove docdir
-rm -rf $RPM_BUILD_ROOT%{_docdir}
+chrpath --delete %{buildroot}%{_bindir}/%{name}
+chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/vampqt5/libmixxxminimal.so
+chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcem4a.so
+chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcewv.so
 
 
 %files
@@ -156,13 +175,16 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}
 %{_bindir}/%{name}
 %{_libdir}/%{name}/
 %{_datadir}/%{name}/
-%{_datadir}/applications/mixxx.desktop
-%{_datadir}/pixmaps/mixxx_icon.svg
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}_icon.svg
 %{_datadir}/appdata/%{name}.appdata.xml
-%{_udevrulesdir}/90-mixxx.usb.rules
+%{_udevrulesdir}/90-%{name}.usb.rules
 
 
 %changelog
+* Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.3-2
+- Fix packaging errors
+
 * Mon Dec 09 2019 Uwe Klotz <uwe.klotz@gmail.com> - 2.2.3-1
 - New upstream release 2.2.3
 
