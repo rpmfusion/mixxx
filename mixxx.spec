@@ -2,9 +2,9 @@
 %global extraver alpha
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 9c15f9eb257f4a65419d1e582f7907897bd28ed4
+%global gitcommit 79809419ea8b4c1c9a846cde1aec60a1b527b0f2
 # Format: <yyyymmdd>
-%global gitcommitdate 20200318
+%global gitcommitdate 20200320
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -23,8 +23,6 @@ Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
-Patch0:         usb_hidapi_udev_rules0.patch
-Patch1:         usb_hidapi_udev_rules1.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -100,8 +98,6 @@ cd cmake_build
 %cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
-  -DINSTALL_GTEST=OFF \
-  -DWITH_STATIC_PIC=ON \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
@@ -118,15 +114,7 @@ cd cmake_build
   -DWAVPACK=ON \
   ..
 
-# Exclude tests from build
-# The bundled legacy gbenchmark lib cannot be built successfully
-# for all architectures. This is the reason why we can't use the
-# make_build macro here und must instead use plain cmake with an
-# explicit build target.
-cmake \
-  --build . \
-  --target mixxx \
-  %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -191,8 +179,9 @@ appstream-util \
 
 
 %changelog
-* Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200318gitdf88442
+* Wed Mar 20 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200320git7980941
 - New upstream snapshot 2.3.0-pre-alpha
+- Fix udev rules for USB HID devices
 - Build debuginfo packages
 - Use cmake macros for the build
 
