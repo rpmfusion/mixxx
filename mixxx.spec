@@ -179,7 +179,7 @@ appstream-util \
 
 
 %changelog
-* Wed Mar 20 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200320git7980941
+* Fri Mar 20 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200320git7980941
 - New upstream snapshot 2.3.0-pre-alpha
 - Fix udev rules for USB HID devices
 - Build debuginfo packages
