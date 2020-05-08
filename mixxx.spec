@@ -34,7 +34,8 @@ BuildRequires:  gcc-c++
 
 # Build Requirements
 BuildRequires:  chrpath
-BuildRequires:  faad2-devel
+# TODO: Re-add support for faad2 when fixed
+#BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
@@ -95,13 +96,14 @@ echo "#pragma once" > src/build.h
 %build
 mkdir -p cmake_build
 cd cmake_build
+# TODO: Re-add support for faad2 when fixed
+#  -DFAAD=ON \
 %cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
-  -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
   -DLOCALECOMPARE=ON \
