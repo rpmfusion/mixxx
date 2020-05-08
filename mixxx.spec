@@ -2,9 +2,9 @@
 %global extraver alpha
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 79809419ea8b4c1c9a846cde1aec60a1b527b0f2
+%global gitcommit 0786536f309e2542451ba3b00bf5eb675b8d6160
 # Format: <yyyymmdd>
-%global gitcommitdate 20200320
+%global gitcommitdate 20200507
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -181,6 +181,10 @@ appstream-util \
 
 
 %changelog
+* Fri May 08 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.3.alpha.20200507git0786536
+- New upstream snapshot 2.3.0-pre-alpha
+- Temporarily disabled broken faad2 support
+
 * Fri Mar 20 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200320git7980941
 - New upstream snapshot 2.3.0-pre-alpha
 - Fix udev rules for USB HID devices
