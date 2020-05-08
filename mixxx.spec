@@ -17,20 +17,20 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
-Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
-Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
+Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 
 # Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
-BuildRequires:  cmake
+BuildRequires:  cmake3
 BuildRequires:  ccache
 BuildRequires:  gcc-c++
+BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
@@ -95,10 +95,11 @@ echo "#pragma once" > src/build.h
 
 %build
 mkdir -p cmake_build
-cd cmake_build
+pushd cmake_build
 # TODO: Re-add support for faad2 when fixed
 #  -DFAAD=ON \
-%cmake \
+%cmake3 \
+  -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
   -DBATTERY=ON \
@@ -116,45 +117,31 @@ cd cmake_build
   -DWAVPACK=ON \
   ..
 
-%make_build
-
+%ninja_build
+popd
 
 %install
-pushd .
-cd cmake_build
-%make_install
-popd
+%ninja_install -C cmake_build
+
 
 # USB HID permissions
 # - Relocate .rules file
 # - Order custom rules before 70-uaccess.rules
 install -d \
-  %{buildroot}%{_udevrulesdir}
+  %{buildroot}%{_udevrulesdir}/
 mv \
   %{buildroot}%{_prefix}%{_sysconfdir}/udev/rules.d/%{name}-usb-uaccess.rules \
   %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 rm -rf \
-  %{buildroot}%{_prefix}%{_sysconfdir}
-
-# Desktop launcher
-desktop-file-install \
-  --vendor "" \
-  --dir %{buildroot}%{_datadir}/applications \
-  --add-category=X-Synthesis \
-  res/linux/%{name}.desktop
-
-# AppStream metadata
-install -Dpm 0644 \
-  -t %{buildroot}%{_datadir}/appdata \
-  res/linux/%{name}.appdata.xml
+  %{buildroot}%{_prefix}%{_sysconfdir}/ \
+  %{buildroot}%{_datadir}/doc/mixxx/
 
 
 %check
 # Tests can only be executed locally. Running them on
 # http://koji.rpmfusion.org always ends with the error
 # message "# Child aborted***Exception:"
-#pushd .
-#cd cmake_build
+#pushd cmake_build
 # TODO: Renable ControllerEngineTest after fixing the failures
 # See also: https://github.com/mixxxdj/mixxx/projects/2#card-34576534
 #ctest \
@@ -162,6 +149,13 @@ install -Dpm 0644 \
 #  %{?_smp_mflags} \
 #  --verbose
 #popd
+
+# Desktop launcher
+desktop-file-install \
+  --vendor "" \
+  --dir %{buildroot}%{_datadir}/applications \
+  --add-category=X-Synthesis \
+  res/linux/%{name}.desktop
 
 appstream-util \
   validate-relax \
@@ -181,6 +175,13 @@ appstream-util \
 
 
 %changelog
+* Fri May 08 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.4.alpha.20200507git0786536
+- Use cmake3 and switch to ninja-build
+- Fix source URL
+- Fix doc install
+- Clean up appdata install
+- Remove Group tag
+
 * Fri May 08 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.3.alpha.20200507git0786536
 - New upstream snapshot 2.3.0-pre-alpha
 - Temporarily disabled broken faad2 support
