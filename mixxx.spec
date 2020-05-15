@@ -154,7 +154,6 @@ rm -rf \
 desktop-file-install \
   --vendor "" \
   --dir %{buildroot}%{_datadir}/applications \
-  --add-category=X-Synthesis \
   res/linux/%{name}.desktop
 
 appstream-util \
