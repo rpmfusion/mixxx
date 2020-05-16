@@ -16,8 +16,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.2.3
-Release:        4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.2.4
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 Group:          Applications/Multimedia
 License:        GPLv2+
@@ -182,6 +182,9 @@ chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsounds
 
 
 %changelog
+* Sat May 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.4-1
+- New upstream release 2.2.4
+
 * Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.3-4
 - Fix packaging errors
 
