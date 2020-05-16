@@ -29,8 +29,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
 BuildRequires:  gcc-g++
-# TODO: Update to CMake/CCache for 2.3.0
-BuildRequires:  python2-scons
+BuildRequires:  python3-scons
 
 # Build Requirements
 BuildRequires:  chrpath
@@ -95,8 +94,7 @@ echo "#pragma once" > src/build.h
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-# TODO: Switch from scons-2 to CMake for 2.3.0
-scons-2 \
+scons-3 \
   %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
@@ -114,13 +112,12 @@ scons-2 \
 
 
 %install
-# TODO: Switch from scons-2 to CMake for 2.3.0
 # All environment variables and arguments for this invocation
 # must match the SCons build invocation!!!
 export CFLAGS=$RPM_OPT_FLAGS
 export LDFLAGS=$RPM_LD_FLAGS
 export LIBDIR=%{_libdir}
-scons-2 \
+scons-3 \
   %{?_smp_mflags} \
   prefix=%{_prefix} \
   qtdir=%{_qt5_prefix} \
@@ -184,6 +181,7 @@ chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsounds
 %changelog
 * Sat May 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.4-1
 - New upstream release 2.2.4
+- Switch SCons build from Python 2 to Python 3
 
 * Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.3-4
 - Fix packaging errors
