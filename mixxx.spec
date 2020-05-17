@@ -1,10 +1,10 @@
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-%global extraver alpha
+%global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 0786536f309e2542451ba3b00bf5eb675b8d6160
+%global gitcommit 293ffd712a4ef82b2e9564d797fe21ef93169056
 # Format: <yyyymmdd>
-%global gitcommitdate 20200507
+%global gitcommitdate 20200516
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -174,6 +174,9 @@ appstream-util \
 
 
 %changelog
+* Sun May 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.5.beta.20200516git293ffd7
+- New upstream snapshot 2.3.0-beta
+
 * Fri May 08 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.4.alpha.20200507git0786536
 - Use cmake3 and switch to ninja-build
 - Fix source URL
