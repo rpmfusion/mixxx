@@ -2,9 +2,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 293ffd712a4ef82b2e9564d797fe21ef93169056
+%global gitcommit 3a734c0229f52b9d63bb361fab25bd5fe2779a3b
 # Format: <yyyymmdd>
-%global gitcommitdate 20200516
+%global gitcommitdate 20200614
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.5%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.6%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -34,8 +34,7 @@ BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
-# TODO: Re-add support for faad2 when fixed
-#BuildRequires:  faad2-devel
+BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
@@ -174,6 +173,10 @@ appstream-util \
 
 
 %changelog
+* Sun Jun 14 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.6.beta.20200614git3a734c0
+- New upstream snapshot 2.3.0-beta
+- Re-enable faad2 for decoding MP4/M4A files
+
 * Sun May 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.5.beta.20200516git293ffd7
 - New upstream snapshot 2.3.0-beta
 
