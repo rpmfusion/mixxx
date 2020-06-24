@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.6%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.7%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -173,6 +173,9 @@ appstream-util \
 
 
 %changelog
+* Wed Jun 24 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.7.beta.20200614git3a734c0
+- Rebuild for new protobuf
+
 * Sun Jun 14 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.6.beta.20200614git3a734c0
 - New upstream snapshot 2.3.0-beta
 - Re-enable faad2 for decoding MP4/M4A files
