@@ -1,3 +1,5 @@
+%undefine __cmake_in_source_build
+
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
 %global extraver beta
 
@@ -93,8 +95,6 @@ echo "#pragma once" > src/build.h
 
 
 %build
-mkdir -p cmake_build
-pushd cmake_build
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -112,14 +112,12 @@ pushd cmake_build
   -DOPUS=ON \
   -DQTKEYCHAIN=ON \
   -DVINYLCONTROL=ON \
-  -DWAVPACK=ON \
-  ..
+  -DWAVPACK=ON
 
-%ninja_build
-popd
+%cmake3_build
 
 %install
-%ninja_install -C cmake_build
+%cmake3_install
 
 
 # USB HID permissions
