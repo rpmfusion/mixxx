@@ -2,9 +2,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 3a734c0229f52b9d63bb361fab25bd5fe2779a3b
+%global gitcommit 64fd2d6cd4010d42e23fe286c3f23fe5940cb603
 # Format: <yyyymmdd>
-%global gitcommitdate 20200614
+%global gitcommitdate 20200816
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -17,7 +17,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.7%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.8%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -95,8 +95,6 @@ echo "#pragma once" > src/build.h
 %build
 mkdir -p cmake_build
 pushd cmake_build
-# TODO: Re-add support for faad2 when fixed
-#  -DFAAD=ON \
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -104,6 +102,7 @@ pushd cmake_build
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
+  -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
   -DLOCALECOMPARE=ON \
@@ -173,6 +172,10 @@ appstream-util \
 
 
 %changelog
+* Sun Aug 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.8.beta.20200816git64fd2d6
+- New upstream snapshot 2.3.0-beta
+- Re-enable faad2 for decoding MP4/M4A files (actually now)
+
 * Wed Jun 24 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.7.beta.20200614git3a734c0
 - Rebuild for new protobuf
 
