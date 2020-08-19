@@ -139,17 +139,8 @@ rm -rf \
 
 
 %check
-# Tests can only be executed locally. Running them on
-# http://koji.rpmfusion.org always ends with the error
-# message "# Child aborted***Exception:"
-#pushd cmake_build
-# TODO: Renable ControllerEngineTest after fixing the failures
-# See also: https://github.com/mixxxdj/mixxx/projects/2#card-34576534
-#ctest \
-#  --exclude-regex ControllerEngineTest \
-#  %{?_smp_mflags} \
-#  --verbose
-#popd
+QT_QPA_PLATFORM=offscreen \
+%ctest3
 
 # Desktop launcher
 desktop-file-install \
