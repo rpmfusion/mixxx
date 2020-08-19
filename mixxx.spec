@@ -103,6 +103,7 @@ echo "#pragma once" > src/build.h
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
+  -DWARNINGS_FATAL=ON \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
