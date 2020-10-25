@@ -37,13 +37,12 @@ BuildRequires:  cmake3
 BuildRequires:  ccache
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build
-BuildRequires:  git
 
 # Build Requirements
+# TODO: Add fftw-devel to enable KeyFinder
 BuildRequires:  chrpath
 BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
-BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
 BuildRequires:  lame-devel
@@ -100,6 +99,9 @@ echo "#pragma once" > src/build.h
 
 
 %build
+# TODO: Add `-DKEYFINDER=ON \`
+# Cloning the KeyFinder repo from GitHub during the build
+# doesn't seem to work on http://koji.rpmfusion.org.
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -111,7 +113,6 @@ echo "#pragma once" > src/build.h
   -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
-  -DKEYFINDER=ON \
   -DLOCALECOMPARE=ON \
   -DLILV=ON \
   -DMAD=ON \
