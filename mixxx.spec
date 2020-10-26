@@ -105,11 +105,13 @@ echo "#pragma once" > src/build.h
 # doesn't seem to work on http://koji.rpmfusion.org. We need
 # to bundle it instead or add it as an additional source and
 # unpack it into the /lib folder.
+# TODO: Re-enable WARNINGS_FATAL=ON after upstream fixes are available
+# https://github.com/mixxxdj/mixxx/pull/3223
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
-  -DWARNINGS_FATAL=ON \
+  -DWARNINGS_FATAL=OFF \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
