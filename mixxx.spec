@@ -1,3 +1,4 @@
+# Build out-of-source (default since Fedora 33)
 %undefine __cmake_in_source_build
 
 %ifarch %{power64}
@@ -127,9 +128,9 @@ echo "#pragma once" > src/build.h
 
 %cmake3_build
 
+
 %install
 %cmake3_install
-
 
 # USB HID permissions
 # - Relocate .rules file
@@ -139,6 +140,8 @@ install -d \
 mv \
   %{buildroot}%{_prefix}%{_sysconfdir}/udev/rules.d/%{name}-usb-uaccess.rules \
   %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
+
+# Delete unpackaged files
 rm -rf \
   %{buildroot}%{_prefix}%{_sysconfdir}/ \
   %{buildroot}%{_datadir}/doc/mixxx/
@@ -148,8 +151,11 @@ rm -rf \
 # Tests can only be executed locally. Running them on
 # http://koji.rpmfusion.org always ends with the error
 # message "# Child aborted***Exception:"
+# Note: Add the macro prefix '%' in front of 'ctest3' manually after uncommenting.
+# Otherwise the tests would get executed by macro expansion even though hidden
+# within a comment!
 #QT_QPA_PLATFORM=offscreen \
-#%ctest3
+#ctest3
 
 # Desktop launcher
 desktop-file-install \
@@ -157,6 +163,7 @@ desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications \
   res/linux/%{name}.desktop
 
+# AppStream data
 appstream-util \
   validate-relax \
   --nonet \
