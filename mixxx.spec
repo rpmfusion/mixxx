@@ -99,9 +99,11 @@ echo "#pragma once" > src/build.h
 
 
 %build
-# TODO: Add `-DKEYFINDER=ON \`
+# TODO: Enable KeyFinder
 # Cloning the KeyFinder repo from GitHub during the build
-# doesn't seem to work on http://koji.rpmfusion.org.
+# doesn't seem to work on http://koji.rpmfusion.org. We need
+# to bundle it instead or add it as an additional source and
+# unpack it into the /lib folder.
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -113,6 +115,7 @@ echo "#pragma once" > src/build.h
   -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
+  -DKEYFINDER=OFF \
   -DLOCALECOMPARE=ON \
   -DLILV=ON \
   -DMAD=ON \
