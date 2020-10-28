@@ -9,9 +9,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit a2f1f52f3752de8fecd0b183ab64cbca7682c231
+%global gitcommit b2efa10855b79bbcf481fe3e840d2049703b09e2
 # Format: <yyyymmdd>
-%global gitcommitdate 20201026
+%global gitcommitdate 20201027
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -182,7 +182,7 @@ appstream-util \
 
 
 %changelog
-* Sun Oct 27 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.9.beta.20201025gita2f1f52
+* Sun Oct 27 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.9.beta.20201027gitb2efa10
 - New upstream snapshot 2.3.0-beta
 
 * Sun Aug 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.8.beta.20200816git64fd2d6
