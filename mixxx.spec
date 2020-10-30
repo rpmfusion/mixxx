@@ -29,6 +29,7 @@ Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
+Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -40,7 +41,6 @@ BuildRequires:  gcc-c++
 BuildRequires:  ninja-build
 
 # Build Requirements
-# TODO: Add fftw-devel to enable KeyFinder
 BuildRequires:  chrpath
 BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
@@ -51,6 +51,7 @@ BuildRequires:  libebur128-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
+BuildRequires:  fftw-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
@@ -89,7 +90,9 @@ MIDI and HID devices.
 
 
 %prep
+
 %autosetup -p1 -n %{name}-%{sources}
+
 echo "#pragma once" > src/build.h
 %if "%{?extraver}" != ""
   echo "#define BUILD_BRANCH \"%{extraver}\"" >> src/build.h
@@ -98,13 +101,12 @@ echo "#pragma once" > src/build.h
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
+# Copy the libKeyFinder source archive into the download folder
+mkdir -p %{_target_platform}/download/libKeyFinder
+cp %{SOURCE1} %{_target_platform}/download/libKeyFinder/
+
 
 %build
-# TODO: Enable KeyFinder
-# Cloning the KeyFinder repo from GitHub during the build
-# doesn't seem to work on http://koji.rpmfusion.org. We need
-# to bundle it instead or add it as an additional source and
-# unpack it into the /lib folder.
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -116,7 +118,7 @@ echo "#pragma once" > src/build.h
   -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
-  -DKEYFINDER=OFF \
+  -DKEYFINDER=ON \
   -DLOCALECOMPARE=ON \
   -DLILV=ON \
   -DMAD=ON \
