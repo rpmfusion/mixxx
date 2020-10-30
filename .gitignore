@@ -5,3 +5,4 @@
 # these large binary files are placed in `rpmbuild/SOURCES` and never
 # end up in the project directory.
 *.tar.gz
+*.zip

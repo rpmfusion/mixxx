@@ -29,7 +29,7 @@ Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
-Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip
+Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip#/libKeyFinder_v2.2.2.zip
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -102,8 +102,10 @@ echo "#pragma once" > src/build.h
 %endif
 
 # Copy the libKeyFinder source archive into the download folder
-mkdir -p %{_target_platform}/download/libKeyFinder
-cp %{SOURCE1} %{_target_platform}/download/libKeyFinder/
+# of the build directory. Rename the archive back into the
+# original name with only a version number
+mkdir -p %{__cmake_builddir}/download/libKeyFinder
+cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/v2.2.2.zip
 
 
 %build
