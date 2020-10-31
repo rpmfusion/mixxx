@@ -203,6 +203,10 @@ appstream-util \
 * Sun May 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.5.beta.20200516git293ffd7
 - New upstream snapshot 2.3.0-beta
 
+* Sat May 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.4-1
+- New upstream release 2.2.4
+- Switch SCons build from Python 2 to Python 3
+
 * Fri May 08 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.4.alpha.20200507git0786536
 - Use cmake3 and switch to ninja-build
 - Fix source URL
@@ -220,16 +224,12 @@ appstream-util \
 - Build debuginfo packages
 - Use cmake macros for the build
 
+* Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.3-4
+- Fix packaging errors
+
 * Tue Mar 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.1.alpha.20200316gite16b6a6
 - New upstream snapshot 2.3.0-pre-alpha
 - Replaced build system SCons with CMake
-
-* Sat May 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.4-1
-- New upstream release 2.2.4
-- Switch SCons build from Python 2 to Python 3
-
-* Wed Mar 18 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.3-4
-- Fix packaging errors
 
 * Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
