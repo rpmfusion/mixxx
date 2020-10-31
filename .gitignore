@@ -1,1 +1,8 @@
-/mixxx-release-2.2.4.tar.gz
+# Prevent to accidentally commit release archives with the source code
+# that are downloaded from the GitHub repo.
+#
+# Note: Using `spectool -g -R mixxx.spec` for this purpose ensures that
+# these large binary files are placed in `rpmbuild/SOURCES` and never
+# end up in the project directory.
+*.tar.gz
+*.zip

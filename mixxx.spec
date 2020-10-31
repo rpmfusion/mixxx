@@ -1,10 +1,17 @@
+# Build out-of-source (default since Fedora 33)
+%undefine __cmake_in_source_build
+
+%ifarch %{power64}
+%global _lto_cflags %{nil}
+%endif
+
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-#global extraver rc
+%global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-#global gitcommit d9d7ea6404de71c86beacfc86f9087dc8db0fc58
+%global gitcommit ab6d8ee260e4f3bb2d32591ced59a62b10f1aebc
 # Format: <yyyymmdd>
-#global gitcommitdate 20181224
+%global gitcommitdate 20201031
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -16,32 +23,35 @@
 %endif
 
 Name:           mixxx
-Version:        2.2.4
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.3.0
+Release:        0.9%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
-Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.mixxx.org
-Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}.tar.gz#/%{name}-%{sources}.tar.gz
+Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
+Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip#/libKeyFinder_v2.2.2.zip
 
 # Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 BuildRequires:  protobuf-compiler
-BuildRequires:  gcc-g++
-BuildRequires:  python3-scons
+BuildRequires:  cmake3
+BuildRequires:  ccache
+BuildRequires:  gcc-c++
+BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
 BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
-BuildRequires:  fftw-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
+BuildRequires:  lame-devel
 BuildRequires:  libebur128-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
+BuildRequires:  fftw-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
@@ -80,105 +90,140 @@ MIDI and HID devices.
 
 
 %prep
+
 %autosetup -p1 -n %{name}-%{sources}
+
 echo "#pragma once" > src/build.h
-%if 0%{?extraver:1}
+%if "%{?extraver}" != ""
   echo "#define BUILD_BRANCH \"%{extraver}\"" >> src/build.h
 %endif
-%if 0%{?snapinfo:1}
+%if "%{?snapinfo}" != ""
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
+# Copy the libKeyFinder source archive into the download folder
+# of the build directory. Rename the archive back into the
+# original name with only a version number
+mkdir -p %{__cmake_builddir}/download/libKeyFinder
+cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/v2.2.2.zip
+
 
 %build
-export CFLAGS=$RPM_OPT_FLAGS
-export LDFLAGS=$RPM_LD_FLAGS
-export LIBDIR=%{_libdir}
-scons-3 \
-  %{?_smp_mflags} \
-  prefix=%{_prefix} \
-  qtdir=%{_qt5_prefix} \
-  build=release \
-  optimize=portable \
-  bulk=1 \
-  faad=1 \
-  ffmpeg=1 \
-  hid=1 \
-  modplug=1 \
-  opus=1 \
-  qtkeychain=1 \
-  shoutcast=1 \
-  wv=1 \
+%cmake3 \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DOPTIMIZE=portable \
+  -DWARNINGS_FATAL=ON \
+  -DBATTERY=ON \
+  -DBROADCAST=ON \
+  -DBULK=ON \
+  -DFAAD=ON \
+  -DFFMPEG=ON \
+  -DHID=ON \
+  -DKEYFINDER=ON \
+  -DLOCALECOMPARE=ON \
+  -DLILV=ON \
+  -DMAD=ON \
+  -DMODPLUG=ON \
+  -DOPUS=ON \
+  -DQTKEYCHAIN=ON \
+  -DVINYLCONTROL=ON \
+  -DWAVPACK=ON
+
+%cmake3_build
 
 
 %install
-# All environment variables and arguments for this invocation
-# must match the SCons build invocation!!!
-export CFLAGS=$RPM_OPT_FLAGS
-export LDFLAGS=$RPM_LD_FLAGS
-export LIBDIR=%{_libdir}
-scons-3 \
-  %{?_smp_mflags} \
-  prefix=%{_prefix} \
-  qtdir=%{_qt5_prefix} \
-  build=release \
-  optimize=portable \
-  bulk=1 \
-  faad=1 \
-  ffmpeg=1 \
-  hid=1 \
-  modplug=1 \
-  opus=1 \
-  qtkeychain=1 \
-  shoutcast=1 \
-  wv=1 \
-  install_root=%{buildroot}%{_prefix} \
-  install
+%cmake3_install
 
-# Remove redundant/unpackaged LICENSE file
-rm %{buildroot}%{_docdir}/%{name}/LICENSE
+# USB HID permissions
+# - Relocate .rules file
+# - Order custom rules before 70-uaccess.rules
+install -d \
+  %{buildroot}%{_udevrulesdir}/
+mv \
+  %{buildroot}%{_prefix}%{_sysconfdir}/udev/rules.d/%{name}-usb-uaccess.rules \
+  %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
-# Install udev rules
-install -Dpm 0644 \
-  res/linux/%{name}.usb.rules \
-  %{buildroot}%{_udevrulesdir}/90-%{name}.usb.rules
+# Delete unpackaged files
+rm -rf \
+  %{buildroot}%{_prefix}%{_sysconfdir}/ \
+  %{buildroot}%{_datadir}/doc/mixxx/
+
+
+%check
+# Tests can only be executed locally. Running them on
+# http://koji.rpmfusion.org always ends with the error
+# message "# Child aborted***Exception:"
+# Note: Add the macro prefix '%' in front of 'ctest3' manually after uncommenting.
+# Otherwise the tests would get executed by macro expansion even though hidden
+# within a comment!
+#QT_QPA_PLATFORM=offscreen \
+#ctest3
 
 # Desktop launcher
 desktop-file-install \
   --vendor "" \
   --dir %{buildroot}%{_datadir}/applications \
-  --add-category=X-Synthesis \
   res/linux/%{name}.desktop
 
-# AppStream metadata
+# AppStream data
 appstream-util \
   validate-relax \
   --nonet \
-  res/linux/%{name}.appdata.xml
-install -Dpm 0644 \
-  -t %{buildroot}%{_datadir}/appdata \
-  res/linux/%{name}.appdata.xml
-
-# Workaround: Manually strip RPATH from installed binaries
-chrpath --delete %{buildroot}%{_bindir}/%{name}
-chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/vampqt5/libmixxxminimal.so
-chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcem4a.so
-chrpath --delete %{buildroot}%{_libdir}/%{name}/plugins/soundsourceqt5/libsoundsourcewv.so
+  %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
 %license COPYING LICENSE
 %doc Mixxx-Manual.pdf README
 %{_bindir}/%{name}
-%{_libdir}/%{name}/
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}_icon.svg
 %{_datadir}/appdata/%{name}.appdata.xml
-%{_udevrulesdir}/90-%{name}.usb.rules
+%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 
 %changelog
+* Sat Oct 31 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.9.beta.20201031gitab6d8ee
+- New upstream snapshot 2.3.0-beta
+
+* Sun Aug 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.8.beta.20200816git64fd2d6
+- New upstream snapshot 2.3.0-beta
+- Re-enable faad2 for decoding MP4/M4A files (actually now)
+
+* Wed Jun 24 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.7.beta.20200614git3a734c0
+- Rebuild for new protobuf
+
+* Sun Jun 14 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.6.beta.20200614git3a734c0
+- New upstream snapshot 2.3.0-beta
+- Re-enable faad2 for decoding MP4/M4A files
+
+* Sun May 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.5.beta.20200516git293ffd7
+- New upstream snapshot 2.3.0-beta
+
+* Fri May 08 2020 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.4.alpha.20200507git0786536
+- Use cmake3 and switch to ninja-build
+- Fix source URL
+- Fix doc install
+- Clean up appdata install
+- Remove Group tag
+
+* Fri May 08 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.3.alpha.20200507git0786536
+- New upstream snapshot 2.3.0-pre-alpha
+- Temporarily disabled broken faad2 support
+
+* Fri Mar 20 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.2.alpha.20200320git7980941
+- New upstream snapshot 2.3.0-pre-alpha
+- Fix udev rules for USB HID devices
+- Build debuginfo packages
+- Use cmake macros for the build
+
+* Tue Mar 17 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.1.alpha.20200316gite16b6a6
+- New upstream snapshot 2.3.0-pre-alpha
+- Replaced build system SCons with CMake
+
 * Sat May 16 2020 Uwe Klotz <uklotz@mixxx.org> - 2.2.4-1
 - New upstream release 2.2.4
 - Switch SCons build from Python 2 to Python 3
