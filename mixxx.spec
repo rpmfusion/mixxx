@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit ab6d8ee260e4f3bb2d32591ced59a62b10f1aebc
+%global gitcommit 8e90a47e51ce8aa725d1dd68d106f397f54c6183
 # Format: <yyyymmdd>
-%global gitcommitdate 20201031
+%global gitcommitdate 20201104
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -22,7 +22,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.9%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.10%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -184,6 +184,10 @@ appstream-util \
 
 
 %changelog
+* Wed Nov  4 14:48:50 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.10.beta.20201104git8e90a47
+- New upstream snapshot 2.3.0-beta
+- Disable LTO on all platforms after crash reports for x86_64
+
 * Sat Oct 31 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.9.beta.20201031gitab6d8ee
 - New upstream snapshot 2.3.0-beta
 
