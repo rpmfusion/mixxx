@@ -151,9 +151,14 @@ rm -rf \
 
 %check
 
-# Run unit tests
-QT_QPA_PLATFORM=offscreen \
-%ctest3
+# Tests can only be executed locally. Running them on
+# http://koji.rpmfusion.org always ends with the error
+# message "# Child aborted***Exception:"
+# Note: Add the macro prefix '%' in front of 'ctest3' manually after uncommenting.
+# Otherwise the tests would get executed by macro expansion even though hidden
+# within a comment!
+#QT_QPA_PLATFORM=offscreen \
+#ctest3
 
 # Desktop launcher
 desktop-file-install \
