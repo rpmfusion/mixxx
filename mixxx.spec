@@ -1,6 +1,8 @@
 # Build out-of-source (default since Fedora 33)
 %undefine __cmake_in_source_build
 
+# Disable LTO after crash reports:
+# https://bugzilla.rpmfusion.org/show_bug.cgi?id=5829
 %global _lto_cflags %{nil}
 
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
