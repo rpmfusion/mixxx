@@ -1,9 +1,7 @@
 # Build out-of-source (default since Fedora 33)
 %undefine __cmake_in_source_build
 
-%ifarch %{power64}
 %global _lto_cflags %{nil}
-%endif
 
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
 %global extraver beta
