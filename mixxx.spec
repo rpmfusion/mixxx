@@ -24,12 +24,13 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.11%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.12%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip#/libKeyFinder_v2.2.2.zip
+Patch0:         github_3284_unix_share_path.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -187,6 +188,9 @@ appstream-util \
 
 
 %changelog
+* Wed Nov 11 08:59:48 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.12.beta.20201110git6b0fb69
+- Fix default folder for loading resources
+
 * Tue Nov 10 11:35:54 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.11.beta.20201110git6b0fb69
 - New upstream snapshot 2.3.0-beta
 - Fix ALSA real-time scheduling
