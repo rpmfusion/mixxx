@@ -1,0 +1,38 @@
+From 6e8fb9f8283711b78b5bf6b214a342f0a8defaad Mon Sep 17 00:00:00 2001
+From: Uwe Klotz <uklotz@mixxx.org>
+Date: Tue, 10 Nov 2020 19:12:34 +0100
+Subject: [PATCH] Set UNIX_SHARE_PATH to absolute path including install prefix
+
+Partially reverts and fixes commit:
+1122ae87ef9a085ed705a6a8761c6c7ad0f5dce3
+
+https://mixxx.zulipchat.com/#narrow/stream/109171-development/topic/CMake.20installation.20directories
+---
+ CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a98c7be5b85..4481a75e371 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1038,8 +1038,10 @@ elseif(UNIX)
+     target_compile_definitions(mixxx-lib PUBLIC __APPLE__)
+   else()
+     target_compile_definitions(mixxx-lib PRIVATE __UNIX__)
++    # UNIX_SHARE_PATH must be set to the absolute path
++    # including the install prefix!
+     target_compile_definitions(
+-      mixxx-lib PUBLIC UNIX_SHARE_PATH="${MIXXX_INSTALL_DATADIR}")
++      mixxx-lib PUBLIC UNIX_SHARE_PATH="${CMAKE_INSTALL_PREFIX}/${MIXXX_INSTALL_DATADIR}")
+     if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+       target_compile_definitions(mixxx-lib PUBLIC __LINUX__)
+     elseif(CMAKE_SYSTEM_NAME MATCHES "^.*BSD$")
+@@ -1061,7 +1063,7 @@ if (APPLE)
+     set(MACOS_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}")
+     set(MACOS_BUNDLE_SHORTVERSION "${CMAKE_PROJECT_VERSION}")
+     set(MACOS_BUNDLE_MINOSVERSION "10.11.0")
+-    
++
+     set_target_properties(mixxx PROPERTIES
+         MACOSX_BUNDLE true
+         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/macos_bundle.plist.in"
