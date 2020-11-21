@@ -13,6 +13,9 @@
 # Format: <yyyymmdd>
 %global gitcommitdate 20201110
 
+# Additional sources
+%global libkeyfinder_archive v2.2.3.zip
+
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
   %global sources release-%{version}%{?extraver:-%{extraver}}
@@ -29,7 +32,8 @@ Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
-Source1:        https://github.com/ibsh/libKeyFinder/archive/v2.2.2.zip#/libKeyFinder_v2.2.2.zip
+# Temporarily rename the libKeyFinder archive for disambiguation while downloading sources
+Source1:        https://github.com/mixxxdj/libKeyFinder/archive/%{libkeyfinder_archive}#/libKeyFinder_%{libkeyfinder_archive}
 Patch0:         github_3284_unix_share_path.patch
 
 # Build Tools
@@ -102,11 +106,12 @@ echo "#pragma once" > src/build.h
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
-# Copy the libKeyFinder source archive into the download folder
-# of the build directory. Rename the archive back into the
-# original name with only a version number
+# Copy the libKeyFinder archive from the sources folder into the
+# dedicated download folder of the build directory. Thereby rename
+# the archive back into the original name as expected by the CMake
+# build.
 mkdir -p %{__cmake_builddir}/download/libKeyFinder
-cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/v2.2.2.zip
+cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/%{libkeyfinder_archive}
 
 
 %build
