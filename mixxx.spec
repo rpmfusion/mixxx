@@ -66,7 +66,7 @@ BuildRequires:  opus-devel
 BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
-BuildRequires:  protobuf-devel
+BuildRequires:  protobuf-lite-devel
 BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtscript-devel
