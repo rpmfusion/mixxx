@@ -9,9 +9,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 6b0fb694b8f215daf775c72f524b94d038fffb95
+%global gitcommit 7e18fc418ed1dea2cb3ccd42ecbc094146470cf4
 # Format: <yyyymmdd>
-%global gitcommitdate 20201110
+%global gitcommitdate 20201126
 
 # Additional sources
 %global libkeyfinder_archive v2.2.3.zip
@@ -27,14 +27,13 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.12%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.13%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 # Temporarily rename the libKeyFinder archive for disambiguation while downloading sources
 Source1:        https://github.com/mixxxdj/libKeyFinder/archive/%{libkeyfinder_archive}#/libKeyFinder_%{libkeyfinder_archive}
-Patch0:         github_3284_unix_share_path.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -192,6 +191,9 @@ appstream-util \
 
 
 %changelog
+* Thu Nov 26 08:56:41 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.13.beta.20201126git7e18fc4
+- New upstream snapshot 2.3.0-beta
+
 * Wed Nov 11 08:59:48 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.12.beta.20201110git6b0fb69
 - Fix default folder for loading resources
 
