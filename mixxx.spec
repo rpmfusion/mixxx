@@ -139,9 +139,16 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/%{libkeyfinder_archive}
 
 
 %install
+# Install build artifacts
 %cmake3_install
 
-# USB HID permissions
+# Install desktop launcher
+desktop-file-install \
+  --vendor "" \
+  --dir %{buildroot}%{_datadir}/applications \
+  res/linux/%{name}.desktop
+
+# Install custom USB HID permissions
 # - Relocate .rules file
 # - Order custom rules before 70-uaccess.rules
 install -d \
@@ -157,22 +164,11 @@ rm -rf \
 
 
 %check
-# Tests can only be executed locally. Running them on
-# http://koji.rpmfusion.org always ends with the error
-# message "# Child aborted***Exception:"
-# Note: Add the macro prefix '%' in front of 'ctest3' manually after uncommenting.
-# Otherwise the tests would get executed by macro expansion even though hidden
-# within a comment!
-#QT_QPA_PLATFORM=offscreen \
-#ctest3
 
-# Desktop launcher
-desktop-file-install \
-  --vendor "" \
-  --dir %{buildroot}%{_datadir}/applications \
-  res/linux/%{name}.desktop
+# Run tests
+%ctest3 --timeout 120
 
-# AppStream data
+# Validate AppStream data
 appstream-util \
   validate-relax \
   --nonet \
