@@ -9,9 +9,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 7e18fc418ed1dea2cb3ccd42ecbc094146470cf4
+%global gitcommit bf343d2677f19d1886682c4bd15e26f70884ce27
 # Format: <yyyymmdd>
-%global gitcommitdate 20201126
+%global gitcommitdate 20201205
 
 # Additional sources
 %global libkeyfinder_archive v2.2.3.zip
@@ -27,7 +27,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.13%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.14%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -139,6 +139,7 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/%{libkeyfinder_archive}
 
 
 %install
+
 # Install build artifacts
 %cmake3_install
 
@@ -187,6 +188,9 @@ appstream-util \
 
 
 %changelog
+* Sat Dec  5 15:01:55 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.14.beta.20201205gitbf343d2
+- New upstream snapshot 2.3.0-beta
+
 * Thu Nov 26 08:56:41 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.13.beta.20201126git7e18fc4
 - New upstream snapshot 2.3.0-beta
 
