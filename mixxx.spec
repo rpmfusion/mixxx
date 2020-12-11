@@ -9,9 +9,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit bf343d2677f19d1886682c4bd15e26f70884ce27
+%global gitcommit 18f698dffece85b0897c62f65020704ef2c2aeef
 # Format: <yyyymmdd>
-%global gitcommitdate 20201205
+%global gitcommitdate 20201211
 
 # Additional sources
 %global libkeyfinder_archive v2.2.3.zip
@@ -27,7 +27,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.14%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.15%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -190,6 +190,9 @@ appstream-util \
 
 
 %changelog
+* Fri Dec 11 23:48:31 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.15.beta.20201211git18f698d
+- New upstream snapshot 2.3.0-beta
+
 * Sat Dec  5 15:01:55 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.14.beta.20201205gitbf343d2
 - New upstream snapshot 2.3.0-beta
 
