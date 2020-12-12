@@ -169,7 +169,7 @@ rm -rf \
 # Run tests
 # The EngineBufferE2ETest test is disabled due to spurious failures
 # for x86_64 when run on AMD EPYC. Varying tests are failing sometimes.
-%ctest3 --timeout 120 --exclude-regex EngineBufferE2ETest
+%ctest3 --timeout 180 --exclude-regex EngineBufferE2ETest
 
 # Validate AppStream data
 appstream-util \
