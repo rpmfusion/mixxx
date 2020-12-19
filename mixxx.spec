@@ -84,6 +84,8 @@ BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
 
+# Runtime Requirements
+Requires: open-sans-fonts
 
 %description
 Mixxx is open source software for DJ'ing. You can use
