@@ -27,7 +27,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.15%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.16%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -192,6 +192,9 @@ appstream-util \
 
 
 %changelog
+* Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.16.beta.20201211git18f698d
+- Rebuilt for new ffmpeg snapshot
+
 * Fri Dec 11 23:48:31 CET 2020 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.15.beta.20201211git18f698d
 - New upstream snapshot 2.3.0-beta
 
