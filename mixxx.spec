@@ -46,7 +46,6 @@ BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
-BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
@@ -85,6 +84,7 @@ BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
 
 # Runtime Requirements
+Requires: faad2
 Requires: open-sans-fonts
 
 %description
