@@ -85,7 +85,6 @@ BuildRequires:  wavpack-devel
 
 # Runtime Requirements
 Requires: faad2
-Requires: fdk-aac
 Requires: open-sans-fonts
 
 %description
