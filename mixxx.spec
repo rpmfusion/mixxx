@@ -10,12 +10,12 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 18f698dffece85b0897c62f65020704ef2c2aeef
+%global gitcommit f009e06ece3ce55b570a015b17dfb0bb78048453
 # Format: <yyyymmdd>
-%global gitcommitdate 20201211
+%global gitcommitdate 20210126
 
 # Additional sources
-%global libkeyfinder_archive v2.2.3.zip
+%global libkeyfinder_archive v2.2.4.zip
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -28,13 +28,13 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.16%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.17%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
-# Temporarily rename the libKeyFinder archive for disambiguation while downloading sources
-Source1:        https://github.com/mixxxdj/libKeyFinder/archive/%{libkeyfinder_archive}#/libKeyFinder_%{libkeyfinder_archive}
+# Temporarily rename the libkeyfinder archive for disambiguation while downloading sources
+Source1:        https://github.com/mixxxdj/libkeyfinder/archive/%{libkeyfinder_archive}#/libkeyfinder_%{libkeyfinder_archive}
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -108,12 +108,12 @@ echo "#pragma once" > src/build.h
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
-# Copy the libKeyFinder archive from the sources folder into the
+# Copy the libkeyfinder archive from the sources folder into the
 # dedicated download folder of the build directory. Thereby rename
 # the archive back into the original name as expected by the CMake
 # build.
-mkdir -p %{__cmake_builddir}/download/libKeyFinder
-cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/%{libkeyfinder_archive}
+mkdir -p %{__cmake_builddir}/download/libkeyfinder
+cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
 
 
 %build
@@ -121,6 +121,7 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libKeyFinder/%{libkeyfinder_archive}
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
+  -DINSTALL_USER_UDEV_RULES=ON \
   -DWARNINGS_FATAL=ON \
   -DBATTERY=ON \
   -DBROADCAST=ON \
@@ -152,19 +153,17 @@ desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications \
   res/linux/%{name}.desktop
 
-# Install custom USB HID permissions
-# - Relocate .rules file
-# - Order custom rules before 70-uaccess.rules
-install -d \
-  %{buildroot}%{_udevrulesdir}/
-mv \
-  %{buildroot}%{_prefix}%{_sysconfdir}/udev/rules.d/%{name}-usb-uaccess.rules \
+# Install custom USB HID permissions before 70-uaccess.rules
+install -DT \
+  %{buildroot}%{_datadir}/%{name}/udev/rules.d/%{name}-usb-uaccess.rules \
   %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
-# Delete unpackaged files
+
+# Delete unpackaged/unused files and directories
 rm -rf \
   %{buildroot}%{_prefix}%{_sysconfdir}/ \
-  %{buildroot}%{_datadir}/doc/mixxx/
+  %{buildroot}%{_datadir}/doc/ \
+  %{buildroot}%{_datadir}/%{name}/udev/
 
 
 %check
@@ -178,7 +177,7 @@ rm -rf \
 appstream-util \
   validate-relax \
   --nonet \
-  %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+  %{buildroot}%{_metainfodir}/%{name}.metainfo.xml
 
 
 %files
@@ -188,11 +187,14 @@ appstream-util \
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}_icon.svg
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_metainfodir}/%{name}.metainfo.xml
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 
 %changelog
+* Tue Jan 26 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.17.beta.20210126gitf009e06
+- New upstream snapshot 2.3.0-beta
+
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.16.beta.20201211git18f698d
 - Rebuilt for new ffmpeg snapshot
 
