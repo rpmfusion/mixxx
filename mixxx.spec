@@ -47,6 +47,8 @@ BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
+# The runtime libraries of FAAD2 are needed during the build for testing
+BuildRequires:  faad2
 BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
