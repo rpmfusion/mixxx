@@ -62,7 +62,6 @@ BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
 BuildRequires:  libmp4v2-devel
-BuildRequires:  libshout-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusbx-devel
 BuildRequires:  lilv-devel
