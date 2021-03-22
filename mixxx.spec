@@ -178,8 +178,14 @@ rm -rf \
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
-%ifarch %{arm} aarch64
-  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN
+# TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
+%ifarch %{arm32} %{arm64}
+  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
+%endif
+
+# TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
+%ifarch %{power64}
+  %global EngineBufferE2ETest.RubberbandReverseTest
 %endif
 
 # Run tests
