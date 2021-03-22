@@ -173,6 +173,7 @@ rm -rf \
 # x86_64 when run on AMD EPYC have been resolved. Varying tests
 # are failing sometimes.
 %ifarch x86_64
+  %global ctest_timeout_secs 60
   %global ctest_exclude_regex EngineBufferE2ETest
 %endif
 
@@ -180,19 +181,21 @@ rm -rf \
 # the failing tests has been found and fixed.
 # TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
 %ifarch %{arm32} %{arm64}
+  %global ctest_timeout_secs 300
   %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
 %endif
 
 # TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
 %ifarch %{power64}
+  %global ctest_timeout_secs 240
   %global ctest_exclude_regex EngineBufferE2ETest.RubberbandReverseTest
 %endif
 
 # Run tests
 %if "%{?ctest_exclude_regex}" == ""
-  %ctest3 --timeout 180
+  %ctest3 --timeout %ctest_timeout_secs
 %else
-  %ctest3 --timeout 180 --exclude-regex "%ctest_exclude_regex"
+  %ctest3 --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
 %endif
 
 # Validate AppStream data
