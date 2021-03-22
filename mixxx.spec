@@ -185,7 +185,7 @@ rm -rf \
 
 # TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
 %ifarch %{power64}
-  %global EngineBufferE2ETest.RubberbandReverseTest
+  %global ctest_exclude_regex EngineBufferE2ETest.RubberbandReverseTest
 %endif
 
 # Run tests
