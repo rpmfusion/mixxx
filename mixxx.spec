@@ -88,6 +88,7 @@ BuildRequires:  wavpack-devel
 # Runtime Requirements
 Requires: faad2
 Requires: open-sans-fonts
+Requires: qt5-qttranslations
 
 %description
 Mixxx is open source software for DJ'ing. You can use
