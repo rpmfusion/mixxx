@@ -169,6 +169,12 @@ rm -rf \
 
 %check
 
+# TODO: Enable EngineBufferE2ETest.RubberbandReverseTest for
+# all architectures after issues have been resolved.
+# https://bugs.launchpad.net/mixxx/+bug/1921955
+# https://github.com/breakfastquay/rubberband/issues/37
+# PR: https://src.fedoraproject.org/rpms/rubberband/pull-request/1
+
 # TODO: Enable EngineBufferE2ETest after spurious failures for
 # x86_64 when run on AMD EPYC have been resolved. Varying tests
 # are failing sometimes.
@@ -179,13 +185,11 @@ rm -rf \
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
-# TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
 %ifarch %{arm32} %{arm64}
   %global ctest_timeout_secs 300
   %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
 %endif
 
-# TODO: Fix spurious failures of EngineBufferE2ETest.RubberbandReverseTest
 %ifarch %{power64}
   %global ctest_timeout_secs 240
   %global ctest_exclude_regex EngineBufferE2ETest.RubberbandReverseTest
