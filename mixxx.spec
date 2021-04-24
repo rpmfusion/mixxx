@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.20%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.21%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,6 +222,9 @@ appstream-util \
 
 
 %changelog
+* Sat Apr 24 2021 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.21.beta.20210322git25f342e
+- Rebuilt for removed libstdc++ symbol (#1937698)
+
 * Mon Mar 22 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.20.beta.20210322git25f342e
 - New upstream snapshot 2.3.0-beta
 - Fix column reordering
