@@ -212,7 +212,7 @@ appstream-util \
 
 %files
 %license COPYING LICENSE
-%doc Mixxx-Manual.pdf README
+%doc README
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
@@ -224,6 +224,7 @@ appstream-util \
 %changelog
 * Wed May 05 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.22.beta.20210505git30af05c
 - New upstream snapshot 2.3.0-beta
+- Unbundle offline PDF manual
 
 * Sat Apr 24 2021 Leigh Scott <leigh123linux@gmail.com> - 2.3.0-0.21.beta.20210322git25f342e
 - Rebuilt for removed libstdc++ symbol (#1937698)
