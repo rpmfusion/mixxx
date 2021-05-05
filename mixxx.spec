@@ -186,14 +186,21 @@ rm -rf \
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
-%ifarch %{arm32} %{arm64}
+%ifarch %{arm32}
   %global ctest_timeout_secs 300
-  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
+  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|ZeroLatencyRateChangeQuant|ZeroLatencyRateDiffQuant|RubberbandReverseTest
+%endif
+
+# TODO: Enable ControllerEngine NaN tests on ARM after the cause for
+# the failing tests has been found and fixed.
+%ifarch %{arm64}
+  %global ctest_timeout_secs 300
+  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|RubberbandReverseTest
 %endif
 
 %ifarch %{power64}
   %global ctest_timeout_secs 240
-  %global ctest_exclude_regex EngineBufferE2ETest.RubberbandReverseTest
+  %global ctest_exclude_regex RubberbandReverseTest
 %endif
 
 # Run tests
