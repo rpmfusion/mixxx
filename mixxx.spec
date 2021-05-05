@@ -119,15 +119,12 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
 
 
 %build
-# Turn off fatal warnings
-# ../src/sources/soundsourceffmpeg.cpp:1023:29: error: 'void av_init_packet(AVPacket*)' is deprecated [-Werror=deprecated-declarations]
-# 1023 |     av_init_packet(&avPacket);
 %cmake3 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
-  -DWARNINGS_FATAL=OFF \
+  -DWARNINGS_FATAL=ON \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
