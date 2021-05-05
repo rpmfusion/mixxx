@@ -186,7 +186,7 @@ rm -rf \
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
-%ifarch %{arm32} %{arm64}
+%ifarch armv7hl aarch64
   %global ctest_timeout_secs 300
   %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
 %endif
