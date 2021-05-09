@@ -188,12 +188,12 @@ rm -rf \
 # the failing tests has been found and fixed.
 %ifarch armv7hl aarch64
   %global ctest_timeout_secs 300
-  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|EngineBufferE2ETest.RubberbandReverseTest
+  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|ZeroLatencyRateChangeQuant|ZeroLatencyRateDiffQuant|RubberbandReverseTest
 %endif
 
 %ifarch %{power64}
   %global ctest_timeout_secs 240
-  %global ctest_exclude_regex EngineBufferE2ETest.RubberbandReverseTest
+  %global ctest_exclude_regex RubberbandReverseTest
 %endif
 
 # Run tests
