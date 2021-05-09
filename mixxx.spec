@@ -186,6 +186,7 @@ rm -rf \
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
+# TODO: Enable broken EngineSyncTest, https://bugs.launchpad.net/mixxx/+bug/1927859
 %ifarch armv7hl aarch64
   %global ctest_timeout_secs 300
   %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|ZeroLatencyRateChangeQuant|ZeroLatencyRateDiffQuant|RubberbandReverseTest
