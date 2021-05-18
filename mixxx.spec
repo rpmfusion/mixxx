@@ -121,7 +121,7 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
 %build
 %cmake3 \
   -GNinja \
-  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
   -DWARNINGS_FATAL=ON \
