@@ -10,9 +10,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit e409a0e08e6100d5347542d751d9e6201048d0f2
+%global gitcommit 1e211c571204cdea3da7543b784809b9ef3c9ba5
 # Format: <yyyymmdd>
-%global gitcommitdate 20210509
+%global gitcommitdate 20210613
 
 # Additional sources
 %global libkeyfinder_archive v2.2.4.zip
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.3.0
-Release:        0.23%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.24%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -216,12 +216,15 @@ appstream-util \
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}_icon.svg
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %{_metainfodir}/%{name}.metainfo.xml
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 
 %changelog
+* Sun Jun 13 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24.beta.20210613git1e211c5
+- New upstream snapshot 2.3.0-beta
+
 * Sun May 09 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.23.beta.20210509gite409a0e
 - New upstream snapshot 2.3.0-beta
 - Fixes an unnoticed regression: 2.3.0-0.22 used ~/local/share/Mixxx instead of ~/.mixxx
