@@ -212,14 +212,14 @@ appstream-util \
 
 %files
 %license COPYING LICENSE
-%doc README
+%doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %{_metainfodir}/%{name}.metainfo.xml
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
-
 
 %changelog
 * Sun Jun 13 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24.beta.20210613git1e211c5
