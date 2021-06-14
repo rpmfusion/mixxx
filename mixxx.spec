@@ -180,7 +180,7 @@ rm -rf \
 # x86_64 when run on AMD EPYC have been resolved. Varying tests
 # are failing sometimes.
 %ifarch x86_64
-  %global ctest_timeout_secs 60
+  %global ctest_timeout_secs 180
   %global ctest_exclude_regex EngineBufferE2ETest
 %endif
 
