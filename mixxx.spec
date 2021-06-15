@@ -10,9 +10,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 7585ce91606b618ee575a78248a9bf4a4a649046
+%global gitcommit 404fa1a5e844e09ae91358358b52f76c2a4ed40b
 # Format: <yyyymmdd>
-%global gitcommitdate 20210614
+%global gitcommitdate 20210615
 
 # Additional sources
 %global libkeyfinder_archive v2.2.4.zip
@@ -222,7 +222,7 @@ appstream-util \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Mon Jun 14 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24.beta.20210614git7585ce9
+* Tue Jun 15 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24beta.20210615git404fa1a
 - New upstream snapshot 2.3.0-beta
 
 * Sun May 09 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.23.beta.20210509gite409a0e
