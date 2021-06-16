@@ -10,7 +10,7 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 404fa1a5e844e09ae91358358b52f76c2a4ed40b
+%global gitcommit 060b86aa7bc36e99df0ede476b04eec0f19735d4
 # Format: <yyyymmdd>
 %global gitcommitdate 20210615
 
@@ -222,7 +222,7 @@ appstream-util \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Tue Jun 15 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24beta.20210615git404fa1a
+* Wed Jun 16 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.24.beta.20210615git060b86a
 - New upstream snapshot 2.3.0-beta
 
 * Sun May 09 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.0-0.23.beta.20210509gite409a0e
