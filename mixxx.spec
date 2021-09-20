@@ -194,9 +194,9 @@ rm -rf \
 %endif
 
 # Validate AppStream data
-appstream-util \
-  validate-relax \
-  --nonet \
+appstreamcli \
+  validate \
+  --no-net \
   %{buildroot}%{_metainfodir}/%{name}.metainfo.xml
 
 
