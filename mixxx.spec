@@ -1,6 +1,3 @@
-# Build out-of-source (default since Fedora 33)
-%undefine __cmake_in_source_build
-
 # Disable LTO for ppc64
 %ifarch %{power64}
 %global _lto_cflags %{nil}
