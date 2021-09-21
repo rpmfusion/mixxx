@@ -24,8 +24,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.3.0
-Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.3.1
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -150,19 +150,12 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
 desktop-file-install \
   --vendor "" \
   --dir %{buildroot}%{_datadir}/applications \
-  res/linux/%{name}.desktop
-
-# Install custom USB HID permissions before 70-uaccess.rules
-install -DT \
-  %{buildroot}%{_datadir}/%{name}/udev/rules.d/%{name}-usb-uaccess.rules \
-  %{buildroot}%{_udevrulesdir}/69-%{name}-usb-uaccess.rules
-
+  res/linux/org.mixxx.Mixxx.desktop
 
 # Delete unpackaged/unused files and directories
 rm -rf \
   %{buildroot}%{_prefix}%{_sysconfdir}/ \
-  %{buildroot}%{_datadir}/doc/ \
-  %{buildroot}%{_datadir}/%{name}/udev/
+  %{buildroot}%{_datadir}/doc/
 
 
 %check
@@ -197,7 +190,7 @@ rm -rf \
 appstreamcli \
   validate \
   --no-net \
-  %{buildroot}%{_metainfodir}/%{name}.metainfo.xml
+  %{buildroot}%{_metainfodir}/org.mixxx.Mixxx.metainfo.xml
 
 
 %files
@@ -205,13 +198,20 @@ appstreamcli \
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/org.mixxx.Mixxx.desktop
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
+%{_datadir}/icons/hicolor/512x512/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-%{_metainfodir}/%{name}.metainfo.xml
+%{_metainfodir}/org.mixxx.Mixxx.metainfo.xml
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed Sep 29 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.1-1
+- New upstream release 2.3.1
+
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
