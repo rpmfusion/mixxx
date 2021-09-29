@@ -35,7 +35,7 @@ Source1:        https://github.com/mixxxdj/libkeyfinder/archive/%{libkeyfinder_a
 
 # Build Tools
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  appstream
 BuildRequires:  protobuf-compiler
 BuildRequires:  cmake3
 BuildRequires:  ccache
