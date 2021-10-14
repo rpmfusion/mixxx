@@ -37,7 +37,7 @@ Source1:        https://github.com/mixxxdj/libkeyfinder/archive/%{libkeyfinder_a
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
 BuildRequires:  protobuf-compiler
-BuildRequires:  cmake3
+BuildRequires:  cmake
 BuildRequires:  ccache
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build
@@ -116,7 +116,7 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
 
 
 %build
-%cmake3 \
+%cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DOPTIMIZE=portable \
@@ -138,13 +138,13 @@ cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
   -DVINYLCONTROL=ON \
   -DWAVPACK=ON
 
-%cmake3_build
+%cmake_build
 
 
 %install
 
 # Install build artifacts
-%cmake3_install
+%cmake_install
 
 # Install desktop launcher
 desktop-file-install \
