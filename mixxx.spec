@@ -12,7 +12,7 @@
 #global gitcommitdate 20210615
 
 # Additional sources
-%global libkeyfinder_archive v2.2.4.zip
+%global libkeyfinder_version 2.2.6
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -24,14 +24,15 @@
 %endif
 
 Name:           mixxx
-Version:        2.3.1
+Version:        2.3.2
 Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
-# Temporarily rename the libkeyfinder archive for disambiguation while downloading sources
-Source1:        https://github.com/mixxxdj/libkeyfinder/archive/%{libkeyfinder_archive}#/libkeyfinder_%{libkeyfinder_archive}
+# Append the actual downloaded file name with a preceding slash '/'
+# as a fragment identifier to the URL to populate SOURCE1 correctly
+Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -108,12 +109,9 @@ echo "#pragma once" > src/build.h
 %endif
 
 # Copy the libkeyfinder archive from the sources folder into the
-# dedicated download folder of the build directory. Thereby rename
-# the archive back into the original name as expected by the CMake
-# build.
-mkdir -p %{__cmake_builddir}/download/libkeyfinder
-cp %{SOURCE1} %{__cmake_builddir}/download/libkeyfinder/%{libkeyfinder_archive}
-
+# dedicated downloads folder of the build directory.
+mkdir -p %{__cmake_builddir}/downloads
+cp %{SOURCE1} %{__cmake_builddir}/downloads
 
 %build
 %cmake \
@@ -209,6 +207,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Mon Jan 31 2022 Uwe Klotz <uklotz@mixxx.org> - 2.3.2-1
+- New upstream release 2.3.2
+
 * Wed Sep 29 2021 Uwe Klotz <uklotz@mixxx.org> - 2.3.1-1
 - New upstream release 2.3.1
 
