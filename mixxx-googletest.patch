@@ -1,0 +1,26 @@
+From 6c48c4a0c1ef54b4929ae1b6da53439467984834 Mon Sep 17 00:00:00 2001
+From: Uwe Klotz <uklotz@mixxx.org>
+Date: Mon, 31 Jan 2022 10:55:24 +0100
+Subject: [PATCH] googletest: Disable GTEST_CAN_STREAM_RESULTS_
+
+To fix a build error on GCC 12
+---
+ lib/googletest/googletest/include/gtest/internal/gtest-port.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/googletest/googletest/include/gtest/internal/gtest-port.h b/lib/googletest/googletest/include/gtest/internal/gtest-port.h
+index 0953a781c0..acad2f6ed5 100644
+--- a/lib/googletest/googletest/include/gtest/internal/gtest-port.h
++++ b/lib/googletest/googletest/include/gtest/internal/gtest-port.h
+@@ -628,7 +628,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
+ // Determines whether test results can be streamed to a socket.
+ #if GTEST_OS_LINUX || GTEST_OS_GNU_KFREEBSD || GTEST_OS_DRAGONFLY || \
+     GTEST_OS_FREEBSD || GTEST_OS_NETBSD || GTEST_OS_OPENBSD
+-# define GTEST_CAN_STREAM_RESULTS_ 1
++# define GTEST_CAN_STREAM_RESULTS_ 0
+ #endif
+ 
+ // Defines some utility macros.
+-- 
+2.34.1
+
