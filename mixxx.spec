@@ -25,7 +25,7 @@
 
 Name:           mixxx
 Version:        2.3.2
-Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -208,6 +208,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.3.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Tue Feb 01 2022 Uwe Klotz <uklotz@mixxx.org> - 2.3.2-2
 - Fix missing release date in AppStream metadata
 
