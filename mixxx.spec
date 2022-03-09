@@ -114,13 +114,15 @@ echo "#pragma once" > src/build.h
 mkdir -p %{__cmake_builddir}/downloads
 cp %{SOURCE1} %{__cmake_builddir}/downloads
 
+# TODO: Set -DWARNINGS_FATAL=ON
+# Disabled to fix compile errors in googletest caused by -Wrestrict (implied by -Wall)
 %build
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
-  -DWARNINGS_FATAL=ON \
+  -DWARNINGS_FATAL=OFF \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
