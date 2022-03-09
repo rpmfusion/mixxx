@@ -25,7 +25,7 @@
 
 Name:           mixxx
 Version:        2.3.4
-Release:        2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -35,13 +35,17 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Patch0:         disable_werror_in_tests.patch
 
+# TODO: Switch back from "clang" to "gcc" after issues have been fixed?
+# See also: <https://github.com/mixxxdj/mixxx/issues/11483>
+%global toolchain clang
+
 # Build Tools
 BuildRequires:  desktop-file-utils
 BuildRequires:  appstream
 BuildRequires:  protobuf-compiler
 BuildRequires:  cmake
 BuildRequires:  ccache
-BuildRequires:  gcc-c++
+BuildRequires:  clang
 BuildRequires:  ninja-build
 
 # Build Requirements
@@ -118,15 +122,15 @@ cp %{SOURCE1} %{__cmake_builddir}/downloads
 
 %build
 
-# TODO: Set -DWARNINGS_FATAL=ON
-# Disabled temporarily to fix compile errors caused by googletest macro EXPECT_CALL
-# that fails on -Werror=maybe-uninitialized with GCC 12.
 %cmake \
   -GNinja \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DCMAKE_LINKER=clang++ \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
-  -DWARNINGS_FATAL=OFF \
+  -DWARNINGS_FATAL=ON \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
@@ -165,19 +169,22 @@ rm -rf \
 
 %check
 
+# TODO: Re-enable Denormal test after Mixxx v2.3.5 has been released.
+# <https://github.com/mixxxdj/mixxx/issues/11484>
+
 # TODO: Enable EngineBufferE2ETest after spurious failures for
 # x86_64 when run on AMD EPYC have been resolved. Varying tests
 # are failing sometimes.
 %ifarch x86_64
   %global ctest_timeout_secs 180
-  %global ctest_exclude_regex EngineBufferE2ETest
+  %global ctest_exclude_regex EngineBufferE2ETest|Denormal
 %endif
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
 # the failing tests has been found and fixed.
 %ifarch %{arm32} %{arm64}
   %global ctest_timeout_secs 300
-  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN
+  %global ctest_exclude_regex setValue_IgnoresNaN|setParameter_NaN|Denormal
 %endif
 
 %ifarch %{power64}
@@ -214,6 +221,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Mon Apr 17 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.4-3
+- Switch from GCC 13 to Clang 16
+
 * Mon Mar 13 2023 Leigh Scott <leigh123linux@gmail.com> - 2.3.4-2
 - rebuilt
 
