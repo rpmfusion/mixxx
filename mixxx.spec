@@ -116,12 +116,16 @@ mkdir -p %{__cmake_builddir}/downloads
 cp %{SOURCE1} %{__cmake_builddir}/downloads
 
 %build
+
+# TODO: Set -DWARNINGS_FATAL=ON
+# Disabled temporarily to fix compile errors caused by googletest macro EXPECT_CALL
+# that fails on -Werror=maybe-uninitialized with GCC 12.
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
-  -DWARNINGS_FATAL=ON \
+  -DWARNINGS_FATAL=OFF \
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
