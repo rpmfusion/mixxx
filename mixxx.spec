@@ -34,6 +34,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE1 correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Patch0:         appstream_metainfo.patch
+Patch1:         disable_werror_in_tests.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
