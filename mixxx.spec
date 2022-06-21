@@ -24,8 +24,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.3.2
-Release:        3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.3.3
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -33,8 +33,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # Append the actual downloaded file name with a preceding slash '/'
 # as a fragment identifier to the URL to populate SOURCE1 correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
-Patch0:         appstream_metainfo.patch
-Patch1:         disable_werror_in_tests.patch
+Patch0:         disable_werror_in_tests.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -215,6 +214,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Tue Jun 21 2022 Uwe Klotz <uklotz@mixxx.org> - 2.3.3-1
+- New upstream release 2.3.3
+
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.3.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
