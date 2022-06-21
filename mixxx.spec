@@ -58,6 +58,8 @@ BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  fftw-devel
+# TODO: Add MS GSL support for the upcoming release v2.4
+#BuildRequires:  guidelines-support-library-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
