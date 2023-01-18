@@ -1,0 +1,14 @@
+diff --git a/src/sources/soundsourceffmpeg.cpp b/src/sources/soundsourceffmpeg.cpp
+index 8a8223b325..41c828adb4 100644
+--- a/src/sources/soundsourceffmpeg.cpp
++++ b/src/sources/soundsourceffmpeg.cpp
+@@ -459,7 +459,7 @@ SoundSourceProviderPriority SoundSourceProviderFFmpeg::getPriorityHint(
+     // supported and tested file extension?
+     // Currently it is only used as a fallback after all other
+     // SoundSources failed to open a file or are otherwise unavailable.
+-    return SoundSourceProviderPriority::Lowest;
++    return SoundSourceProviderPriority::Default;
+ }
+ 
+ SoundSourceFFmpeg::SoundSourceFFmpeg(const QUrl& url)
+-- 

@@ -34,6 +34,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE1 correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Patch0:         disable_werror_in_tests.patch
+Patch1:         ffmpeg_priority.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -46,8 +47,6 @@ BuildRequires:  ninja-build
 
 # Build Requirements
 BuildRequires:  chrpath
-# The runtime libraries of FAAD2 are needed during the build for testing
-BuildRequires:  faad2
 BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
@@ -59,10 +58,7 @@ BuildRequires:  libchromaprint-devel
 BuildRequires:  fftw-devel
 # TODO: Add MS GSL support for the upcoming release v2.4
 #BuildRequires:  guidelines-support-library-devel
-BuildRequires:  libid3tag-devel
-BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
-BuildRequires:  libmp4v2-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  libusbx-devel
 BuildRequires:  lilv-devel
@@ -87,7 +83,6 @@ BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
 
 # Runtime Requirements
-Requires: faad2
 Requires: open-sans-fonts
 Requires: qt5-qttranslations
 
@@ -130,13 +125,13 @@ cp %{SOURCE1} %{__cmake_builddir}/downloads
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
-  -DFAAD=ON \
+  -DFAAD=OFF \
   -DFFMPEG=ON \
   -DHID=ON \
   -DKEYFINDER=ON \
   -DLOCALECOMPARE=ON \
   -DLILV=ON \
-  -DMAD=ON \
+  -DMAD=OFF \
   -DMODPLUG=ON \
   -DOPUS=ON \
   -DQTKEYCHAIN=ON \
