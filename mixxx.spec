@@ -34,6 +34,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE1 correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Patch0:         disable_werror_in_tests.patch
+Patch1:         aarch64_asm_operand_widths.patch
 
 # TODO: Switch back from "clang" to "gcc" after issues have been fixed?
 # See also: <https://github.com/mixxxdj/mixxx/issues/11483>
