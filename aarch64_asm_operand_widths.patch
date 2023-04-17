@@ -1,51 +1,39 @@
-From 2652d52d26125b589c36e1b5251ff39bd872ce45 Mon Sep 17 00:00:00 2001
+From 38a145c6ba4022c70f36290c7f52d5cb91826a95 Mon Sep 17 00:00:00 2001
 From: Uwe Klotz <uwe.klotz@gmail.com>
 Date: Mon, 17 Apr 2023 22:41:32 +0200
 Subject: [PATCH] aarch64: Fix -Wasm-operand-widths
 
 ---
- src/soundio/sounddevicenetwork.cpp   | 4 ++--
- src/soundio/sounddeviceportaudio.cpp | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ src/soundio/sounddevicenetwork.cpp   | 2 +-
+ src/soundio/sounddeviceportaudio.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/soundio/sounddevicenetwork.cpp b/src/soundio/sounddevicenetwork.cpp
-index aff65b9dc0..06db529f5b 100644
+index aff65b9dc0..8da832d6a9 100644
 --- a/src/soundio/sounddevicenetwork.cpp
 +++ b/src/soundio/sounddevicenetwork.cpp
-@@ -462,12 +462,12 @@ void SoundDeviceNetwork::callbackProcessClkRef() {
+@@ -461,7 +461,7 @@ void SoundDeviceNetwork::callbackProcessClkRef() {
+ #if defined(__aarch64__)
          // Flush-to-zero on aarch64 is controlled by the Floating-point Control Register
          // Load the register into our variable.
-         int savedFPCR;
--        asm volatile("mrs %[savedFPCR], FPCR"
-+        asm volatile("mrs %w[savedFPCR], FPCR"
+-        int savedFPCR;
++        int64_t savedFPCR;
+         asm volatile("mrs %[savedFPCR], FPCR"
                       : [ savedFPCR ] "=r"(savedFPCR));
  
-         qDebug() << "aarch64 FPCR: setting bit 24 to 1 to enable Flush-to-zero";
-         // Bit 24 is the flush-to-zero mode control bit. Setting it to 1 flushes denormals to 0.
--        asm volatile("msr FPCR, %[src]"
-+        asm volatile("msr FPCR, %w[src]"
-                      :
-                      : [ src ] "r"(savedFPCR | (1 << 24)));
- #endif
 diff --git a/src/soundio/sounddeviceportaudio.cpp b/src/soundio/sounddeviceportaudio.cpp
-index 681d0942cc..b36578147c 100644
+index 681d0942cc..97a4429420 100644
 --- a/src/soundio/sounddeviceportaudio.cpp
 +++ b/src/soundio/sounddeviceportaudio.cpp
-@@ -936,12 +936,12 @@ int SoundDevicePortAudio::callbackProcessClkRef(
+@@ -935,7 +935,7 @@ int SoundDevicePortAudio::callbackProcessClkRef(
+ #if defined(__aarch64__)
          // Flush-to-zero on aarch64 is controlled by the Floating-point Control Register
          // Load the register into our variable.
-         int savedFPCR;
--        asm volatile("mrs %[savedFPCR], FPCR"
-+        asm volatile("mrs %w[savedFPCR], FPCR"
+-        int savedFPCR;
++        int64_t savedFPCR;
+         asm volatile("mrs %[savedFPCR], FPCR"
                       : [ savedFPCR ] "=r"(savedFPCR));
  
-         qDebug() << "aarch64 FPCR: setting bit 24 to 1 to enable Flush-to-zero";
-         // Bit 24 is the flush-to-zero mode control bit. Setting it to 1 flushes denormals to 0.
--        asm volatile("msr FPCR, %[src]"
-+        asm volatile("msr FPCR, %w[src]"
-                      :
-                      : [ src ] "r"(savedFPCR | (1 << 24)));
- #endif
 -- 
 2.40.0
 
