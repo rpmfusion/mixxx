@@ -36,6 +36,7 @@ Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{lib
 Patch0:         disable_werror_in_tests.patch
 Patch1:         aarch64_asm_operand_widths.patch
 Patch2:         fidlib-fno-finite-math.patch
+Patch3:         basetrackcache.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
