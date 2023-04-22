@@ -1,13 +1,3 @@
-From 38a145c6ba4022c70f36290c7f52d5cb91826a95 Mon Sep 17 00:00:00 2001
-From: Uwe Klotz <uwe.klotz@gmail.com>
-Date: Mon, 17 Apr 2023 22:41:32 +0200
-Subject: [PATCH] aarch64: Fix -Wasm-operand-widths
-
----
- src/soundio/sounddevicenetwork.cpp   | 2 +-
- src/soundio/sounddeviceportaudio.cpp | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
 diff --git a/src/soundio/sounddevicenetwork.cpp b/src/soundio/sounddevicenetwork.cpp
 index aff65b9dc0..8da832d6a9 100644
 --- a/src/soundio/sounddevicenetwork.cpp
@@ -20,7 +10,7 @@ index aff65b9dc0..8da832d6a9 100644
 +        int64_t savedFPCR;
          asm volatile("mrs %[savedFPCR], FPCR"
                       : [ savedFPCR ] "=r"(savedFPCR));
- 
+
 diff --git a/src/soundio/sounddeviceportaudio.cpp b/src/soundio/sounddeviceportaudio.cpp
 index 681d0942cc..97a4429420 100644
 --- a/src/soundio/sounddeviceportaudio.cpp
@@ -33,7 +23,7 @@ index 681d0942cc..97a4429420 100644
 +        int64_t savedFPCR;
          asm volatile("mrs %[savedFPCR], FPCR"
                       : [ savedFPCR ] "=r"(savedFPCR));
- 
--- 
+
+--
 2.40.0
 
