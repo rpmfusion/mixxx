@@ -24,8 +24,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.3.4
-Release:        4%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.3.5
+Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -33,10 +33,6 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # Append the actual downloaded file name with a preceding slash '/'
 # as a fragment identifier to the URL to populate SOURCE1 correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
-Patch0:         disable_werror_in_tests.patch
-Patch1:         aarch64_asm_operand_widths.patch
-Patch2:         fidlib-fno-finite-math.patch
-Patch3:         basetrackcache.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -214,6 +210,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed May 10 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.5-1
+- New upstream release 2.3.5
+
 * Sat Apr 22 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.4-4
 - Switch back to GCC 13
 
