@@ -210,13 +210,13 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Wed May 10 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.5-1
+* Wed May 10 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.5-1
 - New upstream release 2.3.5
 
-* Sat Apr 22 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.4-4
+* Sat Apr 22 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.4-4
 - Switch back to GCC 13
 
-* Mon Apr 17 2023 Uwe Klotz <uklotz@gmail.com> - 2.3.4-3
+* Mon Apr 17 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.4-3
 - Switch from GCC 13 to Clang 16
 
 * Mon Mar 13 2023 Leigh Scott <leigh123linux@gmail.com> - 2.3.4-2
