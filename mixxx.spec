@@ -4,15 +4,18 @@
 %endif
 
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-#global extraver beta
+%global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-#global gitcommit 060b86aa7bc36e99df0ede476b04eec0f19735d4
+%global gitcommit f73413685fe173a07239c66a3a8d619c954f8e74
 # Format: <yyyymmdd>
-#global gitcommitdate 20210615
+%global gitcommitdate 20230713
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
+
+# Additional sources
+%global libdjinterop_version 0.19.1
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -24,15 +27,16 @@
 %endif
 
 Name:           mixxx
-Version:        2.3.5
-Release:        1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Version:        2.4.0
+Release:        0.1%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 # Append the actual downloaded file name with a preceding slash '/'
-# as a fragment identifier to the URL to populate SOURCE1 correctly
+# as a fragment identifier to the URL to populate SOURCE<n> correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
+Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -56,8 +60,7 @@ BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  fftw-devel
-# TODO: Add MS GSL support for the upcoming release v2.4
-#BuildRequires:  guidelines-support-library-devel
+BuildRequires:  guidelines-support-library-devel
 BuildRequires:  libid3tag-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmodplug-devel
@@ -73,6 +76,7 @@ BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-lite-devel
 BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-devel
+BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
@@ -84,6 +88,7 @@ BuildRequires:  sqlite-devel
 BuildRequires:  taglib-devel
 BuildRequires:  upower-devel
 BuildRequires:  wavpack-devel
+BuildRequires:  zlib-devel
 
 # Runtime Requirements
 Requires: faad2
@@ -110,10 +115,11 @@ echo "#pragma once" > src/build.h
   echo "#define BUILD_REV \"%{snapinfo}\"" >> src/build.h
 %endif
 
-# Copy the libkeyfinder archive from the sources folder into the
+# Copy the source archives from the sources folder into the
 # dedicated downloads folder of the build directory.
 mkdir -p %{__cmake_builddir}/downloads
 cp %{SOURCE1} %{__cmake_builddir}/downloads
+cp %{SOURCE2} %{__cmake_builddir}/downloads
 
 %build
 
@@ -126,6 +132,7 @@ cp %{SOURCE1} %{__cmake_builddir}/downloads
   -DBATTERY=ON \
   -DBROADCAST=ON \
   -DBULK=ON \
+  -DENGINEPRIME=ON \
   -DFAAD=ON \
   -DFFMPEG=ON \
   -DHID=ON \
@@ -210,6 +217,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Thu Jul 13 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.1
+- New upstream snapshot 2.4.0-beta
+
 * Wed May 10 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.5-1
 - New upstream release 2.3.5
 
