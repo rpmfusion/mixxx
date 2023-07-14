@@ -146,7 +146,10 @@ cp %{SOURCE2} %{__cmake_builddir}/downloads
   -DVINYLCONTROL=ON \
   -DWAVPACK=ON
 
-%cmake_build
+# TODO: Remove `--target mixxx` after building the tests with the
+# RedHat hardened GCC is fixed.
+# <https://github.com/mixxxdj/mixxx/issues/11742>
+%cmake_build --target mixxx
 
 
 %install
@@ -188,11 +191,13 @@ rm -rf \
 %endif
 
 # Run tests
-%if "%{?ctest_exclude_regex}" == ""
-  %ctest --timeout %ctest_timeout_secs
-%else
-  %ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
-%endif
+# TODO: Renable tests after build failures with the RedHat hardened GCC are fixed.
+# <https://github.com/mixxxdj/mixxx/issues/11742>
+#if "%{?ctest_exclude_regex}" == ""
+#  #ctest --timeout %ctest_timeout_secs
+#else
+#  #ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
+#endif
 
 # Validate AppStream data
 appstreamcli \
