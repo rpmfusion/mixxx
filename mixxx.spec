@@ -186,9 +186,9 @@ rm -rf \
 
 # Run tests
 %if "%{?ctest_exclude_regex}" == ""
-  %ctest3 --timeout %ctest_timeout_secs
+  %ctest --timeout %ctest_timeout_secs
 %else
-  %ctest3 --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
+  %ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
 %endif
 
 # Validate AppStream data
