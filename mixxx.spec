@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit f73413685fe173a07239c66a3a8d619c954f8e74
+%global gitcommit 0550e07eddcb7d45256038c67fac13f40d52328d
 # Format: <yyyymmdd>
-%global gitcommitdate 20230713
+%global gitcommitdate 20230723
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -37,6 +37,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE<n> correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
+Patch0:         wno-stringop-overflow.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -217,7 +218,7 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Thu Jul 13 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.1
+* Sun Jul 23 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.1
 - New upstream snapshot 2.4.0-beta
 
 * Wed May 10 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.5-1
