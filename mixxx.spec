@@ -164,7 +164,8 @@ desktop-file-install \
 # Delete unpackaged/unused files and directories
 rm -rf \
   %{buildroot}%{_prefix}%{_sysconfdir}/ \
-  %{buildroot}%{_datadir}/doc/
+  %{buildroot}%{_datadir}/doc/ \
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}_macos.svg
 
 
 %check
