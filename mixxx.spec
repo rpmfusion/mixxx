@@ -37,7 +37,7 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE<n> correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
-Patch0:         cmake-visibility.patch
+Patch0:         cmake-exclude-subdirectory-lib-benchmark.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -47,6 +47,7 @@ BuildRequires:  cmake
 BuildRequires:  ccache
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build
+BuildRequires:  google-benchmark-devel
 
 # Build Requirements
 BuildRequires:  chrpath
