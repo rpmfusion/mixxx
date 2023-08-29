@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 1d7eadb529ce6ec574b5ad805a1282bcddbbeaa9
+%global gitcommit faae539eeb0319235664b6747bf86c54397ce838
 # Format: <yyyymmdd>
-%global gitcommitdate 20230817
+%global gitcommitdate 20230828
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.2%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.3%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -37,7 +37,6 @@ Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{
 # as a fragment identifier to the URL to populate SOURCE<n> correctly
 Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
-Patch0:         cmake-exclude-subdirectory-lib-benchmark.patch
 
 # Build Tools
 BuildRequires:  desktop-file-utils
@@ -47,6 +46,8 @@ BuildRequires:  cmake
 BuildRequires:  ccache
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build
+BuildRequires:  gtest-devel
+BuildRequires:  gmock-devel
 BuildRequires:  google-benchmark-devel
 
 # Build Requirements
@@ -220,6 +221,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Tue Aug 29 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.3
+- New upstream snapshot 2.4.0-beta
+
 * Thu Aug 17 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.2
 - New upstream snapshot 2.4.0-beta
 
