@@ -126,9 +126,11 @@ cp %{SOURCE2} %{__cmake_builddir}/downloads
 
 %build
 
+# CMAKE_DISABLE_PRECOMPILE_HEADERS: <https://github.com/mixxxdj/mixxx/issues/12073>
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON \
   -DOPTIMIZE=portable \
   -DINSTALL_USER_UDEV_RULES=ON \
   -DWARNINGS_FATAL=ON \
