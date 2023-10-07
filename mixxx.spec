@@ -15,7 +15,7 @@
 %global libkeyfinder_version 2.2.6
 
 # Additional sources
-%global libdjinterop_version 0.19.2
+%global libdjinterop_version 0.20.0
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
