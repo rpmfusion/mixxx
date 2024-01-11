@@ -78,13 +78,11 @@ BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-lite-devel
-BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-devel
 BuildRequires:  qt5-qtdeclarative-devel
 BuildRequires:  qt5-qtscript-devel
 BuildRequires:  qt5-qtsvg-devel
 BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qt5-qtxmlpatterns-devel
 BuildRequires:  qtkeychain-qt5-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  soundtouch-devel
