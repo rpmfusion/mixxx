@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 9cea449dc4d7b73c97d0213acf44ca0ede34c2b9
+%global gitcommit 55decf0131a3ddf66b7cebc831497dfcf0194b16
 # Format: <yyyymmdd>
-%global gitcommitdate 20240102
+%global gitcommitdate 20240117
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.10%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.11%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,34 +222,7 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Tue Jan 02 2024 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.10.beta.20240102git9cea449
-- New upstream snapshot 2.4.0-beta
-
-* Sat Dec 16 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.9.beta.20231215git04b7dd1
-- New upstream snapshot 2.4.0-beta
-
-* Tue Nov 21 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.8.beta.20231119git3223a75
-- Patch .desktop file
-
-* Sun Nov 19 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.7.beta.20231119git3223a75
-- New upstream snapshot 2.4.0-beta
-
-* Tue Nov 14 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.6
-- New upstream snapshot 2.4.0-beta
-
-* Thu Nov 02 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.5
-- New upstream snapshot 2.4.0-beta
-
-* Sat Oct 07 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.4
-- New upstream snapshot 2.4.0-beta
-
-* Tue Aug 29 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.3
-- New upstream snapshot 2.4.0-beta
-
-* Thu Aug 17 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.2
-- New upstream snapshot 2.4.0-beta
-
-* Sun Jul 23 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.1
+* Wed Jan 17 2024 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.11.beta.20240117git55decf0
 - New upstream snapshot 2.4.0-beta
 
 * Wed May 10 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.5-1
