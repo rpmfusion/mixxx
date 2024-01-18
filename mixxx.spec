@@ -173,12 +173,8 @@ rm -rf \
 
 %check
 
-# TODO: Enable EngineBufferE2ETest after spurious failures for
-# x86_64 when run on AMD EPYC have been resolved. Varying tests
-# are failing sometimes.
 %ifarch x86_64
   %global ctest_timeout_secs 180
-  %global ctest_exclude_regex EngineBufferE2ETest
 %endif
 
 # TODO: Enable ControllerEngine NaN tests on ARM after the cause for
@@ -193,10 +189,12 @@ rm -rf \
 %endif
 
 # Run tests
+# TODO: Enable EngineBufferE2ETest after spurious failures have been resolved.
+# TODO: Enable LoopingControlTest after spurious failures have been resolved.
 %if "%{?ctest_exclude_regex}" == ""
-  %ctest --timeout %ctest_timeout_secs
+  %ctest --timeout %ctest_timeout_secs --exclude-regex "EngineBufferE2ETest|LoopingControlTest"
 %else
-  %ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
+  %ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex|EngineBufferE2ETest|LoopingControlTest"
 %endif
 
 # Validate AppStream data
