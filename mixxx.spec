@@ -12,7 +12,7 @@
 %global gitcommitdate 20240117
 
 # Additional sources
-%global libkeyfinder_version 2.2.6
+%global libkeyfinder_version 2.2.8
 
 # Additional sources
 %global libdjinterop_version 0.20.1
@@ -35,7 +35,7 @@ URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 # Append the actual downloaded file name with a preceding slash '/'
 # as a fragment identifier to the URL to populate SOURCE<n> correctly
-Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
+Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/%{libkeyfinder_version}.tar.gz#/libkeyfinder-%{libkeyfinder_version}.tar.gz
 Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
 Patch0:         desktop-file-qpa-platform-xcb.patch
 
