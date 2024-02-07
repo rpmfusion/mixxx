@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 55decf0131a3ddf66b7cebc831497dfcf0194b16
+%global gitcommit c43b5d40a3d534fc3b8f8b50bc9c106e79ca1e15
 # Format: <yyyymmdd>
-%global gitcommitdate 20240117
+%global gitcommitdate 20240207
 
 # Additional sources
 %global libkeyfinder_version 2.2.8
@@ -222,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed Feb 07 2024 Luis Correia <buga@loide.net> - 2.4.0-0.12.beta.20240207gitc43b5d4
+- Rebuild attempt
+
 * Wed Jan 17 2024 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.11.beta.20240117git55decf0
 - New upstream snapshot 2.4.0-beta
 
