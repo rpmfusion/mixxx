@@ -12,7 +12,7 @@
 %global gitcommitdate 20240208
 
 # Additional sources
-%global libkeyfinder_version 2.2.8
+%global libkeyfinder_version 2.2.6
 
 # Additional sources
 %global libdjinterop_version 0.20.1
@@ -28,14 +28,14 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.13%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.14%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
 Source0:        https://github.com/mixxxdj/%{name}/archive/%{sources}/%{name}-%{sources}.tar.gz
 # Append the actual downloaded file name with a preceding slash '/'
 # as a fragment identifier to the URL to populate SOURCE<n> correctly
-Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/%{libkeyfinder_version}.tar.gz#/libkeyfinder-%{libkeyfinder_version}.tar.gz
+Source1:        https://github.com/mixxxdj/libkeyfinder/archive/refs/tags/v%{libkeyfinder_version}.zip#/libkeyfinder-%{libkeyfinder_version}.zip
 Source2:        https://github.com/xsco/libdjinterop/archive/refs/tags/%{libdjinterop_version}.tar.gz#/libdjinterop-%{libdjinterop_version}.tar.gz
 Patch0:         desktop-file-qpa-platform-xcb.patch
 
@@ -222,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.14.beta.20240208git40be3fe
+- New upstream snapshot 2.4.0-0.14.beta.20240208git40be3fe
+
 * Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.13.beta.20240208git40be3fe
 - New upstream snapshot 2.4.0-0.13.beta.20240208git40be3fe
 
