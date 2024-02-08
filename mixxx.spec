@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit c43b5d40a3d534fc3b8f8b50bc9c106e79ca1e15
+%global gitcommit 40be3fe23524982a47931c6e6d7bfc71b314371d
 # Format: <yyyymmdd>
-%global gitcommitdate 20240207
+%global gitcommitdate 20240208
 
 # Additional sources
 %global libkeyfinder_version 2.2.8
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.12%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.14%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,8 +222,14 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Wed Feb 07 2024 Luis Correia <buga@loide.net> - 2.4.0-0.12.beta.20240207gitc43b5d4
-- Rebuild attempt
+* Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.14.beta.20240208git40be3fe
+- New upstream snapshot 2.4.0-0.14.beta.20240208git40be3fe
+
+* Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.13.beta.20240208git40be3fe
+- New upstream snapshot 2.4.0-0.13.beta.20240208git40be3fe
+
+* Sat Feb 03 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.4.0-0.12.beta.20240117git55decf0
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
 * Wed Jan 17 2024 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.11.beta.20240117git55decf0
 - New upstream snapshot 2.4.0-beta
