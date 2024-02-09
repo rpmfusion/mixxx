@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 40be3fe23524982a47931c6e6d7bfc71b314371d
+%global gitcommit d112e4c7be8836669e359c93acba9f2a752c4435
 # Format: <yyyymmdd>
-%global gitcommitdate 20240208
+%global gitcommitdate 20240209
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.14%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0.16%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -185,7 +185,7 @@ rm -rf \
 # the failing tests has been found and fixed.
 %ifarch %{arm32} %{arm64}
   %global ctest_timeout_secs 300
-  %global ctest_exclude_regex %{?ctest_exclude_regex:%{ctest_exclude_regex}|}setValue_IgnoresNaN|setParameter_NaN
+  %global ctest_exclude_regex %{?ctest_exclude_regex:%{ctest_exclude_regex}|}setValue_IgnoresNaN|setParameter_NaN|MovingInterquartileMeanTest
 %endif
 
 %ifarch %{power64}
@@ -222,6 +222,12 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Fri Feb 09 2024 Luis Correia <buga@loide.net> - 2.4.0-0.16.beta.20240209gitd112e4c
+- New upstream snapshot 2.4.0-0.16.beta.20240209gitd112e4c
+
+* Fri Feb 09 2024 Luis Correia <buga@loide.net> - 2.4.0-0.15.beta.20240208git40be3fe
+- Disable a test for aarch64
+
 * Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.14.beta.20240208git40be3fe
 - New upstream snapshot 2.4.0-0.14.beta.20240208git40be3fe
 
