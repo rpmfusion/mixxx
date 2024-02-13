@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit 81066fd4804ac50fe96545fccf0f12074e30322c
+%global gitcommit 64641faeeb5384b183ed6500eacf198a6103d889 
 # Format: <yyyymmdd>
-%global gitcommitdate 20240212
+%global gitcommitdate 20240213
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
