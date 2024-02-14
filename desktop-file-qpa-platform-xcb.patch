@@ -1,0 +1,15 @@
+--- a/res/linux/org.mixxx.Mixxx.desktop
++++ b/res/linux/org.mixxx.Mixxx.desktop
+@@ -8,7 +8,9 @@ GenericName[fr]=Interface numérique pour DJ
+ Comment=A digital DJ interface
+ Comment[de]=Ein digitales DJ-System
+ Comment[fr]=Une interface numérique pour DJ
+-Exec=sh -c "pasuspender -- mixxx || mixxx"
++# Use XWayland platform plugin (xcb) due to issues with Qt5 on Wayland.
++# See also: <https://github.com/mixxxdj/mixxx/issues/12332>
++Exec=env QT_QPA_PLATFORM=xcb sh -c "pasuspender -- mixxx || mixxx"
+ Terminal=false
+ Icon=mixxx
+ Type=Application
+--
+2.42.0
