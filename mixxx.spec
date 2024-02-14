@@ -246,9 +246,6 @@ appstreamcli \
 * Wed Jan 17 2024 Uwe Klotz <uwe.klotz@gmail.com> - 2.4.0-0.11.beta.20240117git55decf0
 - New upstream snapshot 2.4.0-beta
 
-* Tue Aug 15 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.6-1
-- New upstream release 2.3.6
-
 * Wed May 10 2023 Uwe Klotz <uwe.klotz@gmail.com> - 2.3.5-1
 - New upstream release 2.3.5
 
