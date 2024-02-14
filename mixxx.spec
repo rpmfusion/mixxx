@@ -7,9 +7,9 @@
 %global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit d112e4c7be8836669e359c93acba9f2a752c4435
+%global gitcommit d225a5112166e9224e0c61cdc413b9145d009c06 
 # Format: <yyyymmdd>
-%global gitcommitdate 20240209
+%global gitcommitdate 20240214
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        0.16%{?extraver:.%{extraver}}%{?snapinfo:.%{snapinfo}}%{?dist}
+Release:        0
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,16 +222,22 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Fri Feb 09 2024 Luis Correia <buga@loide.net> - 2.4.0-0.16.beta.20240209gitd112e4c
+* Wed Feb 14 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0
+- New upstream release 2.4.0
+
+* Mon Feb 12 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0.17.beta.20240212git81066fd
+- New upstream snapshot 2.4.0-0.17.beta.20240212git81066fd
+
+* Fri Feb 09 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0.16.beta.20240209gitd112e4c
 - New upstream snapshot 2.4.0-0.16.beta.20240209gitd112e4c
 
-* Fri Feb 09 2024 Luis Correia <buga@loide.net> - 2.4.0-0.15.beta.20240208git40be3fe
+* Fri Feb 09 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0.15.beta.20240208git40be3fe
 - Disable a test for aarch64
 
-* Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.14.beta.20240208git40be3fe
+* Thu Feb 08 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0.14.beta.20240208git40be3fe
 - New upstream snapshot 2.4.0-0.14.beta.20240208git40be3fe
 
-* Thu Feb 08 2024 Luis Correia <buga@loide.net> - 2.4.0-0.13.beta.20240208git40be3fe
+* Thu Feb 08 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-0.13.beta.20240208git40be3fe
 - New upstream snapshot 2.4.0-0.13.beta.20240208git40be3fe
 
 * Sat Feb 03 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.4.0-0.12.beta.20240117git55decf0
