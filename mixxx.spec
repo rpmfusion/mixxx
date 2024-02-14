@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        1
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
