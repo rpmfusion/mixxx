@@ -4,12 +4,12 @@
 %endif
 
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
-%global extraver beta
+#global extraver beta
 
 # Optional: Only used for untagged snapshot versions
-%global gitcommit d225a5112166e9224e0c61cdc413b9145d009c06 
+#global gitcommit d225a5112166e9224e0c61cdc413b9145d009c06 
 # Format: <yyyymmdd>
-%global gitcommitdate 20240214
+#global gitcommitdate 20240214
 
 # Additional sources
 %global libkeyfinder_version 2.2.6
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Fri Feb 17 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-2
+- New upstream release 2.4.0
+
 * Wed Feb 14 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-1
 - New upstream release 2.4.0
 
