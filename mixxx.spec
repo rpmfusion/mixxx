@@ -222,7 +222,7 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Fri Feb 17 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-2
+* Fri Feb 16 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-2
 - New upstream release 2.4.0
 
 * Wed Feb 14 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-1
