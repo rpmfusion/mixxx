@@ -27,8 +27,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.4.0
-Release:        2%{?dist}
+Version:        2.4.1
+Release:        3%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed May 29 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.1-3
+- New upstream release 2.4.1
+
 * Fri Feb 16 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-2
 - New upstream release 2.4.0
 
