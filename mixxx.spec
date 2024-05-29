@@ -12,10 +12,10 @@
 #global gitcommitdate 20240214
 
 # Additional sources
-%global libkeyfinder_version 2.2.6
+%global libkeyfinder_version 2.2.8
 
 # Additional sources
-%global libdjinterop_version 0.20.1
+%global libdjinterop_version 0.20.2
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.1
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,7 +222,7 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
-* Wed May 29 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.1-3
+* Wed May 29 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.1-1
 - New upstream release 2.4.1
 
 * Fri Feb 16 2024 Luis Correia <luis.f.correia@gmail.com> - 2.4.0-2
