@@ -15,7 +15,7 @@
 %global libkeyfinder_version 2.2.8
 
 # Additional sources
-%global libdjinterop_version 0.20.2
+%global libdjinterop_version 0.22.1
 
 %if "%{?gitcommit}" == ""
   # (Pre-)Releases
@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -222,6 +222,15 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Fri Nov 01 2024 Luís Correia <luis.f.correia@gmail.com> - 2.4.1-3
+- Add new dependency and prepare for F41
+
+* Fri Nov 01 2024 Luís Correia <luis.f.correia@gmail.com> - 2.4.1-4
+- rebuilt
+
+* Fri Nov 01 2024 Luís Correia <luis.f.correia@gmail.com> - 2.4.1-3
+- rebuilt
+
 * Fri Aug 02 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
 
