@@ -54,8 +54,14 @@ BuildRequires:  google-benchmark-devel
 # Build Requirements
 BuildRequires:  chrpath
 # The runtime libraries of FAAD2 are needed during the build for testing
-BuildRequires:  faad2
-BuildRequires:  ffmpeg-devel
+# START FEDORA BLOCK
+#BuildRequires:  faad2
+#BuildRequires:  ffmpeg-devel
+pkgconfig(libavcodec) 
+pkgconfig(libavformat) 
+pkgconfig(libavutil) 
+pkgconfig(libswresample)
+# END BLOCK
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
 BuildRequires:  lame-devel
