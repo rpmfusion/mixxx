@@ -61,7 +61,7 @@ pkgconfig(libavcodec)
 pkgconfig(libavformat) 
 pkgconfig(libavutil) 
 pkgconfig(libswresample)
-# END BLOCK
+# END FEDORA BLOCK
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
 BuildRequires:  lame-devel
@@ -99,7 +99,7 @@ BuildRequires:  wavpack-devel
 BuildRequires:  zlib-devel
 
 # Runtime Requirements
-Requires: faad2
+#Requires: faad2
 Requires: open-sans-fonts
 Requires: qt5-qttranslations
 
@@ -144,7 +144,7 @@ cp %{SOURCE2} %{__cmake_builddir}/downloads
   -DBULK=ON \
   -DENGINEPRIME=ON \
   -DFAAD=ON \
-  -DFFMPEG=ON \
+#  -DFFMPEG=ON \
   -DHID=ON \
   -DKEYFINDER=ON \
   -DLOCALECOMPARE=ON \
