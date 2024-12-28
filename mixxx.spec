@@ -27,8 +27,8 @@
 %endif
 
 Name:           mixxx
-Version:        2.4.2
-Release:        3%{?dist}
+Version:        2.5.0
+Release:        0%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -54,14 +54,8 @@ BuildRequires:  google-benchmark-devel
 # Build Requirements
 BuildRequires:  chrpath
 # The runtime libraries of FAAD2 are needed during the build for testing
-# START FEDORA BLOCK
-#BuildRequires:  faad2
-#BuildRequires:  ffmpeg-devel
-pkgconfig(libavcodec) 
-pkgconfig(libavformat) 
-pkgconfig(libavutil) 
-pkgconfig(libswresample)
-# END FEDORA BLOCK
+BuildRequires:  faad2
+BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
 BuildRequires:  hidapi-devel
 BuildRequires:  lame-devel
@@ -144,7 +138,7 @@ cp %{SOURCE2} %{__cmake_builddir}/downloads
   -DBULK=ON \
   -DENGINEPRIME=ON \
   -DFAAD=ON \
-#  -DFFMPEG=ON \
+  -DFFMPEG=ON \
   -DHID=ON \
   -DKEYFINDER=ON \
   -DLOCALECOMPARE=ON \
@@ -228,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Sat Dec 28 2024 Luís Correia <luis.f.correia@gmail.com> - 2.5.0-0
+- New upstream release 2.5.0
+
 * Thu Nov 28 2024 Luís Correia <luis.f.correia@gmail.com> - 2.4.2-3
 - New upstream release 2.4.2
 
