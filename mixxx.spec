@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.5.0
-Release:        0%{?dist}
+Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -78,12 +78,12 @@ BuildRequires:  opusfile-devel
 BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-lite-devel
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtdeclarative-devel
-BuildRequires:  qt5-qtscript-devel
-BuildRequires:  qt5-qtsvg-devel
-BuildRequires:  qt5-qtx11extras-devel
-BuildRequires:  qtkeychain-qt5-devel
+BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qtdeclarative-devel
+#BuildRequires:  qt6-qtscript-devel
+BuildRequires:  qt6-qtsvg-devel
+#BuildRequires:  qt6-qtx11extras-devel
+BuildRequires:  qtkeychain-qt6-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  soundtouch-devel
 BuildRequires:  sqlite-devel
@@ -95,7 +95,7 @@ BuildRequires:  zlib-devel
 # Runtime Requirements
 #Requires: faad2
 Requires: open-sans-fonts
-Requires: qt5-qttranslations
+Requires: qt6-qttranslations
 
 %description
 Mixxx is open source software for DJ'ing. You can use
@@ -222,6 +222,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Sat Dec 28 2024 Luís Correia <luis.f.correia@gmail.com> - 2.5.0-1
+- New upstream release 2.5.0, fix dependencies
+
 * Sat Dec 28 2024 Luís Correia <luis.f.correia@gmail.com> - 2.5.0-0
 - New upstream release 2.5.0
 
