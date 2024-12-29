@@ -28,7 +28,7 @@
 
 Name:           mixxx
 Version:        2.5.0
-Release:        1%{?dist}
+Release:        0%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -79,6 +79,8 @@ BuildRequires:  portaudio-devel
 BuildRequires:  portmidi-devel
 BuildRequires:  protobuf-lite-devel
 BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qt5compat-devel
+BuildRequires:  qt6-qtshadertools-devel
 BuildRequires:  qt6-qtdeclarative-devel
 #BuildRequires:  qt6-qtscript-devel
 BuildRequires:  qt6-qtsvg-devel
@@ -168,7 +170,8 @@ desktop-file-install \
 rm -rf \
   %{buildroot}%{_prefix}%{_sysconfdir}/ \
   %{buildroot}%{_datadir}/doc/ \
-  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}_macos.svg
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}_macos.svg \
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}_ios.svg 
 
 
 %check
