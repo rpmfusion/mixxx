@@ -82,9 +82,8 @@ BuildRequires:  qt6-qtbase-devel
 BuildRequires:  qt6-qt5compat-devel
 BuildRequires:  qt6-qtshadertools-devel
 BuildRequires:  qt6-qtdeclarative-devel
-#BuildRequires:  qt6-qtscript-devel
 BuildRequires:  qt6-qtsvg-devel
-#BuildRequires:  qt6-qtx11extras-devel
+BuildRequires:  qt6-qtbase-private-devel
 BuildRequires:  qtkeychain-qt6-devel
 BuildRequires:  rubberband-devel
 BuildRequires:  soundtouch-devel
