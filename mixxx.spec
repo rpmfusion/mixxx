@@ -27,7 +27,7 @@
 %endif
 
 Name:           mixxx
-Version:        2.5.0
+Version:        2.5.1
 Release:        1%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
@@ -224,6 +224,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Tue Apr 29 2025 Luís Correia <luis.f.correia@gmail.com> - 2.5.1-1
+- New upstream release 2.5.1
+
 * Tue Jan 28 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.5.0-1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
 
