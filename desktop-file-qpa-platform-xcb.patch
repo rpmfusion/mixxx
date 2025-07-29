@@ -1,15 +1,13 @@
---- a/res/linux/org.mixxx.Mixxx.desktop
-+++ b/res/linux/org.mixxx.Mixxx.desktop
-@@ -8,7 +8,9 @@ GenericName[fr]=Interface numérique pour DJ
- Comment=A digital DJ interface
- Comment[de]=Ein digitales DJ-System
- Comment[fr]=Une interface numérique pour DJ
+--- ./res/linux/org.mixxx.Mixxx.desktop.orig	2025-07-29 18:39:36.656664578 +0100
++++ ./res/linux/org.mixxx.Mixxx.desktop	2025-07-29 18:40:13.933200484 +0100
+@@ -47,7 +47,9 @@ Comment[fi]=Digitaalinen DJ-järjestelm�
+ Comment[ko]=디지털 DJ 시스템
+ Comment[nb]=Et digitalt DJ-system
+ Comment[bg]=Цифрова DJ система
 -Exec=sh -c "pasuspender -- mixxx || mixxx"
 +# Use XWayland platform plugin (xcb) due to issues with Qt5 on Wayland.
 +# See also: <https://github.com/mixxxdj/mixxx/issues/12332>
 +Exec=env QT_QPA_PLATFORM=xcb sh -c "pasuspender -- mixxx || mixxx"
+ Keywords=dj;music;alsa;jack:realtime;standalone;
  Terminal=false
  Icon=mixxx
- Type=Application
---
-2.42.0
