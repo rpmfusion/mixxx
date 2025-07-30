@@ -3,6 +3,10 @@
 %global _lto_cflags %{nil}
 %endif
 
+# https://github.com/mixxxdj/mixxx/issues/14714
+# https://bugreports.qt.io/browse/QTBUG-135623
+%global optflags %{optflags} -Wno-array-bounds
+
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
 #global extraver beta
 
