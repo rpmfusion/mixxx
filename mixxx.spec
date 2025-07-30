@@ -5,7 +5,14 @@
 
 # https://github.com/mixxxdj/mixxx/issues/14714
 # https://bugreports.qt.io/browse/QTBUG-135623
-%global optflags %{optflags} -Wno-array-bounds
+#
+# /builddir/build/BUILD/mixxx-2.5.2-build/mixxx-2.5.2/src/sources/soundsourceflac.cpp: In member function ‘void mixxx::SoundSourceFLAC::flacError(FLAC__StreamDecoderErrorStatus)’:
+# /builddir/build/BUILD/mixxx-2.5.2-build/mixxx-2.5.2/src/sources/soundsourceflac.cpp:571:12: error: enumeration value ‘FLAC__STREAM_DECODER_ERROR_STATUS_OUT_OF_BOUNDS’ not handled in switch [-Werror=switch]
+#   571 |     switch (status) {
+#      |            ^
+# /builddir/build/BUILD/mixxx-2.5.2-build/mixxx-2.5.2/src/sources/soundsourceflac.cpp:571:12: error: enumeration value ‘FLAC__STREAM_DECODER_ERROR_STATUS_MISSING_FRAME’ # not handled in switch [-Werror=switch]
+
+%global optflags %{optflags} -Wno-array-bounds -Wno-error=switch
 
 # Optional: Package version suffix for pre-releases, e.g. "beta" or "rc"
 #global extraver beta
