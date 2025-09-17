@@ -1,5 +1,6 @@
 # Disable LTO for ppc64
 %ifarch %{power64}
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 %global _lto_cflags %{nil}
 %endif
 
