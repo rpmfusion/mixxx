@@ -208,7 +208,7 @@ rm -rf \
 
 # Run tests
 %if "%{?ctest_exclude_regex}" == ""
-  %ctest --timeout %ctest_timeout_secs | :
+  %ctest --timeout %ctest_timeout_secs || :
 %else
   %ctest --timeout %ctest_timeout_secs --exclude-regex "%ctest_exclude_regex"
 %endif
