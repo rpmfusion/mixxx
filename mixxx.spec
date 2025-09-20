@@ -2,6 +2,7 @@
 %ifarch %{power64}
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 %global _lto_cflags %{nil}
+%global _smp_mflags -j1
 %endif
 
 # https://github.com/mixxxdj/mixxx/issues/14714
