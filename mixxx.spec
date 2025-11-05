@@ -41,7 +41,7 @@
 
 Name:           mixxx
 Version:        2.5.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Mixxx is open source software for DJ'ing
 License:        GPLv2+
 URL:            http://www.mixxx.org
@@ -237,6 +237,9 @@ appstreamcli \
 %{_udevrulesdir}/69-%{name}-usb-uaccess.rules
 
 %changelog
+* Wed Nov 05 2025 Leigh Scott <leigh123linux@gmail.com> - 2.5.3-2
+- Rebuild for ffmpeg-8.0
+
 * Wed Sep 17 2025 Sérgio Basto <sergio@serjux.com> - 2.5.3-1
 - Update mixxx to 2.5.3
 
